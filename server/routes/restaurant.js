@@ -1,10 +1,11 @@
-var express = require('express');
+var express    = require('express');
 var bodyParser = require('body-parser');
-var multer = require('multer');
-var upload = multer();
-var router = express.Router();
+var multer     = require('multer');
+var upload     = multer();
+var router     = express.Router();
 
-var pool = require('./../db/mysql');
+//var pool       = require('./../db/mysql');
+var model      = require('../models');
 
 router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now())
