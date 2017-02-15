@@ -1,15 +1,15 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
+var express      = require('express');
+var path         = require('path');
+var favicon      = require('serve-favicon');
+var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var bodyParser   = require('body-parser');
 
 // import routes/*.js
-var index = require('./routes/index');
-var user = require('./routes/user');
-var restaurant = require('./routes/restaurant');
-var review = require('./routes/review');
+var index        = require('./routes/index');
+var user         = require('./routes/user');
+var restaurant   = require('./routes/restaurant');
+var review       = require('./routes/review');
 
 var app = express();
 
@@ -50,7 +50,7 @@ app.use(function(err, req, res, next) {
 });
 
 /*
-// delete for using 'npm start'
+// comment for using 'npm start'
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 });
