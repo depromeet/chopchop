@@ -5,9 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// import routes/*.js
 var index = require('./routes/index');
 var user = require('./routes/user');
 var restaurant = require('./routes/restaurant');
+var review = require('./routes/review');
 
 var app = express();
 
@@ -23,9 +25,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+// route modules
 app.use('/', index);
 app.use('/user', user);
 app.use('/restaurant', restaurant);
+app.use('/review', review);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -46,8 +50,11 @@ app.use(function(err, req, res, next) {
 });
 
 /*
+// delete for using 'npm start'
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 });
 */
+
 module.exports = app;
+
