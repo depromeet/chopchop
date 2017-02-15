@@ -5,7 +5,7 @@ var Sequelize = require('sequelize');
 //cofig파일에서 dbConfig속성을 불러온다.
 //var env = process.env.NODE_ENV || "dbConfig";
 //var DBInit= require('../config.json')[env];
-var config = require('./../config/config.json');
+var config = require('./../config/config.json').development;
 
 //시퀄라이즈 생성
 var sequelize = new Sequelize(config.database, config.username, config.password, {
@@ -32,6 +32,7 @@ fs.readdirSync(__dirname)
     db[model.name] = model;
   });
 
+// models 폴더가 module 이 됨. 
 Object.keys(db).forEach(function(modelName) {
   if ("associate" in db[modelName]) {
     db[modelName].associate(db);
