@@ -4,7 +4,7 @@ var multer = require('multer');
 var upload = multer();
 var router = express.Router();
 
-var pool = require('./../db/mysql');
+var models = require('../models');
 
 router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now())
@@ -15,6 +15,7 @@ router.use(function timeLog (req, res, next) {
 		GET /review        		
 */
 router.get('/', function(req, res) {
+  console.log('GET /review');
 	// check if token is valid
 	
 	// check if parameter(req.body) is valid
@@ -22,6 +23,7 @@ router.get('/', function(req, res) {
 	// send query to sql server
 
 	// send result to client
+  res.send('GET /review');
 });
 
 /*	POST /user 

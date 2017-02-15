@@ -4,7 +4,8 @@ var multer = require('multer');
 var upload = multer();
 var router = express.Router();
 
-var pool = require('./../db/mysql');
+var models = require('../models');
+//var pool = require('./../db/mysql');
 
 router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now())
