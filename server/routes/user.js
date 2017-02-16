@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var multer     = require('multer');
 var upload     = multer();
 var router     = express.Router();
-var model      = require('../models');
+var models     = require('../models');
 
 router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now())
@@ -15,28 +15,104 @@ router.use(function timeLog (req, res, next) {
  */
 router.get('/', function(req, res) {
   // 'SELECT user_name FROM tbl_user'
-  res.send('GET /user');
+  result = [];
+  models.User.findAll({
+    // add conditional statement here
+
+  }).then(function(users) {
+    for (var i=0; i<users.length; i++) {
+      result[i] = users[i].dataValues;
+    }
+    res.status(200);
+    res.json(result);
+  }).catch(function (err) {
+    // handle error;
+    if(err) {
+      console.log('error! : GET /user');
+      res.status(500)
+      res.send('Something is broken!');
+    }
+  });
 });
 
 /**
  *  POST /user 
  */
-router.post('/', upload.array(), function(req, res) {
+router.post('/', function(req, res) {
   // 'INSERT INTO tbl_user SET ?'
-  res.send('POST /user');
+  models.User.create({
+    //user_id       : 2,    // commented for autoIncrement:true
+    user_email    : 1,
+    user_tokenid  : 1, 
+    user_name     : 1,
+    user_nickname : 1,
+    user_gender   : 1,
+    user_age      : 1,
+    user_address  : 1, 
+    user_rank     : 1, 
+    user_password : 1
+  }).then(function(user) {
+    // you can now access the newly created task via the variable task
+    var result = {};
+    result["id"] = user.user_id;
+    res.status(200);
+    res.json(result);
+  }).catch(function(err) {
+    // handle error
+    if(err=='') {
+    }
+    if(err) {
+      console.log('error! : POST /user');
+      res.status(500);
+      res.send('Something is broken');
+    }
+  });
 });
 
 /**
  *  POST /user/login
  */
 router.post('/login', function(req, res) {
-  res.send('POST /user/login');
+  var sess = req.session;
+  var username = req.body.username;
+  var password = req.body.password;
+
+  models.User.find({
+    attributes: ['user_email', 'user_password'], 
+    where: {
+      user_email : username
+    }
+  }).then(function (user) {
+    // username is not found
+    if(!user) {
+      throw 'username is not fonund';
+    }
+    // username is found && password is correct
+    if(user.user_password == password) {
+      // add session
+      res.status(200);
+      res.send('login success');
+    }
+    // username is found && password is not correct
+    else {
+      throw 'password is not correct';
+    }
+
+  }).catch(function (err) {
+    if(err) {
+      res.status(500);
+      res.send(err);
+      //res.send('Something is broken!')
+    }
+  });
 });
 
 /**
  *  POST /user/logout
  */
 router.post('/logout', function(req, res) {
+  // delete session
+  res.status(200);
   res.send('POST /user/logout');
 });
 
@@ -45,6 +121,7 @@ router.post('/logout', function(req, res) {
  */
 router.put('/', function(req, res) {
   // 'UPDATE tbl_user SET ? WHERE user_id= ?'
+  res.status(200);
   res.send('PUT /user/{user_id}');
 });
 
@@ -53,6 +130,7 @@ router.put('/', function(req, res) {
  */
 router.delete('/', function(req, res) {
   // 'DELETE FROM tbl_user WHERE user_id = ?'
+  res.status(200);
   res.send('DELETE /user/{user_id}');
 });
 
