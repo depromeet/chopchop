@@ -4,7 +4,6 @@ var multer     = require('multer');
 var upload     = multer();
 var router     = express.Router();
 
-//var pool = require('./../db/mysql');
 var models     = require('../models');
 
 router.use(function timeLog (req, res, next) {
@@ -12,10 +11,13 @@ router.use(function timeLog (req, res, next) {
   next()
 });
 
-/*	GET board listing. 
-		GET /board        		
-*/
+/**
+ *  GET board listing. 
+ *	GET /board        		
+ */
 router.get('/', function(req, res) {
+  res.status(200);
+  res.send('GET /board');
   // check if token is valid
 
   // check if parameter(req.body) is valid
@@ -25,9 +27,12 @@ router.get('/', function(req, res) {
   // send result to client
 });
 
-/*	POST /board
-*/
+/**
+ *  POST /board
+ */
 router.post('/', upload.array(), function(req, res) {
+  res.status(200);
+  res.send('POST /board');
   // check if token is valid
 	
   // check if parameter(req.body) is valid
@@ -37,9 +42,12 @@ router.post('/', upload.array(), function(req, res) {
   // send result to client
 });
 
-/* PUT /board/{board_id}
-*/
+/**
+ *  PUT /board/{board_id}
+ */
 router.put('/', function(req, res) {
+  res.status(200);
+  res.send('PUT /board/{board_id}');
   // check if token is valid
 
   // check if parameter(req.body) is valid
@@ -50,9 +58,12 @@ router.put('/', function(req, res) {
 	//res.send('PUT /user!!!!!!!!!');
 });
 
-/* DELETE /board/:{board_id}
-*/
+/**
+ *  DELETE /board/:{board_id}
+ */
 router.delete('/', function(req, res) {
+  res.status(200);
+  res.send('DELETE /board/{board_id}');
   // check if token is valid
 
   // check if parameter(req.body) is valid

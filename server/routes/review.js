@@ -11,11 +11,13 @@ router.use(function timeLog (req, res, next) {
   next()
 });
 
-/*	GET review listing. 
-		GET /review        		
-*/
+/**
+ *  GET review listing. 
+ *  GET /review        		
+ */
 router.get('/', function(req, res) {
-  console.log('GET /review');
+  res.status(200);
+  res.send('GET /review');
 	// check if token is valid
 	
 	// check if parameter(req.body) is valid
@@ -23,11 +25,11 @@ router.get('/', function(req, res) {
 	// send query to sql server
 
 	// send result to client
-  res.send('GET /review');
 });
 
-/*	POST /user 
-*/
+/**
+ *  POST /user 
+ */
 router.post('/', upload.array(), function(req, res) {
   // check if token is valid
 	
@@ -38,8 +40,9 @@ router.post('/', upload.array(), function(req, res) {
   // send result to client
 });
 
-/* PUT /user/{user_id}
-*/
+/**
+ *  PUT /user/{user_id}
+ */
 router.put('/', function(req, res) {
   // check if token is valid
 

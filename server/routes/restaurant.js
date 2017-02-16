@@ -12,25 +12,21 @@ router.use(function timeLog (req, res, next) {
   next()
 });
 
-/*	
-  GET /restaurant     
-  listing all restaurants   		
-*/
+/**
+ *  GET /restaurant     
+ *  listing all restaurants   		
+ */
 router.get('/', function(req, res) {
-	// check if token is valid
-	
-	// check if parameter(req.body) is valid
-	
-	// send query to sql server
-
-	// send result to client
+  res.status(200);
+  res.send('GET /restaurant');  
 });
 
-/*	
-	GET /restaurant     
-	listing all restaurants   		
-*/
+/**
+ *	GET /restaurant/:res_id
+ */
 router.get('/:res_id', function(req, res) {
+  res.status(200);
+  res.send('GET /restaurant/:res_id');  
 	// check if token is valid
 	
 	// check if parameter(req.body) is valid
@@ -40,10 +36,12 @@ router.get('/:res_id', function(req, res) {
 	// send result to client
 });
 
-/*	
-	POST /restaurant 
-*/
+/**
+ *	POST /restaurant 
+ */
 router.post('/', upload.array(), function(req, res) {
+  res.status(200);
+  res.send('POST /restaurant');  
 	// check if token is valid
 	
 	// check if parameter(req.body) is valid
@@ -53,10 +51,12 @@ router.post('/', upload.array(), function(req, res) {
 	// send result to client
 });
 
-/* 
-	PUT /restaurant/{res_id}
-*/
+/**
+ * 	PUT /restaurant/{res_id}
+ */
 router.put('/', function(req, res) {
+  res.status(200);
+  res.send('PUT /restaurant');  
 	// check if token is valid
 	
 	// check if parameter(req.body) is valid
@@ -66,10 +66,12 @@ router.put('/', function(req, res) {
 	// send result to client
 });
 
-/* 
-	DELETE /restaurant
-*/
+/** 
+ *	DELETE /restaurant
+ */
 router.delete('/', function(req, res) {
+  res.status(200);
+  res.send('DELETE /restaurant');  
 	// check if token is valid
 	
 	// check if parameter(req.body) is valid
@@ -80,3 +82,4 @@ router.delete('/', function(req, res) {
 });
 
 module.exports = router;
+
