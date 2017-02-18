@@ -11,6 +11,7 @@ var index        = require('./routes/index');
 var user         = require('./routes/user');
 var restaurant   = require('./routes/restaurant');
 var review       = require('./routes/review');
+var board        = require('./routes/board');
 
 var app = express();
 
@@ -28,9 +29,10 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // route modules
 app.use('/', index);
-app.use('/user', user);
-app.use('/restaurant', restaurant);
-app.use('/review', review);
+app.use('/users', user);
+app.use('/restaurants', restaurant);
+app.use('/reviews', review);
+app.use('/boards', board);
 
 // use session
 app.use(session({
