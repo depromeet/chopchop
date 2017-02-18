@@ -3,9 +3,7 @@ var bodyParser = require('body-parser');
 var multer     = require('multer');
 var upload     = multer();
 var router     = express.Router();
-
-//var pool       = require('./../db/mysql');
-var model      = require('../models');
+var models     = require('../models');
 
 router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now())
@@ -13,72 +11,87 @@ router.use(function timeLog (req, res, next) {
 });
 
 /**
- *  GET /restaurant     
+ *  GET /restaurants     
  *  listing all restaurants   		
  */
 router.get('/', function(req, res) {
-  res.status(200);
-  res.send('GET /restaurant');  
+  var result = {};
+  result["restaurants"] = [];
+
+  models.Restaurant.findAll()
+  .then(function(restaurants) {
+    for(var i=0; i<restaurants.length; i++) {
+      result["restaurants"][i] = restaurants[i].dataValues;
+    }
+    res.status(200);
+    res.json(result);
+  })
+  .catch(function(err) {
+    res.status(500);
+    res.send('Something is broken!');
+  });
 });
 
 /**
- *	GET /restaurant/:res_id
+ *	GET /restaurants/:res_id
  */
 router.get('/:res_id', function(req, res) {
-  res.status(200);
-  res.send('GET /restaurant/:res_id');  
-	// check if token is valid
-	
-	// check if parameter(req.body) is valid
-	
-	// send query to sql server
+  var result = {};
+  var pResID = req.params.res_id;
 
-	// send result to client
+  models.Restaurant.find({
+    attributes: ["res_id", "res_name", "res_img", "res_phonenum", "res_address", "res_score"], 
+    where: {
+      res_id : pResID
+    }
+  })
+  .then(function(restaurants) {
+    result["res_id"] = restaurnats.res_id;
+    result["res_name"] = restaurnats.res_name;
+    result["res_img"] = restaurnats.res_img;
+    result["res_phonenum"] = restaurnats.res_phonenum;
+    result["res_address"] = restaurnats.res_address;
+    result["res_score"] = restaurnats.res_score;
+
+    res.status(200).json(result);
+  })
+  .catch(function(err) {
+    res.status(500).send('Something is broken!');
+  });
 });
 
 /**
- *	POST /restaurant 
+ *	POST /restaurants
  */
-router.post('/', upload.array(), function(req, res) {
-  res.status(200);
-  res.send('POST /restaurant');  
-	// check if token is valid
-	
-	// check if parameter(req.body) is valid
-	
-	// send query to sql server
+router.post('/', function(req, res) {
+  var result = {};
+  var data = req.body.restaurant;
 
-	// send result to client
+  models.Restaurant.create(data)
+  .then(function(restaurant) {
+    result["res_id"] = restaurant.res_id;
+    res.status(200);
+    res.json(result);
+  })
+  .catch(function(err) {
+    res.status(500).send('Something is broken!');
+  });
 });
 
 /**
- * 	PUT /restaurant/{res_id}
+ * 	PUT /restaurants/{res_id}
  */
 router.put('/', function(req, res) {
   res.status(200);
   res.send('PUT /restaurant');  
-	// check if token is valid
-	
-	// check if parameter(req.body) is valid
-	
-	// send query to sql server
-
-	// send result to client
 });
 
 /** 
- *	DELETE /restaurant
+ *	DELETE /restaurants
  */
 router.delete('/', function(req, res) {
   res.status(200);
   res.send('DELETE /restaurant');  
-	// check if token is valid
-	
-	// check if parameter(req.body) is valid
-	
-	// send query to sql server
-
-	// send result to client
 });
 
 module.exports = router;

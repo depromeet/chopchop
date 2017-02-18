@@ -9,14 +9,13 @@ module.exports = function(sequelize, DataTypes) {
     res_id       : { type : DataTypes.INTEGER, primaryKey : true, autoIncrement: true, allowNull : false },
     res_name     : { type : DataTypes.STRING, allowNull : false },
     res_img      : { type : DataTypes.STRING(50) },
-    res_phonenum : { type : DataTypes.STRING(20) },
     res_freenote : { type : DataTypes.STRING(100) },
     res_address  : { type : DataTypes.STRING(50) },
     res_score    : { type : DataTypes.INTEGER }
 	}, 
   {
     classMethods : {},
-		tableName: 'review',
+		tableName: 'restaurant',
 		freezeTableName: true,
 		underscored: true,
 	  timestamps: false
