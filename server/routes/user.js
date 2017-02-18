@@ -15,13 +15,14 @@ router.use(function timeLog (req, res, next) {
  */
 router.get('/', function(req, res) {
   // 'SELECT user_name FROM tbl_user'
-  result = [];
+  result = {};
+  result["users"] = [];
   models.User.findAll({
     // add conditional statement here
 
   }).then(function(users) {
     for (var i=0; i<users.length; i++) {
-      result[i] = users[i].dataValues;
+      result["users"][i] = users[i].dataValues;
     }
     res.status(200);
     res.json(result);
@@ -42,15 +43,15 @@ router.post('/', function(req, res) {
   // 'INSERT INTO tbl_user SET ?'
   var data = req.body.user;
   
-  models.User.create({
-    
-  }).then(function(user) {
+  models.User.create(data)
+  .then(function(user) {
     // you can now access the newly created task via the variable task
     var result = {};
     result["id"] = user.user_id;
     res.status(200);
-    res.json(result);
-  }).catch(function(err) {
+    res.json(result); 
+  })
+  .catch(function(err) {
     // handle error
     if(err=='') {
     }
@@ -75,7 +76,7 @@ router.post('/login', function(req, res) {
     where: {
       user_email : username
     }
-  }).then(function (user) {
+  }).then(function(user) {
     // username is not found
     if(!user) {
       throw 'username is not fonund';
@@ -90,8 +91,7 @@ router.post('/login', function(req, res) {
     else {
       throw 'password is not correct';
     }
-
-  }).catch(function (err) {
+  }).catch(function(err) {
     if(err) {
       res.status(500);
       res.send(err);
