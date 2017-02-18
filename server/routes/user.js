@@ -40,17 +40,10 @@ router.get('/', function(req, res) {
  */
 router.post('/', function(req, res) {
   // 'INSERT INTO tbl_user SET ?'
+  var data = req.body.user;
+  
   models.User.create({
-    //user_id       : 2,    // commented for autoIncrement:true
-    user_email    : 1,
-    user_tokenid  : 1, 
-    user_name     : 1,
-    user_nickname : 1,
-    user_gender   : 1,
-    user_age      : 1,
-    user_address  : 1, 
-    user_rank     : 1, 
-    user_password : 1
+    
   }).then(function(user) {
     // you can now access the newly created task via the variable task
     var result = {};

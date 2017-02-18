@@ -11,10 +11,6 @@ module.exports = function(sequelize, DataTypes) {
 	  user_tokenid  : { type : DataTypes.STRING(30), allowNull : false },
     user_name     : { type : DataTypes.STRING(30), allowNull : false },
     user_nickname : { type : DataTypes.STRING(30), allowNull : false },
-    user_gender   : { type : DataTypes.INTEGER(30), allowNull : false },
-    user_age      : { type : DataTypes.INTEGER(30), allowNull : false },
-    user_address  : { type : DataTypes.STRING(30) },
-    user_rank     : { type : DataTypes.INTEGER(30) }, 
     user_password : { type : DataTypes.STRING(30), allowNull : false }
 	}, {
 		classMethods: {
