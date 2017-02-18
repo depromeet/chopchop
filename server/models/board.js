@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /**
  *  Define a model of board table. 
