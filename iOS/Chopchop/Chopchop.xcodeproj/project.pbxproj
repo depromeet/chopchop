@@ -7,21 +7,56 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF2088511E570AFB0091F418 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF2088501E570AFB0091F418 /* Assets.xcassets */; };
+		EF2088531E5970A20091F418 /* RoomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2088521E5970A20091F418 /* RoomVC.swift */; };
+		EF2088551E59B2440091F418 /* RoomImgView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2088541E59B2440091F418 /* RoomImgView.swift */; };
+		EF2088591E59C9EF0091F418 /* FamousRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2088581E59C9EF0091F418 /* FamousRoomCell.swift */; };
+		EF20885B1E59D86A0091F418 /* ReviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF20885A1E59D86A0091F418 /* ReviewVC.swift */; };
+		EF20885F1E59F58D0091F418 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF20885E1E59F58D0091F418 /* CommentCell.swift */; };
+		EF307CFF1E5216210072E5CB /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF307CFE1E5216210072E5CB /* HomeVC.swift */; };
+		EF307D011E5222980072E5CB /* NMapViewerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF307D001E5222980072E5CB /* NMapViewerSDK.framework */; };
+		EF5408BF1E52F4BC00EE421D /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5408BE1E52F4BC00EE421D /* MainTabBarController.swift */; };
+		EF5408C21E52FD6200EE421D /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5408C11E52FD6200EE421D /* RoomCell.swift */; };
+		EF5408C41E52FD7300EE421D /* RestaurantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5408C31E52FD7300EE421D /* RestaurantCell.swift */; };
+		EF6364FC1E4EFC4F006F60F3 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF6364FB1E4EFC4F006F60F3 /* Alamofire.framework */; };
+		EF6364FE1E4EFC68006F60F3 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF6364FD1E4EFC68006F60F3 /* SwiftyJSON.framework */; };
 		EF6848E31E49B0B2000388CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6848E21E49B0B2000388CE /* AppDelegate.swift */; };
-		EF6848E51E49B0B2000388CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6848E41E49B0B2000388CE /* ViewController.swift */; };
-		EF6848E81E49B0B2000388CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF6848E61E49B0B2000388CE /* Main.storyboard */; };
-		EF6848EA1E49B0B2000388CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF6848E91E49B0B2000388CE /* Assets.xcassets */; };
 		EF6848ED1E49B0B2000388CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF6848EB1E49B0B2000388CE /* LaunchScreen.storyboard */; };
+		EF9C7A521E553AF1005E4BE5 /* NamedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C7A511E553AF1005E4BE5 /* NamedView.swift */; };
+		EF9C7A541E5540BC005E4BE5 /* ReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C7A531E5540BC005E4BE5 /* ReviewCell.swift */; };
+		EF9C7A5A1E55ADAE005E4BE5 /* RoomListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C7A591E55ADAE005E4BE5 /* RoomListVC.swift */; };
+		EF9C7A5C1E55CE19005E4BE5 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C7A5B1E55CE19005E4BE5 /* LocationCell.swift */; };
+		EF9C7A601E55D4BE005E4BE5 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C7A5F1E55D4BE005E4BE5 /* MapVC.swift */; };
+		EF9C7A621E55D4DF005E4BE5 /* MyPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C7A611E55D4DF005E4BE5 /* MyPageVC.swift */; };
+		EF9C7A661E567243005E4BE5 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C7A651E567243005E4BE5 /* UIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EF2088501E570AFB0091F418 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EF2088521E5970A20091F418 /* RoomVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomVC.swift; sourceTree = "<group>"; };
+		EF2088541E59B2440091F418 /* RoomImgView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomImgView.swift; sourceTree = "<group>"; };
+		EF2088581E59C9EF0091F418 /* FamousRoomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamousRoomCell.swift; sourceTree = "<group>"; };
+		EF20885A1E59D86A0091F418 /* ReviewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewVC.swift; sourceTree = "<group>"; };
+		EF20885E1E59F58D0091F418 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		EF307CFB1E5215080072E5CB /* Chopchop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Chopchop-Bridging-Header.h"; sourceTree = "<group>"; };
+		EF307CFE1E5216210072E5CB /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		EF307D001E5222980072E5CB /* NMapViewerSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NMapViewerSDK.framework; path = Carthage/Build/iOS/NMapViewerSDK.framework; sourceTree = "<group>"; };
+		EF5408BE1E52F4BC00EE421D /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		EF5408C11E52FD6200EE421D /* RoomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCell.swift; sourceTree = "<group>"; };
+		EF5408C31E52FD7300EE421D /* RestaurantCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantCell.swift; sourceTree = "<group>"; };
+		EF6364FB1E4EFC4F006F60F3 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		EF6364FD1E4EFC68006F60F3 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		EF6848DF1E49B0B2000388CE /* Chopchop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chopchop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF6848E21E49B0B2000388CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EF6848E41E49B0B2000388CE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		EF6848E71E49B0B2000388CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		EF6848E91E49B0B2000388CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EF6848EC1E49B0B2000388CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EF6848EE1E49B0B2000388CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF9C7A511E553AF1005E4BE5 /* NamedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamedView.swift; sourceTree = "<group>"; };
+		EF9C7A531E5540BC005E4BE5 /* ReviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewCell.swift; sourceTree = "<group>"; };
+		EF9C7A591E55ADAE005E4BE5 /* RoomListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomListVC.swift; sourceTree = "<group>"; };
+		EF9C7A5B1E55CE19005E4BE5 /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
+		EF9C7A5F1E55D4BE005E4BE5 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		EF9C7A611E55D4DF005E4BE5 /* MyPageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageVC.swift; sourceTree = "<group>"; };
+		EF9C7A651E567243005E4BE5 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +64,67 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF6364FE1E4EFC68006F60F3 /* SwiftyJSON.framework in Frameworks */,
+				EF6364FC1E4EFC4F006F60F3 /* Alamofire.framework in Frameworks */,
+				EF307D011E5222980072E5CB /* NMapViewerSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EF20884E1E5702290091F418 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		EF20884F1E5702440091F418 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EF9C7A5B1E55CE19005E4BE5 /* LocationCell.swift */,
+				EF9C7A511E553AF1005E4BE5 /* NamedView.swift */,
+				EF5408C31E52FD7300EE421D /* RestaurantCell.swift */,
+				EF2088581E59C9EF0091F418 /* FamousRoomCell.swift */,
+				EF9C7A531E5540BC005E4BE5 /* ReviewCell.swift */,
+				EF5408C11E52FD6200EE421D /* RoomCell.swift */,
+				EF2088541E59B2440091F418 /* RoomImgView.swift */,
+				EF20885E1E59F58D0091F418 /* CommentCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		EF6364F11E4C5417006F60F3 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EF5408BE1E52F4BC00EE421D /* MainTabBarController.swift */,
+				EF307CFE1E5216210072E5CB /* HomeVC.swift */,
+				EF9C7A591E55ADAE005E4BE5 /* RoomListVC.swift */,
+				EF2088521E5970A20091F418 /* RoomVC.swift */,
+				EF20885A1E59D86A0091F418 /* ReviewVC.swift */,
+				EF9C7A5F1E55D4BE005E4BE5 /* MapVC.swift */,
+				EF9C7A611E55D4DF005E4BE5 /* MyPageVC.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		EF6364FA1E4EFC4E006F60F3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EF307D001E5222980072E5CB /* NMapViewerSDK.framework */,
+				EF6364FD1E4EFC68006F60F3 /* SwiftyJSON.framework */,
+				EF6364FB1E4EFC4F006F60F3 /* Alamofire.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		EF6848D61E49B0B2000388CE = {
 			isa = PBXGroup;
 			children = (
 				EF6848E11E49B0B2000388CE /* Chopchop */,
 				EF6848E01E49B0B2000388CE /* Products */,
+				EF6364FA1E4EFC4E006F60F3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +139,33 @@
 		EF6848E11E49B0B2000388CE /* Chopchop */ = {
 			isa = PBXGroup;
 			children = (
+				EF9C7A631E567228005E4BE5 /* Helper */,
 				EF6848E21E49B0B2000388CE /* AppDelegate.swift */,
-				EF6848E41E49B0B2000388CE /* ViewController.swift */,
-				EF6848E61E49B0B2000388CE /* Main.storyboard */,
-				EF6848E91E49B0B2000388CE /* Assets.xcassets */,
+				EF20884E1E5702290091F418 /* Models */,
+				EF20884F1E5702440091F418 /* Views */,
+				EF6364F11E4C5417006F60F3 /* ViewControllers */,
 				EF6848EB1E49B0B2000388CE /* LaunchScreen.storyboard */,
 				EF6848EE1E49B0B2000388CE /* Info.plist */,
+				EF307CFB1E5215080072E5CB /* Chopchop-Bridging-Header.h */,
+				EF2088501E570AFB0091F418 /* Assets.xcassets */,
 			);
 			path = Chopchop;
+			sourceTree = "<group>";
+		};
+		EF9C7A631E567228005E4BE5 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				EF9C7A641E567234005E4BE5 /* Extension */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		EF9C7A641E567234005E4BE5 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				EF9C7A651E567243005E4BE5 /* UIView.swift */,
+			);
+			name = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,6 +178,7 @@
 				EF6848DB1E49B0B2000388CE /* Sources */,
 				EF6848DC1E49B0B2000388CE /* Frameworks */,
 				EF6848DD1E49B0B2000388CE /* Resources */,
+				EF6364F91E4EFA13006F60F3 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -97,6 +202,7 @@
 					EF6848DE1E49B0B2000388CE = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 827YX997NH;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -125,34 +231,59 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF6848ED1E49B0B2000388CE /* LaunchScreen.storyboard in Resources */,
-				EF6848EA1E49B0B2000388CE /* Assets.xcassets in Resources */,
-				EF6848E81E49B0B2000388CE /* Main.storyboard in Resources */,
+				EF2088511E570AFB0091F418 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EF6364F91E4EFA13006F60F3 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EF6848DB1E49B0B2000388CE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF6848E51E49B0B2000388CE /* ViewController.swift in Sources */,
+				EF9C7A5A1E55ADAE005E4BE5 /* RoomListVC.swift in Sources */,
+				EF2088551E59B2440091F418 /* RoomImgView.swift in Sources */,
+				EF9C7A601E55D4BE005E4BE5 /* MapVC.swift in Sources */,
+				EF9C7A541E5540BC005E4BE5 /* ReviewCell.swift in Sources */,
+				EF20885B1E59D86A0091F418 /* ReviewVC.swift in Sources */,
+				EF2088531E5970A20091F418 /* RoomVC.swift in Sources */,
+				EF307CFF1E5216210072E5CB /* HomeVC.swift in Sources */,
+				EF5408BF1E52F4BC00EE421D /* MainTabBarController.swift in Sources */,
+				EF9C7A521E553AF1005E4BE5 /* NamedView.swift in Sources */,
+				EF20885F1E59F58D0091F418 /* CommentCell.swift in Sources */,
+				EF9C7A5C1E55CE19005E4BE5 /* LocationCell.swift in Sources */,
+				EF5408C21E52FD6200EE421D /* RoomCell.swift in Sources */,
+				EF2088591E59C9EF0091F418 /* FamousRoomCell.swift in Sources */,
+				EF9C7A661E567243005E4BE5 /* UIView.swift in Sources */,
 				EF6848E31E49B0B2000388CE /* AppDelegate.swift in Sources */,
+				EF9C7A621E55D4DF005E4BE5 /* MyPageVC.swift in Sources */,
+				EF5408C41E52FD7300EE421D /* RestaurantCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		EF6848E61E49B0B2000388CE /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EF6848E71E49B0B2000388CE /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		EF6848EB1E49B0B2000388CE /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -259,11 +390,24 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 827YX997NH;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/gns/github/depromeet/chopchop/iOS/Chopchop/Carthage/Build/iOS,
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Chopchop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.goodnews.Chopchop;
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.Chopchop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Chopchop/Chopchop-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -272,11 +416,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 827YX997NH;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/gns/github/depromeet/chopchop/iOS/Chopchop/Carthage/Build/iOS,
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Chopchop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.goodnews.Chopchop;
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.Chopchop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Chopchop/Chopchop-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -300,6 +456,7 @@
 				EF6848F31E49B0B2000388CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
