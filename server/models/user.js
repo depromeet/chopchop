@@ -4,7 +4,6 @@ var crypto = require('crypto');
  *  Define a model of user table. 
  */
 module.exports = function(sequelize, DataTypes) {
-  console.log('models/user.js')
 	return sequelize.define("User", {
 	  user_id       : { type : DataTypes.INTEGER(15), primaryKey : true, allowNull : false, autoIncrement : true },
 	  user_email    : { type : DataTypes.STRING(64), allowNull : false },

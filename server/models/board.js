@@ -4,7 +4,6 @@
  *  Define a model of board table. 
  */
 module.exports = function(sequelize, DataTypes) {
-  console.log('models/board.js');
   return sequelize.define("Board", {
     board_id       : { type : DataTypes.INTEGER, primaryKey : true, autoIncrement: true, allowNull : false },
     board_name     : { type : DataTypes.STRING, allowNull : false },

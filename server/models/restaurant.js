@@ -4,7 +4,6 @@
  *  Define a model of restaurant table.  
  */
 module.exports = function(sequelize, DataTypes) {
-  console.log('models/restaurant.js');
   return sequelize.define("Restaurant", {
     res_id       : { type : DataTypes.INTEGER, primaryKey : true, autoIncrement: true, allowNull : false },
     res_name     : { type : DataTypes.STRING, allowNull : false },
