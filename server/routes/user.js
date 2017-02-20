@@ -4,14 +4,15 @@ var multer     = require('multer');
 var upload     = multer();
 var router     = express.Router();
 var models     = require('../models');
+var jwt        = require('jsonwebtoken');
 
 router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now())
   next()
 });
 
-/**	
- *  GET /user        		
+/**
+ *  GET /user
  */
 router.get('/', function(req, res) {
   // 'SELECT user_name FROM tbl_user'
@@ -37,19 +38,19 @@ router.get('/', function(req, res) {
 });
 
 /**
- *  POST /user 
+ *  POST /user
  */
 router.post('/', function(req, res) {
   // 'INSERT INTO tbl_user SET ?'
   var data = req.body.user;
-  
+
   models.User.create(data)
   .then(function(user) {
     // you can now access the newly created task via the variable task
     var result = {};
     result["id"] = user.user_id;
     res.status(200);
-    res.json(result); 
+    res.json(result);
   })
   .catch(function(err) {
     // handle error
@@ -71,8 +72,9 @@ router.post('/login', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
 
+  const secret = "SeCrEtKeYfOrHaShInGiNChOpChOp";
   models.User.find({
-    attributes: ['user_email', 'user_password'], 
+    attributes: ['user_email', 'user_password'],
     where: {
       user_email : username
     }
@@ -84,8 +86,27 @@ router.post('/login', function(req, res) {
     // username is found && password is correct
     if(user.user_password == password) {
       // add session
+      jwt.sign(
+        {
+          username: username,
+          admin: password
+        },
+        secret,
+        {
+          expiresIn: '7d',
+          issuer: 'chopchoping.com',
+          subject: 'userInfo'
+        }, (err, token) => {
+          token
+        })
+
       res.status(200);
-      res.send('login success');
+      // res.send('login success');
+      res.json({
+        message: 'login success',
+        token
+      })
+
     }
     // username is found && password is not correct
     else {
@@ -128,4 +149,3 @@ router.delete('/', function(req, res) {
 });
 
 module.exports = router;
-
