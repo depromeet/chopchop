@@ -72,7 +72,7 @@ router.post('/login', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
 
-  const secret = "SeCrEtKeYfOrHaShInGiNChOpChOp";
+  const secret = req.app.get('jwt-secret');
   models.User.find({
     attributes: ['user_email', 'user_password'],
     where: {

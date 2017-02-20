@@ -37,7 +37,7 @@ app.use('/boards', board);
 // use session
 app.use(session({
   secret: 'showmethemoney',
-  resave: false, 
+  resave: false,
   saveUninitialized: true
 }));
 
@@ -59,6 +59,13 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// set the secret key variable for jwt
+app.set('jwt-secret', "SeCrEtKeYfOrHaShInGiNChOpChOp")
+// [수정필요] 아래의 형태로 config.json에 시크릿 키를 하나 임의로 만들어서 저장해야할 것 같아요!
+// app.set('jwt-secret', config.secret)
+
+
+
 /*
 // comment for using 'npm start'
 app.listen(3000, function () {
@@ -67,4 +74,3 @@ app.listen(3000, function () {
 */
 
 module.exports = app;
-
