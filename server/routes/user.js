@@ -89,7 +89,6 @@ router.post('/login', function(req, res) {
       jwt.sign(
         {
           username: username,
-          admin: password
         },
         secret,
         {
