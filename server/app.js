@@ -69,6 +69,7 @@ app.set('jwt-secret', "SeCrEtKeYfOrHaShInGiNChOpChOp")
 // app.set('jwt-secret', config.secret)
 
 // 이후 라우터마다 토큰검증이 필요한 각 url을 아래의 형태로 작성하면, 토큰 검증을 합니다.
+// const authMiddleware = require('../middlewares/auth')
 // router.use('/', authMiddleware)
 // ex) board.js에 아래와 같이 입력하면, 먼저 토큰 검증을 합니다.
 // router.use('/:board_id', authMiddleware)
