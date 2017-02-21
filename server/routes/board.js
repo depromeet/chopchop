@@ -79,19 +79,11 @@ router.post('/', function(req, res) {
 });
 
 /**
- *  PUT /board/{board_id}
+ *  PUT /boards/{board_id}
  */
 router.put('/', function(req, res) {
   res.status(200);
-  res.send('PUT /board/{board_id}');
-  // check if token is valid
-
-  // check if parameter(req.body) is valid
-	
-  // send query to sql server
-
-  // send result to client
-	//res.send('PUT /user!!!!!!!!!');
+  res.send('PUT /boards/{board_id}');
 });
 
 /**
@@ -100,13 +92,6 @@ router.put('/', function(req, res) {
 router.delete('/', function(req, res) {
   res.status(200);
   res.send('DELETE /board/{board_id}');
-  // check if token is valid
-
-  // check if parameter(req.body) is valid
-	
-  // send query to sql server
-
-  // send result to client
 });
 
 module.exports = router;
