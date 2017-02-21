@@ -12,7 +12,7 @@ router.use(function timeLog (req, res, next) {
 });
 
 /**
- *  GET /user
+ *  GET /users
  */
 router.get('/', function(req, res) {
   // 'SELECT user_name FROM tbl_user'
@@ -38,7 +38,7 @@ router.get('/', function(req, res) {
 });
 
 /**
- *  POST /user
+ *  POST /users
  */
 router.post('/', function(req, res) {
   // 'INSERT INTO tbl_user SET ?'
@@ -65,7 +65,7 @@ router.post('/', function(req, res) {
 });
 
 /**
- *  POST /user/login
+ *  POST /users/login
  */
 router.post('/login', function(req, res) {
   var sess = req.session;
@@ -121,16 +121,16 @@ router.post('/login', function(req, res) {
 });
 
 /**
- *  POST /user/logout
+ *  POST /users/logout
  */
 router.post('/logout', function(req, res) {
-  // delete session
+  // TODO : delete session
   res.status(200);
   res.send('POST /user/logout');
 });
 
 /**
- *  PUT /user/{user_id}
+ *  PUT /users/{user_id}
  */
 router.put('/', function(req, res) {
   // 'UPDATE tbl_user SET ? WHERE user_id= ?'
@@ -139,7 +139,7 @@ router.put('/', function(req, res) {
 });
 
 /**
- *  DELETE /user/{user_id}
+ *  DELETE /users/{user_id}
  */
 router.delete('/', function(req, res) {
   // 'DELETE FROM tbl_user WHERE user_id = ?'
