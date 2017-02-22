@@ -5,6 +5,7 @@ var upload     = multer();
 var router     = express.Router();
 var models     = require('../models');
 var jwt        = require('jsonwebtoken');
+var aws        = require('../aws/storage');
 
 router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now())
@@ -12,15 +13,23 @@ router.use(function timeLog (req, res, next) {
 });
 
 /**
- *  GET /users
+ *  GET /users?limit=N
+ *  list N users ['user_id', 'user_name', 'user_nickname', 'user_image']
  */
 router.get('/', function(req, res) {
-  // 'SELECT user_name FROM tbl_user'
-  result = {};
+  var qLimit = Number(req.query.limit);
+  if(!qLimit) {
+    qLimit = 1;
+  }
+  console.log('qLimit : ' + qLimit);
+  var result = {};
   result["users"] = [];
+
   models.User.findAll({
     // add conditional statement here
-
+    // TODO : user_image  
+    attributes : ['user_id', 'user_name', 'user_nickname', 'user_image'], 
+    limit : qLimit
   }).then(function(users) {
     for (var i=0; i<users.length; i++) {
       result["users"][i] = users[i].dataValues;
@@ -30,7 +39,6 @@ router.get('/', function(req, res) {
   }).catch(function (err) {
     // handle error;
     if(err) {
-      console.log('error! : GET /user');
       res.status(500)
       res.send('Something is broken!');
     }
@@ -38,30 +46,87 @@ router.get('/', function(req, res) {
 });
 
 /**
+ *  GET /users/email?email={user_email}
+ */
+router.get('/email', function(req, res) {
+  var qEmail = req.query.email;
+  console.log('qEmail : ' + qEmail);
+
+  models.User.findOne({
+    where : {
+      user_email : qEmail
+    }
+  }).then(function(user) {
+    console.log(user.dataValues);
+    
+    if(!user) {
+      res.status(200).json({
+        message : 'success'
+      });
+    } else {
+      // TODO : replace status code to right value
+      res.status(400).json({
+        message : 'failure'
+      });
+    }
+  }).catch(function(err) {
+    res.status(500).json({
+      message : 'error : find ~ catch'
+    });
+  });
+});
+
+/**
  *  POST /users
  */
 router.post('/', function(req, res) {
-  // 'INSERT INTO tbl_user SET ?'
-  var data = req.body.user;
+  // TODO : require user_image 
 
+  var data = req.body.user;
+  var result = {};
+
+  // add user except image
   models.User.create(data)
   .then(function(user) {
-    // you can now access the newly created task via the variable task
-    var result = {};
-    result["id"] = user.user_id;
+    result["message"] = 'success';
     res.status(200);
     res.json(result);
   })
   .catch(function(err) {
-    // handle error
-    if(err=='') {
-    }
-    if(err) {
-      console.log('error! : POST /user');
-      res.status(500);
-      res.send('Something is broken');
-    }
+    result["message"] = 'failure';
+    res.status(500);
+    res.json(result);
   });
+/*
+  return models.sequelize.transaction(function (t) {
+    // chain all your queries here. make sure you return them.
+    return models.User.create(data, {transaction: t})
+    .then(function (user) {
+      var fileType = 'png';
+      var addressOfImage = '/users/' + user.user_id + '.' + fileType;
+
+      return user.update({
+        user_image : addressOfImage
+      },
+      {
+        where : {
+          user_id : user.user_id
+        }
+      }, {transaction: t});
+    });
+  }).then(function (result) {
+    console.log(result);
+    // Transaction has been committed
+    // result is whatever the result of the promise chain returned to the transaction callback
+    res.status(200);
+    res.send('transaction success');
+  }).catch(function (err) {
+    // Transaction has been rolled back
+    // err is whatever rejected the promise chain returned to the transaction callback
+    res.status(500);
+    res.send('transaction failure');
+  });
+  */
 });
 
 /**
@@ -69,53 +134,63 @@ router.post('/', function(req, res) {
  */
 router.post('/login', function(req, res) {
   var sess = req.session;
-  var username = req.body.username;
+  var email = req.body.email;
   var password = req.body.password;
+  
+  var result = {};
 
   const secret = req.app.get('jwt-secret');
   models.User.find({
-    attributes: ['user_email', 'user_password'],
+    attributes: ['user_id', 'user_name', 'user_email', 'user_password'],
     where: {
-      user_email : username
+      user_email : email
     }
   }).then(function(user) {
     // username is not found
     if(!user) {
-      throw 'username is not fonund';
+      throw 'not found';
     }
     // username is found && password is correct
     if(user.user_password == password) {
-      // add session
+
       jwt.sign(
-        {
-          username: username,
-        },
-        secret,
-        {
-          expiresIn: '7d',
-          issuer: 'chopchoping.com',
-          subject: 'userInfo'
-        }, (err, token) => {
-          token
-        })
-
-      res.status(200);
-      // res.send('login success');
-      res.json({
-        message: 'login success',
-        token
-      })
-
+      {
+        id   : user.user_id,
+        name : user.user_name
+      },
+      secret,
+      {
+        expiresIn: '7d',
+        issuer: 'chopchoping.com',
+        subject: 'userInfo'
+      }, (err, token) => {
+        //token
+        result["token"]   = token;
+        result["message"] = 'login success';
+        res.status(200);
+        res.json(result);
+      });
     }
     // username is found && password is not correct
     else {
-      throw 'password is not correct';
+      throw 'not correct';
     }
   }).catch(function(err) {
-    if(err) {
+    if(err == 'not found') {
+      res.status(412);
+      res.json({
+        message : 'ID is not found'
+      });
+    } else if(err == 'not correct') {
+      res.status(412);
+      res.json({
+        message : 'Password is not correct'
+      });
+    } else {
       res.status(500);
-      res.send(err);
-      //res.send('Something is broken!')
+      res.json({
+        message : 'Server Error'
+      });
     }
   });
 });
@@ -148,3 +223,4 @@ router.delete('/', function(req, res) {
 });
 
 module.exports = router;
+
