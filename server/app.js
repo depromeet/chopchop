@@ -74,9 +74,6 @@ app.set('jwt-secret', "SeCrEtKeYfOrHaShInGiNChOpChOp")
 // ex) board.js에 아래와 같이 입력하면, 먼저 토큰 검증을 합니다.
 // router.use('/:board_id', authMiddleware)
 
-
-
-
 /*
 // comment for using 'npm start'
 app.listen(3000, function () {
@@ -85,3 +82,4 @@ app.listen(3000, function () {
 */
 
 module.exports = app;
+
