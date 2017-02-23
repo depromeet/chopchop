@@ -49,8 +49,14 @@ router.get('/', function(req, res) {
  *  GET /users/email?email={user_email}
  */
 router.get('/email', function(req, res) {
-  var qEmail = req.query.email;
-  console.log('qEmail : ' + qEmail);
+  if(!req.query.email) {
+    res.status(412)
+    res.json({
+      message : "Precondition Failed"
+    });
+  } else {
+    var qEmail = req.query.email;
+  }
 
   models.User.findOne({
     where : {
