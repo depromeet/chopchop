@@ -71,7 +71,7 @@ router.get('/email', function(req, res) {
       });
     } else {
       // TODO : replace status code to right value
-      res.status(400).json({
+      res.status(200).json({
         message : 'failure'
       });
     }
