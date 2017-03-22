@@ -13,6 +13,11 @@ router.use(function timeLog (req, res, next) {
     next()
 });
 
+// 리뷰 작성
+router.post('/reviews', regisReview);
+
+// 인기 리뷰 조회 5개
+router.get('/reviews', popularReview);
 
 // 방 안에서의 리뷰 조회 params로 방 번호를 받음
 router.get('/reviewinBoard/:idx', function(req, res) {
@@ -36,12 +41,6 @@ router.get('/reviewinBoard/:idx', function(req, res) {
             res.send('Something is broken!');
         });
 });
-
-// 인기 리뷰 조회 5개
-router.get('/reviews', popularReview);
-
-// 리뷰 작성
-router.post('/reviews', regisReview);
 
 // 특정 리뷰 조회
 router.get('/reviews/:idx', certainReviewinfo);
