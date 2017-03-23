@@ -55,7 +55,7 @@ router.delete('/reviews/:idx', deleteReview);
  */
 
 // 리뷰 좋아요
-router.put('/reviewsLike/:idx',  likeReview);
+router.put('/reviewsLike/:idx',   likeReview);
 
 // 리뷰 좋아요 취소
 router.put('/reviewsCancel/:idx', unlikeReview);
