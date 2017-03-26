@@ -1,6 +1,3 @@
-/**
- * Created by yujajin on 18/03/2017.
- */
 var express = require('express');
 var bodyParser = require('body-parser');
 var multer = require('multer');

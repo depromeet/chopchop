@@ -41,6 +41,11 @@ app.use(session({
   saveUninitialized: true
 }));
 
+app.use('/user', user);
+app.use('/restaurant', restaurant);
+app.use('/review', review);
+app.use('/board', board);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
