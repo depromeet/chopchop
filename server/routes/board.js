@@ -34,10 +34,10 @@ router.get('/boards', function(req, res) {
 router.get('/boards/:idx',certainBoard);
 
 // 방 팔로우
-router.put('/boards/:idx',followBoard);
+router.put('/boards',followBoard);
 
 // 방 팔로우 취소
-router.put('/boardsCancel/:idx', unfollowBoard)
+router.put('/boardsCancel', unfollowBoard)
 
 // 인기 방 조회
 router.get('/boardsPopular',popularBoard);
@@ -83,10 +83,10 @@ function certainBoard(req, res){
     })
 }
 
-// 방 팔로우 put, board_id params로 받음, bf_userid, bf_boardid body로 받음
+// 방 팔로우 put, bf_userid, bf_boardid body로 받음
 function followBoard(req, res){
-    var board_id = req.params.idx;
     var bfinfo = req.body;
+    var board_id = req.body.bf_boardid;
     var result = {
         board_id : null,
         status   : null,
@@ -112,10 +112,10 @@ function followBoard(req, res){
     })
 }
 
-// 방 팔로우 취소 put, board_id params로 받음, bf_userid, bf_boardid body로 받음
+// 방 팔로우 취소 put, bf_userid, bf_boardid body로 받음
 function unfollowBoard(req, res){
-    var board_id = req.params.idx;
     var bfinfo = req.body;
+    var board_id = req.body.bf_boardid;
     var result = {
         board_id : null,
         status   : null,
@@ -209,32 +209,42 @@ function popularBoard(req, res){
 // 팔로우 된 방 조회 params로 userid 받음
 function specialBoard(req, res){
     var result = {
+        status : null,
         reason : null,
         board  : null
     };
+    var board_id = [];
     var user_id = req.params.idx;
     models.Board_Follow.findAll({where : {bf_userid : user_id}}).then(function(ret1){
-        for(var i=0; i<ret1.length; i++) {
-            models.Board.findById(ret1[i].bf_boardid).then(function(ret2){
-                result["board"][i] = ret2[i].dataValues;
-            })
+        for(var i = 0; i < ret1.length; i++){
+            board_id[i] = ret1[i].bf_boardid;
         }
-        if(ret == null){
+        console.log("board id is");
+        console.log(board_id);
+
+        models.Board.findAll({where : {board_id: board_id} }).then(function(ret2){
+            if(ret2 == null) {
+                res.status(400);
+                result.status = 'F';
+                result.reason = 'not find board';
+                res.json(result);
+            } else {
+                result.status = 'S';
+                result.board  = ret2;
+                res.json(result);
+            }
+        }, function(err1) {
+            console.log(err1);
             res.status(400);
             result.status = 'F';
-            result.reason = 'not find review';
+            result.reason = "Failed check board";
             res.json(result);
-        } else{
-            console.log(ret);
-            result.status = 'S';
-            result.review = ret;
-            res.json(result);
-        }
-    }, function(err) {
-        console.log(err);
+        })
+    }, function(err2){
+        console.log(err2);
         res.status(400);
         result.status = 'F';
-        result.reason = err.message;
+        result.reason = "Failed check board_follow";
         res.json(result);
     })
 }
