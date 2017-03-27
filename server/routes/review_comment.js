@@ -7,12 +7,6 @@ var router = express.Router();
 var models = require('../models');
 
 
-
-router.use(function timeLog (req, res, next) {
-    console.log('Time: ', Date.now())
-    next()
-});
-
 // 댓글 작성
 router.post('/comments',regisComment);
 
@@ -75,16 +69,16 @@ function deleteComment(req, res){
     var result = {
         status : null,
         reason : null,
-        rc_id : null
     };
-    models.Review_Comment.destroy({where: {rc_reviewid : rc_id}}).then(function(ret) {
+    models.Review_Comment.destroy({where: {rc_id : rc_id}}).then(function(ret) {
         if(ret == 1) {
             result.status = 'S';
-            result.review = ret;         res.json(result);
+            res.json(result);
         }
         else {
             res.status(400);
-            result.status = 'F';         result.reason = 'No review to delete';
+            result.status = 'F';
+            result.reason = 'No review to delete';
             res.json(result);
         }
     }, function(err) {
@@ -94,6 +88,5 @@ function deleteComment(req, res){
         res.json(result);
     })
 }
-
 
 module.exports = router;
