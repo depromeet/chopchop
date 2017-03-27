@@ -33,7 +33,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', user);
 app.use('/restaurants', restaurant);
-app.use('/reviews', review);
+app.use('/review', review);
 app.use('/boards', board);
 app.use('/review_comments', review_comment);
 app.use('/review_responses', review_response);

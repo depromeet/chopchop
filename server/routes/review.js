@@ -49,10 +49,8 @@ router.get('/reviewinBoard/:idx', function(req, res) {
         });
 });
 
-/*
- // 리뷰 수정
- router.put('/reviews/:idx', modifyReview);
- */
+// 리뷰 수정
+router.put('/reviews/:idx', modifyReview);
 
 // 리뷰 작성 post, body
 function regisReview(req, res){
@@ -161,45 +159,21 @@ function deleteReview(req, res) {
     })
 }
 
-/*
- // 리뷰 수정 putm params로 review_id 받음, body로 수정 내용 받음
- function modifyReview(req, res){
- var review_id = req.params.idx;
- var reviewinfo = req.body;
- var result = {
- review_id : null,
- status    : null,
- reason    : null
- };
-
- models.Review.
-
-
- }
- */
-
-//인기 리뷰 조회 get, 5개,
-function popularReview(req, res){
+// 리뷰 수정 put params로 review_id 받음, body로 수정 내용 받음
+function modifyReview(req, res){
+    var review_id = req.params.idx;
+    var reviewinfo = req.body;
     var result = {
-        reason : null,
-        review : null
+        review_id : null,
+        status    : null,
+        reason    : null
     };
 
-    models.Review.sequelize.query('select * from review order by review_like desc limit 5;').then(function(ret){
-        if(ret == null) {
-            res.status(400);
-            result.status = 'F';
-            result.reason = 'not find toilet';
-            res.json(result);
-        } else {
-            console.log(ret[0]);
-            result.status = 'S';
-            result.review = ret[0];
-            res.json(result);
-        }
+    models.Review.update(reviewinfo, {where : {review_id : review_id}}).then(function () {
+        result.status = 'S';
+        result.review_id = review_id;
+        res.json(result);
     }, function(err) {
-        console.log(err);
-        res.status(400);
         result.status = 'F';
         result.reason = err.message;
         res.json(result);

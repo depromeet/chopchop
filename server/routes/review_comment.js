@@ -29,10 +29,8 @@ router.get('/comments/:idx',function(req, res){
         });
 });
 
-/*
- // 댓글 수정
- router.put('/comments/:idx',modifyComment);
- */
+// 댓글 수정
+router.put('/comments/:idx',modifyComment);
 
 // 댓글 삭제
 router.delete('/comments/:idx', deleteComment);
@@ -56,12 +54,27 @@ function regisComment(req, res){
     })
 }
 
-/*
- // 댓글 수정,
- function modifyComment(req, res){
+// 댓글 수정 params로 댓글 아이디 입력받음
+function modifyComment(req, res){
+    var rc_id = req.params.idx;
+    var rcinfo = req.body;
+    var result = {
+        rc_id     : null,
+        status    : null,
+        reason    : null
+    };
 
- }
- */
+    models.Review_Comment.update(rcinfo, {where : {rc_id : rc_id}}).then(function () {
+        result.status = 'S';
+        result.rc_id = rc_id;
+        res.json(result);
+    }, function(err) {
+        res.status(400);
+        result.status = 'F';
+        result.reason = err.message;
+        res.json(result);
+    })
+}
 
 // 댓글 삭제, params로 rc_id 받음
 function deleteComment(req, res){

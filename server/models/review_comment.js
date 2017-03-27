@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
             rc_id        : { type : DataTypes.INTEGER, primaryKey : true, autoIncrement: true, allowNull : false },
             rc_userid    : { type : DataTypes.INTEGER},
             rc_reviewid  : { type : DataTypes.INTEGER},
-            rc_comment   : { type : DataTypes.STRING}
+            rc_comment   : { type : DataTypes.STRING(20)}
         },
         {
             classMethods: {},

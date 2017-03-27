@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     review_img      : { type : DataTypes.STRING(20) },
     review_like     : { type : DataTypes.INTEGER },
     review_bad      : { type : DataTypes.INTEGER },
-    review_report   : { type : DataTypes.INTEGER },
+    review_report   : { type : DataTypes.INTEGER }
   },
   {
 	  classMethods: {},

@@ -6,10 +6,6 @@ var router     = express.Router();
 
 var models     = require('../models');
 
-/*
- // 전체 방 조회
- router.get('/boards',entireBoard);
- */
 
 // 전체 방 조회
 router.get('/boards', function(req, res) {
