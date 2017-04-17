@@ -7,11 +7,13 @@ var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
 // import routes/*.js
-var index        = require('./routes/index');
-var user         = require('./routes/user');
-var restaurant   = require('./routes/restaurant');
-var review       = require('./routes/review');
-var board        = require('./routes/board');
+var index           = require('./routes/index');
+var user            = require('./routes/user');
+var restaurant      = require('./routes/restaurant');
+var review          = require('./routes/review');
+var board           = require('./routes/board');
+var review_response = require('./routes/review_response');
+var review_comment  = require('./routes/review_comment');
 
 var app = express();
 
@@ -31,8 +33,10 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', user);
 app.use('/restaurants', restaurant);
-app.use('/reviews', review);
+app.use('/review', review);
 app.use('/boards', board);
+app.use('/review_comments', review_comment);
+app.use('/review_responses', review_response);
 
 // use session
 app.use(session({

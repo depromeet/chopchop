@@ -1,4 +1,4 @@
-var express    = require('express');
+var express = require('express');
 var bodyParser = require('body-parser');
 var multer     = require('multer');
 var upload     = multer();
@@ -6,8 +6,8 @@ var router     = express.Router();
 var models     = require('../models');
 
 router.use(function timeLog (req, res, next) {
-  console.log('Time: ', Date.now())
-  next()
+    console.log('Time: ', Date.now())
+    next()
 });
 
 /**
@@ -90,9 +90,8 @@ router.put('/', function(req, res) {
  *	DELETE /restaurants
  */
 router.delete('/', function(req, res) {
-  res.status(200);
-  res.send('DELETE /restaurant');  
+    res.status(200);
+    res.send('DELETE /restaurant');
 });
-
 module.exports = router;
 
