@@ -101,7 +101,7 @@ router.post('/', function(req, res) {
   .catch(function(err) {
     result["message"] = 'failure';
     res.status(500);
-    res.json(result);
+    res.json(err.message);
   });
 /*
   return models.sequelize.transaction(function (t) {
