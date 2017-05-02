@@ -11,14 +11,21 @@ router.use(function timeLog (req, res, next) {
 });
 
 /**
- *  GET /restaurants     
- *  listing all restaurants   		
+ *  GET /restaurants
+ *  listing all restaurants
  */
 router.get('/', function(req, res) {
+  var qLimit = Number(req.query.limit);
+  if(!qLimit) {
+    qLimit = 1;
+  }
+
   var result = {};
   result["restaurants"] = [];
 
-  models.Restaurant.findAll()
+  models.Restaurant.findAll({
+    limit : qLimit,
+  })
   .then(function(restaurants) {
     for(var i=0; i<restaurants.length; i++) {
       result["restaurants"][i] = restaurants[i].dataValues;
@@ -40,7 +47,7 @@ router.get('/:res_id', function(req, res) {
   var pResID = req.params.res_id;
 
   models.Restaurant.find({
-    attributes: ["res_id", "res_name", "res_img", "res_phonenum", "res_address", "res_score"], 
+    attributes: ["res_id", "res_name", "res_img", "res_phonenum", "res_address", "res_score"],
     where: {
       res_id : pResID
     }
@@ -83,10 +90,10 @@ router.post('/', function(req, res) {
  */
 router.put('/', function(req, res) {
   res.status(200);
-  res.send('PUT /restaurant');  
+  res.send('PUT /restaurant');
 });
 
-/** 
+/**
  *	DELETE /restaurants
  */
 router.delete('/', function(req, res) {
@@ -94,4 +101,3 @@ router.delete('/', function(req, res) {
     res.send('DELETE /restaurant');
 });
 module.exports = router;
-
