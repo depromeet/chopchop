@@ -35,37 +35,61 @@ router.get('/', function(req, res) {
 /**
  *	GET /restaurants/:res_id
  */
+// router.get('/:res_id', function(req, res) {
+//   var result = {};
+//   var pResID = req.params.res_id;
+//
+//   models.Restaurant.find({
+//     attributes: ["res_id", "res_name", "res_img", "res_phonenum", "res_address", "res_score"],
+//     where: {
+//       res_id : pResID
+//     }
+//   })
+//   .then(function(restaurants) {
+//     result["res_id"] = restaurnats.res_id;
+//     result["res_name"] = restaurnats.res_name;
+//     result["res_img"] = restaurnats.res_img;
+//     result["res_phonenum"] = restaurnats.res_phonenum;
+//     result["res_address"] = restaurnats.res_address;
+//     result["res_score"] = restaurnats.res_score;
+//
+//     res.status(200).json(result);
+//   })
+//   .catch(function(err) {
+//     res.status(500).send('Something is broken!');
+//   });
+// });
+
 router.get('/:res_id', function(req, res) {
-  var result = {};
-  var pResID = req.params.res_id;
+    var result = {};
+    var pResID = req.params.res_id;
 
-  models.Restaurant.find({
-    attributes: ["res_id", "res_name", "res_img", "res_phonenum", "res_address", "res_score"], 
-    where: {
-      res_id : pResID
-    }
-  })
-  .then(function(restaurants) {
-    result["res_id"] = restaurnats.res_id;
-    result["res_name"] = restaurnats.res_name;
-    result["res_img"] = restaurnats.res_img;
-    result["res_phonenum"] = restaurnats.res_phonenum;
-    result["res_address"] = restaurnats.res_address;
-    result["res_score"] = restaurnats.res_score;
-
-    res.status(200).json(result);
-  })
-  .catch(function(err) {
-    res.status(500).send('Something is broken!');
-  });
+    models.Restaurant.findById(pResID)
+        .then(function(restaurants) {
+          if(restaurants == null){
+            res.status(400).send('There is no restaurants');
+          } else {
+              result["res_id"] = restaurants.res_id;
+              result["res_name"] = restaurants.res_name;
+              result["res_img"] = restaurants.res_img;
+              result["res_phonenum"] = restaurants.res_phonenum;
+              result["res_address"] = restaurants.res_address;
+              result["res_score"] = restaurants.res_score;
+              res.status(200).json(result);
+          }
+        })
+        .catch(function(err) {
+            res.status(500).send('Something is broken!');
+        });
 });
+
 
 /**
  *	POST /restaurants
  */
 router.post('/', function(req, res) {
   var result = {};
-  var data = req.body.restaurant;
+  var data = req.body;
 
   models.Restaurant.create(data)
   .then(function(restaurant) {
@@ -78,20 +102,48 @@ router.post('/', function(req, res) {
   });
 });
 
+
+
 /**
- * 	PUT /restaurants/{res_id}
+ * 	PUT /restaurants/:res_id
  */
-router.put('/', function(req, res) {
-  res.status(200);
-  res.send('PUT /restaurant');  
+router.put('/:res_id', function(req, res) {
+    var result  = {};
+    var pResID  = req.params.res_id;
+    var resInfo = req.body;
+
+    models.Restaurant.update(resInfo,
+        {where : {res_id : pResID}})
+        .then(function(){
+          result["res_id"] = pResID;
+          res.status(200);
+          res.json(result);
+        })
+        .catch(function(err){
+          res.status(500).send('Something is broken!');
+        });
 });
 
 /** 
- *	DELETE /restaurants
+ *	DELETE /restaurants/:res_id
  */
-router.delete('/', function(req, res) {
-    res.status(200);
-    res.send('DELETE /restaurant');
+router.delete('/:res_id', function(req, res) {
+  var result = {};
+  var pResId = req.params.res_id;
+
+  models.Restaurant.destroy({where: {res_id : pResId}})
+      .then(function(restaurant){
+        if(restaurant == null){
+          res.status(400).send('There is no restaurant');
+        }else{
+          result["res_id"] = pResId;
+          res.status(200);
+          res.json(result);
+        }
+      }).catch(function(err){
+        res.status(500).send('response error');
+  })
+
 });
 module.exports = router;
 
