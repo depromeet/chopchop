@@ -25,9 +25,9 @@ function responseReview(req, res) {
     var rvrinfo = req.body,
 
         result = {
-        review_id   : null,
-        status      : null,
-        reason      : null
+            review_id   : null,
+            status      : null,
+            reason      : null
         },
 
         preventDuplication = {
@@ -35,14 +35,14 @@ function responseReview(req, res) {
             rvr_reviewid    : rvrinfo.rvr_reviewid
         },
 
-        value = {
-        review_like     : 0,
-        review_bad      : 0,
-        review_report   : 0
+        reviewIdMatched = {
+            review_id: rvrinfo.rvr_reviewid
         },
 
-        reviewIdMatched = {
-        review_id : rvrinfo.rvr_reviewid
+        value = {
+            review_like     : 0,
+            review_bad      : 0,
+            review_report   : 0
         };
 
     models.Review_Response.findAll({where:preventDuplication}).then(function (response) {
@@ -60,7 +60,7 @@ function responseReview(req, res) {
                 else if (rvrinfo.rvr_report == 1)   {value.review_report = review[0].dataValues.review_report + 1}
 
                 models.Review.update(value, {where: reviewIdMatched}).then(function () {
-                    result.review_id = rvr_rid;
+                    result.review_id = rvrinfo.rvr_reviewid;
                     result.status = 'S';
                     res.status(200).json(result);
                 }, function (err) {
@@ -96,7 +96,11 @@ function deresponseReview(req, res) {
 
         reviewIdMatched = {
             review_id : rvrinfo.rvr_reviewid
-        };
+        },
+
+        destoryCondition = {
+            rvr_reviewid: rvrinfo.rvr_reviewid
+        }
 
     models.Review_Response.findAll({where:preventDuplication}).then(function (response) {
         // 리스폰스 중복방지
@@ -106,7 +110,7 @@ function deresponseReview(req, res) {
             res.status(200).json(result);
         }
         else {
-            models.Review_Response.destroy({where: {rvr_reviewid: rvrinfo.rvr_reviewid}})
+            models.Review_Response.destroy({where: destoryCondition})
             models.Review.findAll({where: reviewIdMatched}).then(function (review) {
                 if      (rvrinfo.rvr_like == 1)     {value.review_like      = review[0].dataValues.review_like - 1}
                 else if (rvrinfo.rvr_bad == 1)      {value.review_bad       = review[0].dataValues.review_bad - 1}

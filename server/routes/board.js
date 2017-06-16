@@ -30,7 +30,7 @@ router.get('/boards', function(req, res) {
 router.get('/boards/:idx',certainBoard);
 
 // 방 팔로우
-// router.put('/boards',followBoard);
+router.put('/boards',followBoard);
 
 // 방 팔로우 취소
 router.put('/boardsCancel', unfollowBoard)
@@ -80,7 +80,110 @@ function certainBoard(req, res){
 }
 
 // // 방 팔로우 put, bf_userid, bf_boardid body로 받음
-// function followBoard(req, res){
+function followBoard(req, res){
+    var bfinfo = req.body,
+
+        result = {
+            board_id : null,
+            status   : null,
+            reason   : null
+        },
+
+        preventDuplication = {
+            bf_userid  : bfinfo.bf_userid,
+            bf_boardid : bfinfo.bf_boardid
+        },
+
+        boardIdMatched = {
+            board_id : bfinfo.bf_boardid
+        },
+
+        value = {
+            board_popular : 0
+        };
+
+
+    models.Board_Follow.findAll({where:preventDuplication}).then(function (response) {
+        // 리스폰스 중복방지
+        if(response.length > 0) {
+            result.status = 'F';
+            result.reason = 'Duplicate follow';
+            res.status(200).json(result);
+        }
+        else{
+            models.Board_Follow.create(bfinfo)
+            models.Board.findAll({where: boardIdMatched}).then(function(board){
+                value.board_popular = board[0].dataValues.board_popular + 1;
+                models.Board.update(value, {where:boardIdMatched}).then(function() {
+                    result.board_id = bfinfo.bf_boardid;
+                    result.status   = 'S';
+                    res.status(200).json(result);
+                }, function (err) {
+                    result.status = 'F';
+                    result.reason = err;
+                    res.status(400).json(result);
+                })
+            })
+        }
+    })
+}
+
+// 방 팔로우 취소 put, bf_userid, bf_boardid body로 받음
+function unfollowBoard(req, res){
+    var bfinfo = req.body,
+
+        result = {
+            board_id : null,
+            status   : null,
+            reason   : null
+        },
+
+        preventDuplication = {
+            bf_userid  : bfinfo.bf_userid,
+            bf_boardid : bfinfo.bf_boardid
+        },
+
+        boardIdMatched = {
+            board_id : bfinfo.bf_boardid
+        },
+
+        value = {
+            board_popular : 0
+        },
+
+        destroyCondition = {
+            bf_boardid: bfinfo.bf_boardid
+        }
+
+
+    models.Board_Follow.findAll({where:preventDuplication}).then(function (response) {
+        // 리스폰스 중복방지
+        if(response.length == 0) {
+            result.status = 'F';
+            result.reason = 'Duplicate follow';
+            res.status(200).json(result);
+        }
+        else{
+            models.Board_Follow.destroy({where: destroyCondition})
+            models.Board.findAll({where: boardIdMatched}).then(function(board){
+                value.board_popular = board[0].dataValues.board_popular - 1;
+                models.Board.update(value, {where: boardIdMatched}).then(function() {
+                    result.board_id = bfinfo.bf_boardid;
+                    result.status   = 'S';
+                    res.status(200).json(result);
+                }, function (err) {
+                    result.status = 'F';
+                    result.reason = err;
+                    res.status(400).json(result);
+                })
+            })
+        }
+    })
+}
+
+
+
+// function unfollowBoard(req, res){
 //     var bfinfo = req.body;
 //     var board_id = req.body.bf_boardid;
 //     var result = {
@@ -88,9 +191,8 @@ function certainBoard(req, res){
 //         status   : null,
 //         reason   : null
 //     };
-//     models.Board.sequelize.query('update board set board_popular = board_popular + 1 where board_id = ?',{replacements : [board_id]}).then(function(ret1){
-//         models.Board_Follow.create(bfinfo).then(function(ret2){
-//             models.Board_Follow.findAll({where:
+//     models.Board.sequelize.query('update board set board_popular = board_popular - 1 where board_id = ?',{replacements : [board_id]}).then(function(ret1){
+//         models.Board_Follow.destroy({where : {bf_userid : bfinfo.bf_userid, bf_boardid : bfinfo.bf_boardid}}).then(function(ret2){
 //             res.status(200);
 //             result.board_id = board_id;
 //             result.status = 'S';
@@ -108,35 +210,6 @@ function certainBoard(req, res){
 //         res.json(result);
 //     })
 // }
-
-// 방 팔로우 취소 put, bf_userid, bf_boardid body로 받음
-function unfollowBoard(req, res){
-    var bfinfo = req.body;
-    var board_id = req.body.bf_boardid;
-    var result = {
-        board_id : null,
-        status   : null,
-        reason   : null
-    };
-    models.Board.sequelize.query('update board set board_popular = board_popular - 1 where board_id = ?',{replacements : [board_id]}).then(function(ret1){
-        models.Board_Follow.destroy({where : {bf_userid : bfinfo.bf_userid, bf_boardid : bfinfo.bf_boardid}}).then(function(ret2){
-            res.status(200);
-            result.board_id = board_id;
-            result.status = 'S';
-            res.json(result);
-        }, function(err2){
-            res.status(400);
-            result.status = 'F';
-            result.reason = 'board_follow update failed';
-            res.json(result);
-        })
-    }, function(err1){
-        console.log(err1);
-        result.status = 'F';
-        result.reason = 'Follow failed';
-        res.json(result);
-    })
-}
 
 // 인기 방 조회 get, 3개
 function popularBoard(req, res){
