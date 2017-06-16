@@ -16,9 +16,9 @@ module.exports = function(sequelize, DataTypes) {
     review_score    : { type : DataTypes.INTEGER, allowNull : false },
     review_story    : { type : DataTypes.STRING(100) },
     review_img      : { type : DataTypes.STRING(20) },
-    review_like     : { type : DataTypes.INTEGER },
-    review_bad      : { type : DataTypes.INTEGER },
-    review_report   : { type : DataTypes.INTEGER }
+    review_like     : { type : DataTypes.INTEGER, allowNull : false },
+    review_bad      : { type : DataTypes.INTEGER, allowNull : false },
+    review_report   : { type : DataTypes.INTEGER, allowNull : false }
   },
   {
 	  classMethods: {},
