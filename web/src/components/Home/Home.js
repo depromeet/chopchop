@@ -32,7 +32,7 @@ class Home extends Component {
                 <Grid centered columns={4}>
                     <Grid.Column>
                         <Header as='h4' icon textAlign='center'>
-                            <Link to={'/chopchop/Profile/1'}>
+                            <Link to={'/chopchop/profile/1'}>
                                 <Image shape='circular' size='small' bordered src='https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/18952672_1325477787549113_3739752028675042452_n.jpg?oh=096986f94b4d73c056abb51ec407de01&oe=59E784F1' />
                             </Link>
                             지명
@@ -40,7 +40,7 @@ class Home extends Component {
                     </Grid.Column>
                     <Grid.Column>
                         <Header as='h4' icon textAlign='center'>
-                            <Link to={'/chopchop/Profile/1'}>
+                            <Link to={'/chopchop/profile/1'}>
                                 <Image shape='circular' size='small' bordered src='https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/18952672_1325477787549113_3739752028675042452_n.jpg?oh=096986f94b4d73c056abb51ec407de01&oe=59E784F1' />
                             </Link>
                             지명
@@ -50,7 +50,7 @@ class Home extends Component {
                 <Grid centered columns={4}>
                     <Grid.Column>
                         <Header as='h4' icon textAlign='center'>
-                            <Link to={'/chopchop/Profile/1'}>
+                            <Link to={'/chopchop/profile/1'}>
                                 <Image shape='circular' size='small' bordered src='https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/18952672_1325477787549113_3739752028675042452_n.jpg?oh=096986f94b4d73c056abb51ec407de01&oe=59E784F1' />
                             </Link>
                             지명
@@ -58,7 +58,7 @@ class Home extends Component {
                     </Grid.Column>
                     <Grid.Column>
                         <Header as='h4' icon textAlign='center'>
-                            <Link to={'/chopchop/Profile/1'}>
+                            <Link to={'/chopchop/profile/1'}>
                                 <Image shape='circular' size='small' bordered src='https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/18952672_1325477787549113_3739752028675042452_n.jpg?oh=096986f94b4d73c056abb51ec407de01&oe=59E784F1' />
                             </Link>
                             지명
@@ -66,7 +66,7 @@ class Home extends Component {
                     </Grid.Column>
                     <Grid.Column>
                         <Header as='h4' icon textAlign='center'>
-                            <Link to={'/chopchop/Profile/1'}>
+                            <Link to={'/chopchop/profile/1'}>
                                 <Image shape='circular' size='small' bordered src='https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/18952672_1325477787549113_3739752028675042452_n.jpg?oh=096986f94b4d73c056abb51ec407de01&oe=59E784F1' />
                             </Link>
                             지명

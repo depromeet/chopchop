@@ -33,7 +33,6 @@ class Review extends Component {
                                 Ours is a life of constant reruns. We're always circling back to where we'd we started, then starting all
                                 over again. Even if we don't run extra laps that day, we surely will come back for more of the same another
                                 day soon.
-                                {this.props.match.params.reviewId}
                               </Feed.Extra>
                               <Feed.Meta>
                                 <Feed.Like>

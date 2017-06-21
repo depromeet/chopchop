@@ -14,12 +14,13 @@ class Profile extends Component {
     }
 
     render() {
+        console.log(this.props);
         return(
             <div>
                 <Header as='h2' icon textAlign='center'>
-                    <Image shape='circular' size='small' bordered src='https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/15726806_1169155089848051_2754135665369198951_n.jpg?oh=23e6551a4143726e75a13e1269651a02&oe=59482A3A' />
+                    <Image shape='circular' size='small' bordered src='https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/18952672_1325477787549113_3739752028675042452_n.jpg?oh=096986f94b4d73c056abb51ec407de01&oe=59E784F1' />
                     <Header.Content>
-                        닉네임: {this.props.match.params.profileId}
+                        닉네임: ??
                     </Header.Content>
                 </Header>
                 <Image centered size='large' src='http://semantic-ui.com/images/wireframe/centered-paragraph.png' />
