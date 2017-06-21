@@ -1,0 +1,41 @@
+import * as types from './ActionTypes';
+
+export function increment() {
+	return {
+		type: types.INCREMENT
+	};
+}
+
+export function decrement() {
+	return {
+		type: types.DECREMENT
+	};
+}
+
+export function setColor(color) {
+	return{
+		type: types.SET_COLOR,
+		color
+	};
+}
+
+export const fetchPost = (postId) => ({
+  type: 'FETCH_POST',
+  postId,
+});
+export const requestPost = () => ({
+  type: 'REQUEST_POST',
+});
+export const receivePost = (post, comments) => ({
+  type: 'RECEIVE_POST',
+  post,
+  comments,
+});
+
+export const receivePostFailed = () => ({
+  type: 'RECEIVE_POST_FAILED'
+});
+
+export const hideWarning = () => ({
+  type: 'HIDE_WARNING'
+});
