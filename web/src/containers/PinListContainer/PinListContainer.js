@@ -1,28 +1,20 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import PinList from '../../components/PinList/PinList';
+import ChopWrapper from '../../components/ChopWrapper';
 
-const propTypes = {
+type propTypes = {}
 
-};
-const defaultProps = {
-
-};
 class PinListContainer extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+  props: propTypes;
 
-    render() {
-        return(
-          <div>
-            <PinList/>
-          </div>
-        );
-    }
+  render() {
+    return (
+      <ChopWrapper>
+        <PinList />
+      </ChopWrapper>
+    );
+  }
 }
-
-PinListContainer.propTypes = propTypes;
-PinListContainer.defaultProps = defaultProps;
 
 export default PinListContainer;

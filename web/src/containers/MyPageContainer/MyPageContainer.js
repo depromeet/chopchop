@@ -1,26 +1,20 @@
-import React, { Component, PropTypes } from 'react';
+// @flow
+import React, { Component } from 'react';
 import MyPage from '../../components/MyPage/MyPage';
+import ChopWrapper from '../../components/ChopWrapper';
 
-const propTypes = {
+type propTypes = {}
 
-};
-const defaultProps = {
-
-};
 class MyPageContainer extends Component {
+  props: propTypes;
 
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return(
-            <MyPage/>
-        );
-    }
+  render() {
+    return (
+      <ChopWrapper>
+        <MyPage />
+      </ChopWrapper>
+    );
+  }
 }
-
-MyPageContainer.propTypes = propTypes;
-MyPageContainer.defaultProps = defaultProps;
 
 export default MyPageContainer;

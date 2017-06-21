@@ -1,28 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import Room from '../../components/Room/Room';
+import ChopWrapper from '../../components/ChopWrapper';
 
-const propTypes = {
-
-};
-const defaultProps = {
-
-};
+type propTypes = {}
 class RoomContainer extends Component {
+  props: propTypes;
 
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return(
-            <div>
-              <Room/>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <ChopWrapper>
+        <Room />
+      </ChopWrapper>
+    );
+  }
 }
-
-RoomContainer.propTypes = propTypes;
-RoomContainer.defaultProps = defaultProps;
 
 export default RoomContainer;

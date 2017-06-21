@@ -1,28 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import Review from '../../components/Review/Review';
+import ChopWrapper from '../../components/ChopWrapper';
 
-const propTypes = {
+type propTypes = {}
 
-};
-const defaultProps = {
-
-};
 class ReviewContainer extends Component {
+  props: propTypes;
 
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return(
-            <div>
-              <Review/>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <ChopWrapper>
+        <Review />
+      </ChopWrapper>
+    );
+  }
 }
-
-ReviewContainer.propTypes = propTypes;
-ReviewContainer.defaultProps = defaultProps;
-
 export default ReviewContainer;

@@ -1,28 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import Profile from '../../components/Profile/Profile';
+import ChopWrapper from '../../components/ChopWrapper';
 
-const propTypes = {
-
-};
-const defaultProps = {
-
-};
+type propTypes = {}
 class ProfileContainer extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+  props: propTypes;
 
-    render() {
-        return(
-            <div>
-              <Profile/>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <ChopWrapper>
+        <Profile />
+      </ChopWrapper>
+    );
+  }
 }
-
-ProfileContainer.propTypes = propTypes;
-ProfileContainer.defaultProps = defaultProps;
 
 export default ProfileContainer;

@@ -1,28 +1,21 @@
-import React, { Component, PropTypes } from 'react';
+// @flow
+import React, { Component } from 'react';
+import ChopWrapper from '../../components/ChopWrapper';
 import Home from '../../components/Home/Home';
 
-const propTypes = {
 
-};
-const defaultProps = {
+type propTypes = {}
 
-};
 class HomeContainer extends Component {
+  props: propTypes;
 
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return(
-            <div>
-              <Home/>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <ChopWrapper>
+        <Home />
+      </ChopWrapper>
+    );
+  }
 }
-
-HomeContainer.propTypes = propTypes;
-HomeContainer.defaultProps = defaultProps;
 
 export default HomeContainer;
