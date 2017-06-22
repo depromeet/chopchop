@@ -60,20 +60,30 @@ router.put('/reviews/:idx', modifyReview);
 
 // 리뷰 작성 post, body
 function regisReview(req, res){
-    var reviewinfo = req.body;
-    var result = {
+    var reviewinfo = req.body,
+        result = {
         review_id : null,
         status : null,
         reason : null
-    };
+        },
+
+        res_score = null,
+        res_name = null;
+
     models.Review.create(reviewinfo).then(function(ret){
-        result.review_id = ret.review_id;
-        result.status = 'S';
-        res.json(result);
-    }, function(err){
-        result.status = 'F';
-        result.reason = err;
-        res.json(result);
+        res_score = reviewinfo.review_score;
+        res_name  = reviewinfo.review_resname;
+        console.log(res_score);
+        console.log(res_name);
+        models.Restaurant.update({res_score: res_score},{where:{res_name : res_name}}).then(function(){
+            result.review_id = ret.review_id;
+            result.status = 'S';
+            res.status(200).json(result);
+        }, function(err){
+            result.status = 'F';
+            result.reason = err;
+            res.status(400).json(result);
+        })
     })
 }
 

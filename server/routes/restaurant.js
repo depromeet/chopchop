@@ -83,6 +83,26 @@ router.get('/:res_id', function(req, res) {
         });
 });
 
+//별점 조회
+router.get('/score/:res_id',function(req, res) {
+    var result = {},
+        pResID = req.params.res_id;
+
+    models.Restaurant.findById(pResID).then(function(restaurants){
+        if(restaurants == null){
+            res.status(200).send('There is no restaurants');
+        }
+        else{
+            result.status = 'S';
+            result.score = restaurants.res_score;
+            res.status(200).json(result);
+        }
+    }, function(err){
+        result.status = 'F';
+        result.reason = err;
+        res.status(400).json(result);
+    })
+})
 
 /**
  *	POST /restaurants
