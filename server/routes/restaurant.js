@@ -11,8 +11,8 @@ router.use(function timeLog (req, res, next) {
 });
 
 /**
- *  GET /restaurants     
- *  listing all restaurants   		
+ *  GET /restaurants
+ *  listing all restaurants
  */
 router.get('/', function(req, res) {
   var result = {};
@@ -35,30 +35,6 @@ router.get('/', function(req, res) {
 /**
  *	GET /restaurants/:res_id
  */
-// router.get('/:res_id', function(req, res) {
-//   var result = {};
-//   var pResID = req.params.res_id;
-//
-//   models.Restaurant.find({
-//     attributes: ["res_id", "res_name", "res_img", "res_phonenum", "res_address", "res_score"],
-//     where: {
-//       res_id : pResID
-//     }
-//   })
-//   .then(function(restaurants) {
-//     result["res_id"] = restaurnats.res_id;
-//     result["res_name"] = restaurnats.res_name;
-//     result["res_img"] = restaurnats.res_img;
-//     result["res_phonenum"] = restaurnats.res_phonenum;
-//     result["res_address"] = restaurnats.res_address;
-//     result["res_score"] = restaurnats.res_score;
-//
-//     res.status(200).json(result);
-//   })
-//   .catch(function(err) {
-//     res.status(500).send('Something is broken!');
-//   });
-// });
 
 router.get('/:res_id', function(req, res) {
     var result = {};
@@ -102,7 +78,16 @@ router.get('/score/:res_id',function(req, res) {
         result.reason = err;
         res.status(400).json(result);
     })
-})
+});
+
+//식당 팔로우
+router.put('/follow',followRes);
+
+//식당 팔로우 취소
+router.put('/followCancel',unfollowRes);
+
+// 팔로우 한 식당 조회
+router.get('/resFollowed/:idx', specialRes);
 
 /**
  *	POST /restaurants
@@ -121,8 +106,6 @@ router.post('/', function(req, res) {
     res.status(500).send('Something is broken!');
   });
 });
-
-
 
 /**
  * 	PUT /restaurants/:res_id
@@ -144,7 +127,7 @@ router.put('/:res_id', function(req, res) {
         });
 });
 
-/** 
+/**
  *	DELETE /restaurants/:res_id
  */
 router.delete('/:res_id', function(req, res) {
@@ -163,7 +146,141 @@ router.delete('/:res_id', function(req, res) {
       }).catch(function(err){
         res.status(500).send('response error');
   })
-
 });
-module.exports = router;
 
+// 식당 팔로우
+function followRes(req, res){
+    var rfInfo = req.body,
+        result = {
+            res_id : null,
+            status   : null,
+            reason   : null
+        },
+
+        preventDuplication = {
+            rf_userid  : rfInfo.rf_userid,
+            rf_resid   : rfInfo.rf_resid
+        },
+
+        resIdMatched = {
+            res_id : rfInfo.rf_resid
+        },
+
+        value = {
+            res_popular : 0
+        };
+
+    models.Restaurant_Follow.findAll({where:preventDuplication}).then(function (response) {
+
+        // 리스폰스 중복방지
+        if(response.length > 0) {
+            result.status = 'F';
+            result.reason = 'Duplicate follow';
+            res.status(200).json(result);
+        }
+        else{
+            models.Restaurant_Follow.create(rfInfo);
+            models.Restaurant.findAll({where: resIdMatched}).then(function(restaurant){
+                value.res_popular = restaurant[0].dataValues.res_popular + 1;
+                models.Restaurant.update(value, {where:resIdMatched}).then(function() {
+                    result.res_id = rfInfo.rf_resid;
+                    result.status   = 'S';
+                    res.status(200).json(result);
+                }, function (err) {
+                    result.status = 'F';
+                    result.reason = err;
+                    res.status(400).json(result);
+                })
+            })
+        }
+    })
+}
+
+// 식당 팔로우 취소
+function unfollowRes(req, res){
+    var rfInfo = req.body,
+        result = {
+            res_id : null,
+            status   : null,
+            reason   : null
+        },
+
+        preventDuplication = {
+            rf_userid  : rfInfo.rf_userid,
+            rf_resid   : rfInfo.rf_resid
+        },
+
+        resIdMatched = {
+            res_id : rfInfo.rf_resid
+        },
+
+        value = {
+            res_popular : 0
+        },
+
+        destoryCondition = {
+          rf_resid: rfInfo.rf_resid
+        }
+
+
+    models.Restaurant_Follow.findAll({where:preventDuplication}).then(function (response) {
+        // 리스폰스 중복방지
+        if(response.length == 0) {
+            result.status = 'F';
+            result.reason = 'Duplicate follow';
+            res.status(200).json(result);
+        }
+        else{
+            models.Restaurant_Follow.destroy({where: destoryCondition});
+            models.Restaurant.findAll({where: resIdMatched}).then(function(restaurant){
+                value.res_popular = restaurant[0].dataValues.res_popular - 1;
+                models.Restaurant.update(value, {where:resIdMatched}).then(function() {
+                    result.res_id = rfInfo.rf_resid;
+                    result.status   = 'S';
+                    res.status(200).json(result);
+                }, function (err) {
+                    result.status = 'F';
+                    result.reason = err;
+                    res.status(400).json(result);
+                })
+            })
+        }
+    })
+
+}
+
+//해당 유저의 팔로우 한 식당 조회
+function specialRes(req, res){
+  var result = {},
+      res_id = [];
+      user_id = req.params.idx;
+
+  models.Restaurant_Follow.findAll({where : {rf_userid : user_id}}).then(function(resF){
+      for(var i = 0; i < resF.length; i++){
+          res_id[i] = resF[i].rf_resid;
+      }
+      models.Restaurant.findAll({where : {res_id: res_id} }).then(function(restaurant){
+          if(restaurant.length == 0) {
+              result.status = 'F';
+              result.reason = 'not find restaurant';
+              res.status(200).json(result);
+          } else {
+              result.status = 'S';
+              result.restaurant  = restaurant;
+              res.status(200).json(result);
+          }
+      }, function(errOfRestaurantFind) {
+          result.status = 'F';
+          result.reason = "Failed check board" + errOfRestaurantFind;
+          res.status(400).json(result);
+      })
+  }, function(errOfRestaurantFollow){
+      result.status = 'F';
+      result.reason = "Failed check board_follow" + errOfRestaurantFollow;
+      res.status(400).json(result);
+  })
+}
+
+
+
+module.exports = router;

@@ -37,10 +37,10 @@ router.get('/boards/list/:idx', boardList);
 router.get('/boards/:idx',certainBoard);
 
 // 방 팔로우
-router.put('/boards',followBoard);
+router.put('/follow',followBoard);
 
 // 방 팔로우 취소
-router.put('/boardsCancel', unfollowBoard)
+router.put('/followCancel', unfollowBoard)
 
 // 인기 방 조회
 router.get('/boardsPopular',popularBoard);
@@ -282,44 +282,33 @@ function popularBoard(req, res){
 
 // 팔로우 된 방 조회 params로 userid 받음
 function specialBoard(req, res){
-    var result = {
-        status : null,
-        reason : null,
-        board  : null
-    };
-    var board_id = [];
-    var user_id = req.params.idx;
-    models.Board_Follow.findAll({where : {bf_userid : user_id}}).then(function(ret1){
-        for(var i = 0; i < ret1.length; i++){
-            board_id[i] = ret1[i].bf_boardid;
-        }
-        console.log("board id is");
-        console.log(board_id);
+    var result   = {},
+        board_id = [],
+        user_id  = req.params.idx;
 
-        models.Board.findAll({where : {board_id: board_id} }).then(function(ret2){
-            if(ret2 == null) {
-                res.status(400);
+    models.Board_Follow.findAll({where : {bf_userid : user_id}}).then(function(boardF){
+        for(var i = 0; i < boardF.length; i++){
+            board_id[i] = boardF[i].bf_boardid;
+        }
+        models.Board.findAll({where : {board_id: board_id} }).then(function(board){
+            if(board.length == 0) {
                 result.status = 'F';
                 result.reason = 'not find board';
-                res.json(result);
+                res.status(200).json(result);
             } else {
                 result.status = 'S';
-                result.board  = ret2;
-                res.json(result);
+                result.board  = board;
+                res.status(200).json(result);
             }
-        }, function(err1) {
-            console.log(err1);
-            res.status(400);
+        }, function(errOfBoardFind) {
             result.status = 'F';
-            result.reason = "Failed check board";
-            res.json(result);
+            result.reason = "Failed check board" + errOfBoardFind;
+            res.status(400).json(result);
         })
-    }, function(err2){
-        console.log(err2);
-        res.status(400);
+    }, function(errOfBoardFollow){
         result.status = 'F';
-        result.reason = "Failed check board_follow";
-        res.json(result);
+        result.reason = "Failed check board_follow" +  errOfBoardFollow;
+        res.status(400).json(result);
     })
 }
 
