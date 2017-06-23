@@ -10,75 +10,23 @@ router.use(function timeLog (req, res, next) {
     next()
 });
 
-/**
- *  GET /restaurants
- *  listing all restaurants
- */
-router.get('/', function(req, res) {
-  var result = {};
-  result["restaurants"] = [];
+// 식당 등록
+router.post('/', regisRestaurant);
 
-  models.Restaurant.findAll()
-  .then(function(restaurants) {
-    for(var i=0; i<restaurants.length; i++) {
-      result["restaurants"][i] = restaurants[i].dataValues;
-    }
-    res.status(200);
-    res.json(result);
-  })
-  .catch(function(err) {
-    res.status(500);
-    res.send('Something is broken!');
-  });
-});
+// 전체 식당 조회
+router.get('/', restaurantsList);
 
-/**
- *	GET /restaurants/:res_id
- */
+// 특정 식당 조회
+router.get('/:res_id', certainRestaurants);
 
-router.get('/:res_id', function(req, res) {
-    var result = {};
-    var pResID = req.params.res_id;
+// 별점 조회
+router.get('/score/:res_id', restaurantsScore);
 
-    models.Restaurant.findById(pResID)
-        .then(function(restaurants) {
-          if(restaurants == null){
-            res.status(400).send('There is no restaurants');
-          } else {
-              result["res_id"] = restaurants.res_id;
-              result["res_name"] = restaurants.res_name;
-              result["res_img"] = restaurants.res_img;
-              result["res_phonenum"] = restaurants.res_phonenum;
-              result["res_address"] = restaurants.res_address;
-              result["res_score"] = restaurants.res_score;
-              res.status(200).json(result);
-          }
-        })
-        .catch(function(err) {
-            res.status(500).send('Something is broken!');
-        });
-});
+// 식당 정보 수정
+router.put('/:res_id', modifyRestaurant);
 
-//별점 조회
-router.get('/score/:res_id',function(req, res) {
-    var result = {},
-        pResID = req.params.res_id;
-
-    models.Restaurant.findById(pResID).then(function(restaurants){
-        if(restaurants == null){
-            res.status(200).send('There is no restaurants');
-        }
-        else{
-            result.status = 'S';
-            result.score = restaurants.res_score;
-            res.status(200).json(result);
-        }
-    }, function(err){
-        result.status = 'F';
-        result.reason = err;
-        res.status(400).json(result);
-    })
-});
+// 식당 정보 삭제
+router.delete('/:res_id', deleteRestaurant);
 
 //식당 팔로우
 router.put('/follow',followRes);
@@ -89,15 +37,19 @@ router.put('/followCancel',unfollowRes);
 // 팔로우 한 식당 조회
 router.get('/resFollowed/:idx', specialRes);
 
-/**
- *	POST /restaurants
- */
-router.post('/', function(req, res) {
+//식당 검색
+router.get('/search/:keyword', searchResByname);
+
+
+
+
+
+// 식당 등록
+function regisRestaurant(req, res){
   var result = {};
   var data = req.body;
 
-  models.Restaurant.create(data)
-  .then(function(restaurant) {
+  models.Restaurant.create(data).then(function(restaurant) {
     result["res_id"] = restaurant.res_id;
     res.status(200);
     res.json(result);
@@ -105,32 +57,91 @@ router.post('/', function(req, res) {
   .catch(function(err) {
     res.status(500).send('Something is broken!');
   });
-});
+}
 
-/**
- * 	PUT /restaurants/:res_id
- */
-router.put('/:res_id', function(req, res) {
-    var result  = {};
-    var pResID  = req.params.res_id;
-    var resInfo = req.body;
+// 전체 식당 조회
+function restaurantsList(req, res){
+  var result = {};
+  result["restaurants"] = [];
 
-    models.Restaurant.update(resInfo,
-        {where : {res_id : pResID}})
-        .then(function(){
-          result["res_id"] = pResID;
-          res.status(200);
-          res.json(result);
-        })
-        .catch(function(err){
+  models.Restaurant.findAll().then(function(restaurants) {
+    for(var i=0; i<restaurants.length; i++) {
+      result["restaurants"][i] = restaurants[i].dataValues;
+    }
+    res.status(200);
+    res.json(result);
+  })
+  .catch(function(err) {
+    res.status(500);
+    res.send('Something is broken!');
+  });
+}
+
+// 특정 식당 조회
+function certainRestaurants(req, res){
+  var result = {};
+  var pResID = req.params.res_id;
+
+  models.Restaurant.findById(pResID)
+      .then(function(restaurants) {
+        if(restaurants == null){
+          res.status(400).send('There is no restaurants');
+        } else {
+            result["res_id"] = restaurants.res_id;
+            result["res_name"] = restaurants.res_name;
+            result["res_img"] = restaurants.res_img;
+            result["res_phonenum"] = restaurants.res_phonenum;
+            result["res_address"] = restaurants.res_address;
+            result["res_score"] = restaurants.res_score;
+            res.status(200).json(result);
+        }
+      })
+      .catch(function(err) {
           res.status(500).send('Something is broken!');
-        });
-});
+      });
+}
 
-/**
- *	DELETE /restaurants/:res_id
- */
-router.delete('/:res_id', function(req, res) {
+// 식당 별점 조회
+function restaurantsScore(req, res){
+  var result = {},
+      pResID = req.params.res_id;
+
+  models.Restaurant.findById(pResID).then(function(restaurants){
+      if(restaurants == null){
+          res.status(200).send('There is no restaurants');
+      }
+      else{
+          result.status = 'S';
+          result.score = restaurants.res_score;
+          res.status(200).json(result);
+      }
+  }, function(err){
+      result.status = 'F';
+      result.reason = err;
+      res.status(400).json(result);
+  })
+}
+
+// 식당 정보 수정
+function modifyRestaurant(req, res){
+  var result  = {};
+  var pResID  = req.params.res_id;
+  var resInfo = req.body;
+
+  models.Restaurant.update(resInfo,
+      {where : {res_id : pResID}})
+      .then(function(){
+        result["res_id"] = pResID;
+        res.status(200);
+        res.json(result);
+      })
+      .catch(function(err){
+        res.status(500).send('Something is broken!');
+      });
+}
+
+// 식당 정보 삭제
+function deleteRestaurant(req, res) {
   var result = {};
   var pResId = req.params.res_id;
 
@@ -146,7 +157,7 @@ router.delete('/:res_id', function(req, res) {
       }).catch(function(err){
         res.status(500).send('response error');
   })
-});
+}
 
 // 식당 팔로우
 function followRes(req, res){
@@ -281,6 +292,33 @@ function specialRes(req, res){
   })
 }
 
+//식당 검색
+function searchResByname(req, res){
+
+  var keyword = req.params.keyword,
+      condition = {
+        res_name    : keyword,
+        res_address : keyword
+      },
+      result = {};
+
+  models.Restaurant.sequelize.query(' select * from restaurant where res_name LIKE "%' + keyword + '%" or res_address LIKE"%' + keyword + '%" ').then(function(restaurant){
+    if(restaurant.length == 0){
+      result.status = 'F';
+      result.reason = 'not find restaurant';
+      res.status(200).json(result);
+    }
+    else{
+      result.restaurant = restaurant[0];
+      result.status = 'S';
+      res.status(200).json(result);
+    }
+  }, function(errOfRestaurantFind){
+    result.status = 'F';
+    result.reason = errOfRestaurantFind;
+    res.status(400).json(result);
+  })
+}
 
 
 module.exports = router;
