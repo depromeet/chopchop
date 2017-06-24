@@ -1,7 +1,7 @@
 'use strict'
 
 /**
- *  Define a model of restaurant table.  
+ *  Define a model of restaurant table.
  */
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define("Restaurant", {
@@ -11,7 +11,8 @@ module.exports = function(sequelize, DataTypes) {
     res_freenote : { type : DataTypes.STRING(100) },
     res_address  : { type : DataTypes.STRING(50) },
     res_score    : { type : DataTypes.INTEGER },
-    res_popular    : { type : DataTypes.INTEGER, allowNull : false }
+    res_popular  : { type : DataTypes.INTEGER, allowNull : false },
+    res_phonenum : { type : DataTypes.STRING(50) }
   },
   {
     classMethods : {},
@@ -19,5 +20,5 @@ module.exports = function(sequelize, DataTypes) {
 		freezeTableName: true,
 		underscored: true,
 	  timestamps: false
-  });    
+  });
 };

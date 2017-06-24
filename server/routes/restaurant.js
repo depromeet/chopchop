@@ -90,9 +90,12 @@ function certainRestaurants(req, res){
             result["res_id"] = restaurants.res_id;
             result["res_name"] = restaurants.res_name;
             result["res_img"] = restaurants.res_img;
-            result["res_phonenum"] = restaurants.res_phonenum;
+            result["res_freenote"] = restaurants.res_freenote;
             result["res_address"] = restaurants.res_address;
             result["res_score"] = restaurants.res_score;
+            result["res_popular"] = restaurants.res_popular;
+            result["res_phonenum"] = restaurants.res_phonenum;
+
             res.status(200).json(result);
         }
       })
@@ -128,16 +131,23 @@ function modifyRestaurant(req, res){
   var pResID  = req.params.res_id;
   var resInfo = req.body;
 
-  models.Restaurant.update(resInfo,
-      {where : {res_id : pResID}})
-      .then(function(){
+  models.Restaurant.findAll({where: {res_id : pResID}}).then(function(restaurant){
+    if(restaurant.length == 0){
+      result.status = 'F';
+      result.reason = 'not find restaurant';
+      res.status(200).json(result);
+    }
+    else{
+      models.Restaurant.update(resInfo,{where : {res_id : pResID}}).then(function(){
         result["res_id"] = pResID;
-        res.status(200);
-        res.json(result);
+        result.status = 'S';
+        res.status(200).json(result);
       })
       .catch(function(err){
         res.status(500).send('Something is broken!');
       });
+    }
+  })
 }
 
 // 식당 정보 삭제
@@ -148,11 +158,10 @@ function deleteRestaurant(req, res) {
   models.Restaurant.destroy({where: {res_id : pResId}})
       .then(function(restaurant){
         if(restaurant == null){
-          res.status(400).send('There is no restaurant');
+          res.status(200).send('There is no restaurant');
         }else{
           result["res_id"] = pResId;
-          res.status(200);
-          res.json(result);
+          res.status(200).json(result);
         }
       }).catch(function(err){
         res.status(500).send('response error');

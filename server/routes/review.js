@@ -20,7 +20,7 @@ router.get('/reviewPerfer/:idx', perferReview);
 // 한 식당에 대한 리뷰 조회
 router.get('/reviewRes/:idx', resReview)
 
-// 인기 리뷰 조회 5개
+// 인기 리뷰 조회(전체조회)
 router.get('/reviews', popularReview);
 
 // 방 안에서의 리뷰 조회 params로 방 번호를 받음

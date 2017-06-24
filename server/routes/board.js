@@ -8,10 +8,10 @@ var models     = require('../models');
 
 
 //방 생성 한 유저당 방 하나만 생성
-router.post('/boards', regisBoard);
+router.post('/', regisBoard);
 
 // 전체 방 조회 팔로잉 되는 방 빼고
-router.get('/boards/list/:idx', boardList);
+router.get('/lists/:idx', boardList);
 
 /* 전체 방 조회
 // router.get('/boards', function(req, res) {
@@ -34,16 +34,16 @@ router.get('/boards/list/:idx', boardList);
 */
 
 // 특정 방 조회
-router.get('/boards/:idx',certainBoard);
+router.get('/ones/:idx',certainBoard);
+
+// 인기 방 조회
+router.get('/populars',popularBoard);
 
 // 방 팔로우
-router.put('/follow',followBoard);
+router.put('/followes',followBoard);
 
 // 방 팔로우 취소
 router.put('/followCancel', unfollowBoard)
-
-// 인기 방 조회
-router.get('/boardsPopular',popularBoard);
 
 // 팔로우 된 방 조회
 router.get('/boardsFollowed/:idx',specialBoard);
@@ -77,7 +77,7 @@ function regisBoard(req, res) {
                 res.status(200).json(result);
             }, function (err) {
                 result.status = 'F';
-                result.reason = err;
+                result.reason = 'not find board response' + err;
                 res.status(400).json(result);
             })
         }
@@ -100,11 +100,11 @@ function boardList(req, res) {
         for(var i =0; i < followed.length; i++){
             board_id[i]= followed[i].bf_boardid;
         }
-        models.Board.sequelize.query('select * from board where board_id not in (' + board_id + ')').then(function(board){
+        models.Board.sequelize.query('select * from board where board_id not in (' + board_id + ') order by board_popular DESC').then(function(board){
             if(board == null){
                 result.status = 'F';
                 result.reason = 'not find board';
-                res.status(400).json(result);
+                res.status(200).json(result);
             }
             else{
                 result.board  = board[0];
@@ -113,7 +113,7 @@ function boardList(req, res) {
             }
         }, function(err){
             result.status = 'F';
-            result.reason = 'not find board response';
+            result.reason = 'not find board response' + err;
             res.status(400).json(result);
         })
     })
@@ -129,24 +129,45 @@ function certainBoard(req, res){
     };
     models.Board.findById(idx).then(function(ret) {
         if(ret == null){
-            res.status(400);
             result.status = 'F';
             result.reason = 'not find board';
-            res.json(result);
+            res.status(200).json(result);
         } else{
-            console.log(ret);
             result.status = 'S';
             result.board = ret;
-            res.json(result);
+            res.status(200).json(result);
         }
     }, function(err) {
-        console.log(err);
-        res.status(400);
         result.status = 'F';
-        result.reason = err.message;
-        res.json(result);
+        result.reason = 'not find board response' + err.message;
+        res.status(400).json(result);
     })
 }
+
+// 인기 방 조회 get, 3개
+function popularBoard(req, res){
+    var result = {
+        reason : null,
+        board : null
+    };
+
+    models.Board.sequelize.query('select * from board order by board_popular desc limit 3;').then(function(ret){
+        if(ret == null) {
+            result.status = 'F';
+            result.reason = 'not find board';
+            res.status(200).json(result);
+        } else {
+            result.status = 'S';
+            result.board = ret[0];
+            res.status(200).json(result);
+        }
+    }, function(err) {
+        result.status = 'F';
+        result.reason = 'not find board response' + err.message;
+        res.status(400).json(result);
+    })
+}
+
 
 // // 방 팔로우 put, bf_userid, bf_boardid body로 받음
 function followBoard(req, res){
@@ -189,7 +210,7 @@ function followBoard(req, res){
                     res.status(200).json(result);
                 }, function (err) {
                     result.status = 'F';
-                    result.reason = err;
+                    result.reason = 'not find board response' + err;
                     res.status(400).json(result);
                 })
             })
@@ -249,35 +270,6 @@ function unfollowBoard(req, res){
         }
     })
 
-}
-
-// 인기 방 조회 get, 3개
-function popularBoard(req, res){
-    var result = {
-        reason : null,
-        board : null
-    };
-
-    console.log('check before query');
-    models.Board.sequelize.query('select * from board order by board_popular desc limit 3;').then(function(ret){
-        if(ret == null) {
-            res.status(400);
-            result.status = 'F';
-            result.reason = 'not find board';
-            res.json(result);
-        } else {
-            console.log(ret[0]);
-            result.status = 'S';
-            result.board = ret[0];
-            res.json(result);
-        }
-    }, function(err) {
-        console.log(err);
-        res.status(400);
-        result.status = 'F';
-        result.reason = err.message;
-        res.json(result);
-    })
 }
 
 // 팔로우 된 방 조회 params로 userid 받음
