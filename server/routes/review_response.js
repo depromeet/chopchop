@@ -9,11 +9,6 @@ var upload = multer();
 var router = express.Router();
 var models = require('../models');
 
-router.use(function timeLog (req, res, next) {
-    console.log('Time: ', Date.now())
-    next()
-});
-
 // 리뷰 좋아요
 router.put('/reviewsLike',   responseReview);
 

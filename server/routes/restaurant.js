@@ -5,37 +5,28 @@ var upload     = multer();
 var router     = express.Router();
 var models     = require('../models');
 
-router.use(function timeLog (req, res, next) {
-    console.log('Time: ', Date.now())
-    next()
-});
-
 /**
  *  GET /restaurants
  *  listing all restaurants
  */
 router.get('/', function(req, res) {
-  var qLimit = Number(req.query.limit);
-  if(!qLimit) {
-    qLimit = 1;
-  }
+  var data = {};
+  data.limit = 10;
+  if('limit' in req.query) data.limit = Number(req.query.limit);
+  if('offset' in req.query) data.offset = Number(req.query.offset);
 
   var result = {};
-  result["restaurants"] = [];
+  result.values = [];
 
-  models.Restaurant.findAll({
-    limit : qLimit,
-  })
+  models.Restaurant.findAll(data)
   .then(function(restaurants) {
     for(var i=0; i<restaurants.length; i++) {
-      result["restaurants"][i] = restaurants[i].dataValues;
+      result.values[i] = restaurants[i];
     }
-    res.status(200);
-    res.json(result);
+    res.status(200).json(result);
   })
   .catch(function(err) {
-    res.status(500);
-    res.send('Something is broken!');
+    res.status(500).send(err.message);
   });
 });
 
@@ -44,23 +35,18 @@ router.get('/', function(req, res) {
  */
 router.get('/:res_id', function(req, res) {
   var result = {};
-  var pResID = req.params.res_id;
 
   models.Restaurant.find({
-    attributes: ["res_id", "res_name", "res_img", "res_phonenum", "res_address", "res_score"],
+    // attributes: ["res_id", "res_name", "res_img", "res_phonenum", "res_address", "res_score"],
     where: {
-      res_id : pResID
-    }
+      res_id : req.params.res_id,
+    },
   })
   .then(function(restaurants) {
-    result["res_id"] = restaurnats.res_id;
-    result["res_name"] = restaurnats.res_name;
-    result["res_img"] = restaurnats.res_img;
-    result["res_phonenum"] = restaurnats.res_phonenum;
-    result["res_address"] = restaurnats.res_address;
-    result["res_score"] = restaurnats.res_score;
-
-    res.status(200).json(result);
+    if(!restaurants)
+      res.status(400).send('not found');
+    else
+      res.status(200).json(restaurants);
   })
   .catch(function(err) {
     res.status(500).send('Something is broken!');

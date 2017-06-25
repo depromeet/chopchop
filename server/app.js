@@ -30,19 +30,27 @@ app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // route modules
+app.use(function timeLog (req, res, next) {
+    console.log('Time: ', Date.now())
+    next()
+});
 app.use('/', index);
 app.use('/users', user);
 app.use('/restaurants', restaurant);
-app.use('/review', review);
+app.use('/reviews', review);
 app.use('/boards', board);
-app.use('/review_comments', review_comment);
+app.use('/comments', review_comment);
 app.use('/review_responses', review_response);
 
 // use session
 app.use(session({
-  secret: 'showmethemoney',
+  key: 'sid', // 세션키
+  secret: 'secret', // 비밀키
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 1000 * 60 * 60 // 쿠키 유효기간 1시간
+  }
 }));
 
 // catch 404 and forward to error handler
@@ -86,4 +94,3 @@ app.listen(3000, function () {
 */
 
 module.exports = app;
-
