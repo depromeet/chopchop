@@ -6,7 +6,7 @@ var router = express.Router();
 var models = require('../models');
 
 // 댓글 작성
-router.post('/', registerComment);
+router.post('/', regisComment);
 
 /**
  *  GET /comments?limit={%d}&offset={%d}
@@ -58,23 +58,37 @@ router.put('/:idx', modifyComment);
 router.delete('/:idx', deleteComment);
 
 // 댓글 작성, body로 rc_reviewid, rc_userid 받음
-function registerComment(req, res) {
-  var commentInfo = req.body;
-  var result = {
-    rc_id: null,
-    status: null,
-    reason: null,
-  };
-  models.Review_Comment.create(commentInfo)
-  .then(function(ret) {
-    result.rc_id = ret.rc_id;
-    result.status = 'S';
-    res.status(200).json(result);
-  }).catch(function(err) {
-    result.status = 'F';
-    result.reason = 'create failed';
-    res.status(400).json(result);
-  });
+function regisComment(req, res){
+    var commentInfo = req.body,
+        result = {
+            rc_id  : null,
+            status : null,
+            reason : null
+        },
+
+        value = {
+            review_comment : 0
+        },
+
+        reviewIdMatched = {
+            review_id: commentInfo.rc_reviewid
+        };
+
+    models.Review_Comment.create(commentInfo).then(function(ret){
+        models.Review.findAll({where: reviewIdMatched}).then(function(comment){
+            value.review_comment = comment[0].dataValues.review_comment + 1;
+
+            models.Review.update(value, {where: reviewIdMatched}).then(function () {
+                result.rc_id = ret.rc_id;
+                result.status = 'S';
+                res.status(200).json(result);
+            }, function (err) {
+                result.status = 'F';
+                result.reason = err;
+                res.status(400).json(result);
+            })
+        })
+    });
 }
 
 // 댓글 수정 params로 댓글 아이디 입력받음
@@ -103,31 +117,44 @@ function modifyComment(req, res) {
 }
 
 // 댓글 삭제, params로 rc_id 받음
-function deleteComment(req, res) {
-  var rc_id = req.params.idx;
-  var result = {
-    status: null,
-    reason: null,
-  };
-  models.Review_Comment.destroy({
-    where: {
-      rc_id: rc_id
-    }
-  }).then(function(ret) {
-    if (ret == 1) {
-      result.status = 'S';
-      res.status(200).json(result);
-    } else {
-      result.status = 'F';
-      result.reason = 'No review to delete';
-      res.status(400).json(result);
-    }
-  }).catch(function(err) {
-    console.log(err);
-    result.status = 'F';
-    result.reason = err.message;
-    res.status(500).json(result);
-  });
+function deleteComment(req, res){
+    var rc_id = req.params.idx,
+        result = {
+            status : null,
+            reason : null
+        },
+
+        value = {
+            review_comment : 0
+        },
+
+        review_id = 0;
+
+    models.Review_Comment.findById(rc_id).then(function(comment){
+        review_id = comment.dataValues.rc_reviewid;
+        models.Review.findById(review_id).then(function(review){
+            value.review_comment = review.dataValues.review_comment - 1;
+            models.Review.update(value,{where:{review_id: review_id}});
+            models.Review_Comment.destroy({where: {rc_id : rc_id}}).then(function(ret) {
+                if(ret == 1) {
+                    result.status = 'S';
+                    res.json(result);
+                }
+                else {
+                    res.status(400);
+                    result.status = 'F';
+                    result.reason = 'No review to delete';
+                    res.json(result);
+                }
+            }, function(err) {
+                console.log(err);
+                result.status = 'F';
+                result.reason = err.message;
+                res.json(result);
+            })
+        });
+    });
 }
 
 module.exports = router;
+

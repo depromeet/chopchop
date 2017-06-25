@@ -6,9 +6,6 @@ var router = express.Router();
 var models = require('../models');
 var async = require('async');
 
-// 리뷰 작성
-router.post('/', registerReview);
-
 // 리뷰 검색
 router.get('/', function(req, res) {
   var data = {};
@@ -78,87 +75,174 @@ function findRestaurant(innerCallback) {
   });
 }
 
+// 좋아요 한 리뷰 조회
+router.get('/reviewPerfer/:idx', perferReview);
+
+// 한 식당에 대한 리뷰 조회
+router.get('/reviewRes/:idx', resReview)
+
+// 인기 리뷰 조회(전체조회)
+router.get('/reviews', popularReview);
+
+// 방 안에서의 리뷰 조회 params로 방 번호를 받음
+router.get('/reviewinBoard/:idx', function(req, res) {
+    var result = {};
+    result["reviews"] = [];
+
+    console.log(result);
+    var idx = req.params.idx;
+
+
+    models.Review.findAll({where: {review_boardid : idx}})
+        .then(function(reviews) {
+            for(var i=0; i<reviews.length; i++) {
+                result["reviews"][i] = reviews[i].dataValues;
+            }
+            res.status(200);
+            res.json(result);
+        })
+        .catch(function(err) {
+            res.status(500);
+            res.send('Something is broken!');
+        });
+});
+
 // 특정 리뷰 조회
-// router.get('/:idx', certainReviewInfo);
+router.get('/reviews/:idx', certainReviewInfo);
 
 // 리뷰 삭제
-router.delete('/:idx', deleteReview);
+router.delete('/reviews/:idx', deleteReview);
 
-// 인기 리뷰 조회 5개
-// router.get('/', popularReview);
-
-// // 방 안에서의 리뷰 조회 params로 방 번호를 받음
-// router.get('/reviewinBoard/:idx', function(req, res) {
-//   var result = {};
-//   result.reviews = [];
-//
-//   console.log(result);
-//   var idx = req.params.idx;
-//
-//   models.Review.findAll({
-//       where: {
-//         review_boardid: idx
-//       }
-//     })
-//     .then(function(reviews) {
-//       for (var i = 0; i < reviews.length; i++) {
-//         result.reviews[i] = reviews[i];
-//       }
-//       res.status(200).json(result);
-//     })
-//     .catch(function(err) {
-//       res.status(500).send('Something is broken!');
-//     });
-// });
+// 리뷰 작성
+router.post('/reviews', regisReview);
 
 // 리뷰 수정
 router.put('/:idx', modifyReview);
 
 // 리뷰 작성 post, body
-function registerReview(req, res) {
-  var reviewInfo = req.body;
-  var result = {};
+function regisReview(req, res){
+    var reviewinfo = req.body,
+        result = {
+        review_id : null,
+        status : null,
+        reason : null
+        },
 
-  models.Review.create(reviewInfo)
-    .then(function(ret) {
-      result.review_id = ret.review_id;
-      result.status = 'S';
-      res.json(result);
-    }).catch(function(err) {
-      result.status = 'F';
-      result.reason = err;
-      res.json(result);
-    });
+        res_score = null,
+        res_name = null;
+
+    models.Review.create(reviewinfo).then(function(ret){
+        res_score = reviewinfo.review_score;
+        res_name  = reviewinfo.review_resname;
+        console.log(res_score);
+        console.log(res_name);
+        models.Restaurant.update({res_score: res_score},{where:{res_name : res_name}}).then(function(){
+            result.review_id = ret.review_id;
+            result.status = 'S';
+            res.status(200).json(result);
+        }, function(err){
+            result.status = 'F';
+            result.reason = err;
+            res.status(400).json(result);
+        })
+    })
 }
 
-// //인기 리뷰 조회 get, 5개,
-// function popularReview(req, res) {
-//   var result = {
-//     reason: null,
-//     review: null
-//   };
-//
-//   models.Review.sequelize.query('select * from review order by review_like desc limit 5;')
-//     .then(function(ret) {
-//       if (ret == null) {
-//         res.status(400);
-//         result.status = 'F';
-//         result.reason = 'not find toilet';
-//         res.json(result);
-//       } else {
-//         console.log(ret[0]);
-//         result.status = 'S';
-//         result.review = ret[0];
-//         res.json(result);
-//       }
-//     }).catch(function(err) {
-//       console.log(err);
-//       res.status(400);
-//       result.status = 'F';
-//       result.reason = err.message;
-//       res.json(result);
-//     });
-// }
+// 좋아요 한 리뷰 조회
+function perferReview(req, res){
+    var result = {
+        review : null,
+        status : null,
+        reason : null
+        },
+
+        user_id = req.params.idx,
+        review_id = [];
+
+    models.Review_Response.findAll({where: {rvr_userid : user_id}}).then(function(response){
+        for(var i =0; i<response.length; i++){
+            review_id[i] = response[i].dataValues.rvr_reviewid;
+        }
+        models.Review.findAll({where: {review_id : review_id}}).then(function(review){
+            if(review == null){
+                result.status = 'F';
+                result.reason = 'not find review';
+                res.status(200).json(result);
+            }
+            else {
+                result.review = review;
+                result.status = 'S';
+                res.status(200).json(result);
+            }
+        }, function(errOfReviewFind){
+            result.status = 'F';
+            result.reason = errOfReviewFind;
+            res.status(400).json(result);
+        })
+    }, function(errOfResponse){
+        result.status = 'F';
+        result.reason = errOfResponse;
+        res.status(400).json(result);
+    })
+}
+
+// 한 식당에 대한 리뷰 조회
+function resReview(req, res){
+    var result = {
+        review : null,
+        status : null,
+        reason : null
+        },
+
+        resId = req.params.idx;
+
+    models.Review.findAll({where: {review_resid: resId}}).then(function(review){
+        if(review == null){
+            result.status = 'F';
+            result.reason = 'not find review';
+            res.status(200).json(result);
+        }
+        else{
+            result.review = review;
+            result.status = 'S';
+            res.status(200).json(result);
+        }
+    },function(err){
+        result.status = 'F';
+        result.reason = err;
+        res.status(400).json(result);
+    })
+
+}
+
+
+//인기 리뷰 조회 get
+function popularReview(req, res){
+    var result = {
+        reason : null,
+        review : null
+    };
+
+    models.Review.sequelize.query('select * from review order by review_like desc').then(function(ret){
+        if(ret == null) {
+            res.status(400);
+            result.status = 'F';
+            result.reason = 'not find board';
+            res.json(result);
+        } else {
+            console.log(ret[0]);
+            result.status = 'S';
+            result.review = ret[0];
+            res.json(result);
+        }
+    }, function(err) {
+        console.log(err);
+        res.status(400);
+        result.status = 'F';
+        result.reason = err.message;
+        res.json(result);
+    })
+}
 
 // 특정 리뷰 조회 , get, params로 review_id 받음
 function certainReviewInfo(req, res) {
@@ -233,3 +317,4 @@ function modifyReview(req, res) {
 }
 
 module.exports = router;
+

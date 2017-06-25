@@ -8,8 +8,8 @@ module.exports = function(sequelize, DataTypes) {
     board_id       : { type : DataTypes.INTEGER, primaryKey : true, autoIncrement: true, allowNull : false },
     board_name     : { type : DataTypes.STRING, allowNull : false },
     board_img      : { type : DataTypes.STRING(50) },
-    board_catagory : { type : DataTypes.INTEGER },
-    board_popular  : { type : DataTypes.INTEGER },
+    board_catagory : { type : DataTypes.STRING(50) },
+    board_popular  : { type : DataTypes.INTEGER, allowNull : false },
     board_uid      : { type : DataTypes.INTEGER },
   },
   {
