@@ -14,8 +14,8 @@ router.get('/', restaurantsList);
 // 특정 식당 조회
 router.get('/:res_id', certainRestaurants);
 
-// 별점 조회
-router.get('/score/:res_id', restaurantsScore);
+// // 별점 조회
+// router.get('/score/:res_id', restaurantsScore);
 
 // 식당 정보 수정
 router.put('/:res_id', modifyRestaurant);
@@ -24,13 +24,13 @@ router.put('/:res_id', modifyRestaurant);
 router.delete('/:res_id', deleteRestaurant);
 
 //식당 팔로우
-router.put('/follow',followRes);
+router.post('/follow',followRes);
 
 //식당 팔로우 취소
-router.put('/followCancel',unfollowRes);
+router.delete('/follow',unfollowRes);
 
 // 팔로우 한 식당 조회
-router.get('/resFollowed/:idx', specialRes);
+router.get('/follow/:idx', specialRes);
 
 //식당 검색
 router.get('/search/:keyword', searchResByname);
@@ -321,4 +321,3 @@ function searchResByname(req, res){
 }
 
 module.exports = router;
-

@@ -40,7 +40,7 @@ app.use('/restaurants', restaurant);
 app.use('/reviews', review);
 app.use('/boards', board);
 app.use('/comments', review_comment);
-app.use('/review_responses', review_response);
+app.use('/responses', review_response);
 
 // use session
 app.use(session({

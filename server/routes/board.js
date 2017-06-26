@@ -38,12 +38,12 @@ router.get('/', function(req, res) {
 router.get('/:idx', certainBoard);
 
 // 방 팔로우
-router.put('/', followBoard);
+router.post('/follow', followBoard);
 
 // 방 팔로우 취소
-router.put('/cancel', unfollowBoard);
+router.delete('/follow', unfollowBoard);
 
-// 인기 방 조회
+// // 인기 방 조회
 // router.get('/popular',popularBoard);
 
 //방 생성 한 유저당 방 하나만 생성
@@ -53,7 +53,7 @@ router.post('/', regisBoard);
 router.get('/lists/:idx', boardList);
 
 // 팔로우 된 방 조회
-router.get('/followed/:idx', specialBoard);
+router.get('/follow/:idx', specialBoard);
 
 // 방 생성 한 유저당 방 하나만 생성
 function regisBoard(req, res) {
@@ -314,4 +314,3 @@ function specialBoard(req, res){
 }
 
 module.exports = router;
-

@@ -10,10 +10,10 @@ var models = require('../models');
 
 // 리뷰 좋아요
 // 리뷰 리스폰스
-router.put('/reviewsLike',   responseReview);
+router.post('/', responseReview);
 
 // 리뷰 리스폰스 취소
-router.put('/reviewsUnlike', deresponseReview);
+router.delete('/', deresponseReview);
 
 //리뷰 리스폰스 put, review_like++, rvr_userid, rvr_reviewid body로 받음
 function responseReview(req, res) {
@@ -126,4 +126,3 @@ function deresponseReview(req, res) {
 }
 
 module.exports = router;
-

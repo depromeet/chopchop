@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     board_name     : { type : DataTypes.STRING, allowNull : false },
     board_img      : { type : DataTypes.STRING(50) },
     board_catagory : { type : DataTypes.STRING(50) },
-    board_popular  : { type : DataTypes.INTEGER, allowNull : false },
+    board_popular  : { type : DataTypes.INTEGER },
     board_uid      : { type : DataTypes.INTEGER },
   },
   {

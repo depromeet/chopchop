@@ -28,7 +28,7 @@ router.get('/', function(req, res) {
   models.User.findAll(data)
     .then(function(users) {
       if(!users)
-        res.status(400).send('not found');
+        res.status(200).send('not found');
 
       for (var i = 0; i < users.length; i++) {
         result.users[i] = users[i];

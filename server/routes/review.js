@@ -76,16 +76,16 @@ function findRestaurant(innerCallback) {
 }
 
 // 좋아요 한 리뷰 조회
-router.get('/reviewPerfer/:idx', perferReview);
+router.get('/perfer/:idx', perferReview);
 
 // 한 식당에 대한 리뷰 조회
-router.get('/reviewRes/:idx', resReview)
+router.get('/res/:idx', resReview)
 
 // 인기 리뷰 조회(전체조회)
-router.get('/reviews', popularReview);
+router.get('/', popularReview);
 
 // 방 안에서의 리뷰 조회 params로 방 번호를 받음
-router.get('/reviewinBoard/:idx', function(req, res) {
+router.get('/inboard/:idx', function(req, res) {
     var result = {};
     result["reviews"] = [];
 
@@ -108,13 +108,13 @@ router.get('/reviewinBoard/:idx', function(req, res) {
 });
 
 // 특정 리뷰 조회
-router.get('/reviews/:idx', certainReviewInfo);
+router.get('/:idx', certainReviewInfo);
 
 // 리뷰 삭제
-router.delete('/reviews/:idx', deleteReview);
+router.delete('/:idx', deleteReview);
 
 // 리뷰 작성
-router.post('/reviews', regisReview);
+router.post('/', regisReview);
 
 // 리뷰 수정
 router.put('/:idx', modifyReview);
@@ -317,4 +317,3 @@ function modifyReview(req, res) {
 }
 
 module.exports = router;
-
