@@ -20,8 +20,8 @@ router.get('/:res_id', certainRestaurants);
 // 식당 정보 수정
 router.put('/:res_id', modifyRestaurant);
 
-// 식당 정보 삭제
-router.delete('/:res_id', deleteRestaurant);
+// // 식당 정보 삭제
+// router.delete('/:res_id', deleteRestaurant);
 
 //식당 팔로우
 router.post('/follow',followRes);
@@ -68,7 +68,8 @@ function restaurantsList(req, res){
 
 // 특정 식당 조회
 function certainRestaurants(req, res){
-  var result = {};
+  var result = {},
+      pResID = req.params.res_id;
 
   models.Restaurant.findById(pResID)
       .then(function(restaurants) {
@@ -148,7 +149,7 @@ function deleteRestaurant(req, res) {
 
   models.Restaurant.destroy({where: {res_id : pResId}})
       .then(function(restaurant){
-        if(restaurant == null){
+        if(restaurant == 0){
           res.status(200).send('There is no restaurant');
         }else{
           result["res_id"] = pResId;
@@ -231,7 +232,7 @@ function unfollowRes(req, res){
 
         destoryCondition = {
           rf_resid: rfInfo.rf_resid
-        }
+        };
 
 
     models.Restaurant_Follow.findAll({where:preventDuplication}).then(function (response) {
