@@ -15,9 +15,27 @@ class Rooms extends Component {
 
     constructor(props) {
         super(props);
+        props.onGetAllRooms(1);
     }
 
     render() {
+        const boards = this.props.roomsReducer.board;
+        const parsedBoards = boards.map((board, index) => 
+            <Grid.Row>
+                <Grid.Column width={3}>
+                    <Link to={`/chopchop/rooms/`+board.board_id}>
+                        {board.board_img!==null?<Image src={board.board_img}/>:<Image src='http://semantic-ui.com/images/wireframe/image.png' />}
+                    </Link>
+                </Grid.Column>
+                <Grid.Column width={13}>
+                    <Link to={`/chopchop/rooms/`+board.board_id}>
+                        {board.board_name!==null?board.board_name:''}
+                    </Link>
+                </Grid.Column>
+            </Grid.Row>
+        );
+        console.log(boards);
+        console.log(parsedBoards);
         return(
             <div>
                     <div>
@@ -54,11 +72,13 @@ class Rooms extends Component {
                         </Grid>
 
 
+                        {/*{JSON.stringify(boards)}*/}
+                        {/*{boards[0]?boards[0].board_id:null}*/}
                         <Header as='h3' dividing>
                             전체방
                         </Header>
-
                         <Grid celled>
+                            {parsedBoards}
                             <Grid.Row>
                                 <Grid.Column width={3}>
                                     <Link to={`/chopchop/rooms/1`}>

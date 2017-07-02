@@ -2,6 +2,7 @@ import axios from 'axios';
 import config from '/config/config.json'
 
 export function signUp(userInfo){
+  console.log(config);
   return axios.post(
     config.server.url + 'users',{
       user_tokenid: {userInfo.tokenid},

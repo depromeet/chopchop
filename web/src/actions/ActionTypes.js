@@ -1,3 +1,2 @@
-export const INCREMENT = "INCREMENT";
-export const DECREMENT = "DECREMENT";
-export const SET_COLOR = "SET_COLOR";
+export const GET_ALL_ROOMS = "GET_ALL_ROOMS";
+export const ADD_ALL_ROOMS_TO_STATE = "ADD_ALL_ROOMS_TO_STATE";

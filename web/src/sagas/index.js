@@ -1,7 +1,7 @@
-import test from './test';
+import roomsSaga from './rooms';
 
 export default function* rootSaga() {
   yield [
-    test()
+    roomsSaga()
   ];
 };

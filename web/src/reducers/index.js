@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import counter from './counter';
+import rooms from './rooms';
 import ui from './ui';
 
 const reducers = combineReducers({
-	counter, ui
+	roomsReducer: rooms,
 })
 
 export default reducers;
