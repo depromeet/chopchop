@@ -5,22 +5,17 @@ import * as types from '../actions/ActionTypes';
 import axios from 'axios';
 import config from '../config/config.json'
 
-
 function* getAllRooms(action){
   const url = config.server.url;
   const userId = action.userId;
   const req = "http://" + url + "/boards/lists/" + userId;
-  console.log(req);
   try{
     let roomsData = {};
-
     yield axios.get(req)
-    .then( res => { roomsData = res.data } )
-    console.log(roomsData);
+          .then( res => { roomsData = res.data } )
     yield put(actions.addAllRoomsToState(roomsData));
   } catch(e){
     console.log(e);
-
   }
 }
 
