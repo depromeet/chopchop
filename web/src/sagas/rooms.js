@@ -23,24 +23,22 @@ function* watchGetAllRooms(){
   yield takeEvery(types.GET_ALL_ROOMS, getAllRooms);
 }
 
-function* getOnesRooms(action){
+function* getFollwingRooms(action){
   const url = config.server.url;
   const userId = action.userId;
-  const req = "http://" + url + "/boards/ones/";
+  const req = "http://" + url + "/boards/follow/" + userId;
   try{
     let roomsData = {};
-    yield axios.put(req,{
-            "idx": userId
-          })
+    yield axios.get(req)
           .then( res => { roomsData = res.data } )
-    yield put(actions.addOnesRoomsToState(roomsData));
+    yield put(actions.addFollowingRoomsToState(roomsData));
   } catch(e){
     console.log(e);
   }
 }
 
-function* watchGetOnesRooms(){
-  yield takeEvery(types.GET_ONES_ROOMS, getOnesRooms);
+function* watchGetFollwingRooms(){
+  yield takeEvery(types.GET_FOLLOWING_ROOMS, getFollwingRooms);
 }
 
 function* makeNewRoom(action){
@@ -65,6 +63,6 @@ function* watchMakeNewRoom(){
 
 export default function* postSaga(){
   yield fork(watchGetAllRooms);
-  yield fork(watchGetOnesRooms);
+  yield fork(watchGetFollwingRooms);
   yield fork(watchMakeNewRoom);
 }

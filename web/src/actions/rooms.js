@@ -11,13 +11,13 @@ export const addAllRoomsToState = (roomsData) => ({
   roomsData
 });
 
-export const getOnesRooms = (userId) => ({
-  type: types.GET_ONES_ROOMS,
+export const getFollowingRooms = (userId) => ({
+  type: types.GET_FOLLOWING_ROOMS,
   userId
 });
 
-export const addOnesRoomsToState = (roomsData) => ({
-  type: types.ADD_ONES_ROOMS_TO_STATE,
+export const addFollowingRoomsToState = (roomsData) => ({
+  type: types.ADD_FOLLOWING_ROOMS_TO_STATE,
   roomsData
 });
 

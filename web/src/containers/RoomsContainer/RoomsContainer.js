@@ -13,6 +13,7 @@ class RoomsContainer extends Component {
     super(props)
     const userId = 1;
     this.props.onGetAllRooms(userId);
+    this.props.onGetFollowingRooms(userId);
 
   }
   
@@ -37,7 +38,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onGetAllRooms: (userId) => dispatch(roomsActions.getAllRooms(userId)),
-    onGetOnesRooms: (userId) => dispatch(roomsActions.getOnesRooms(userId)),
+    onGetFollowingRooms: (userId) => dispatch(roomsActions.getFollowingRooms(userId)),
     onMakeNewRoom: (userId) => dispatch(roomsActions.makeNewRoom(userId))
   };
 }

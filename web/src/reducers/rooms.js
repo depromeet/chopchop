@@ -4,7 +4,7 @@ const initialState = {
     allBoards: [
 
     ],
-	onesBoards: [
+	followingBoards: [
 
 	]
 };
@@ -17,10 +17,10 @@ export default function rooms(state = initialState, action) {
 				...state,
                 allBoards: action.roomsData.board
 			 };
-		case types.ADD_ONES_ROOMS_TO_STATE:
+		case types.ADD_FOLLOWING_ROOMS_TO_STATE:
 			return {
 				...state,
-                onesBoards: action.roomsData.board
+                followingBoards: action.roomsData.board
 			 };
 		default:
 			return state;

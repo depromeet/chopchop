@@ -20,7 +20,7 @@ class Rooms extends Component {
 
     render() {
         const allBoards = this.props.roomsReducer.allBoards;
-        const onesBoards = this.props.roomsReducer.onesBoards;
+        const followingBoards = this.props.roomsReducer.followingBoards;
         const roomName = "방제";
         const userId = 14;
         return(
@@ -35,7 +35,7 @@ class Rooms extends Component {
                         </Header>
 
                         <RoomList>
-                            {onesBoards}
+                            {followingBoards}
                         </RoomList>
 
 
