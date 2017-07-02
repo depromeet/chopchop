@@ -12,10 +12,8 @@ class HomeContainer extends Component {
 
   render() {
     return (
-      <ChopWrapper>
-        <Home
-            onGetAllRooms={this.props.onGetAllRooms}
-         />
+      <ChopWrapper tab="Home">
+        <Home/>
       </ChopWrapper>
     );
   }

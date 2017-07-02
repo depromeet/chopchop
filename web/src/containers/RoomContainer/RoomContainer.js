@@ -8,7 +8,7 @@ class RoomContainer extends Component {
 
   render() {
     return (
-      <ChopWrapper>
+      <ChopWrapper tab="Rooms">
         <Room />
       </ChopWrapper>
     );

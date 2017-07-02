@@ -10,7 +10,7 @@ class PinListContainer extends Component {
 
   render() {
     return (
-      <ChopWrapper>
+      <ChopWrapper tab="PinList">
         <PinList />
       </ChopWrapper>
     );

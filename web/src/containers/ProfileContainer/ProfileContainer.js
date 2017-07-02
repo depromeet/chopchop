@@ -9,7 +9,7 @@ class ProfileContainer extends Component {
 
   render() {
     return (
-      <ChopWrapper>
+      <ChopWrapper tab="Profile">
         <Profile />
       </ChopWrapper>
     );

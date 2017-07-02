@@ -1,9 +1,12 @@
 import React from 'react';
 import Navigation from './Navigation/Navigation'
 
-const ChopWrapper = ({ children }) => (
+const ChopWrapper = ({tab, children}) => (
   <div className="ChopWrapper">
-    <Navigation /> {children}
+    <Navigation
+      tab={tab}
+    /> 
+      {children}
   </div>
 );
 

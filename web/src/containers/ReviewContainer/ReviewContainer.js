@@ -9,7 +9,7 @@ class ReviewContainer extends Component {
 
   render() {
     return (
-      <ChopWrapper>
+      <ChopWrapper tab="Review">
         <Review />
       </ChopWrapper>
     );

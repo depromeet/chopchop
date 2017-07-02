@@ -10,7 +10,7 @@ class MyPageContainer extends Component {
 
   render() {
     return (
-      <ChopWrapper>
+      <ChopWrapper tab="MyPage">
         <MyPage />
       </ChopWrapper>
     );

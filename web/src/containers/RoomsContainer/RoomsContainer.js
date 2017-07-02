@@ -18,7 +18,7 @@ class RoomsContainer extends Component {
   
   render() {
     return (
-      <ChopWrapper>
+      <ChopWrapper tab="Rooms">
         <Rooms 
           roomsReducer={this.props.roomsReducer}
         />
