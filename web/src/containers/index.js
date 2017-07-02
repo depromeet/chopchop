@@ -28,7 +28,7 @@ class Body extends Component {
             <Container text>
                 <Route exact path="/chopchop/" component={HomeContainer}/>
                 <Route path="/chopchop/rooms/:roomId" component={RoomContainer}/>
-                <Route path="/chopchop/rooms" component={RoomsContainer}/>
+                <Route exact path="/chopchop/rooms" component={RoomsContainer}/>
                 <Route path="/chopchop/pinList" component={PinListContainer}/>
                 <Route path="/chopchop/myPage" component={MyPageContainer}/>
                 <Route path="/chopchop/reviews/:reviewId" component={ReviewContainer}/>
