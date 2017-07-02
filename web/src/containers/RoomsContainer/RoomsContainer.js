@@ -21,6 +21,7 @@ class RoomsContainer extends Component {
       <ChopWrapper tab="Rooms">
         <Rooms 
           roomsReducer={this.props.roomsReducer}
+          onMakeNewRoom={this.props.onMakeNewRoom}
         />
       </ChopWrapper>
     );
@@ -36,7 +37,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onGetAllRooms: (userId) => dispatch(roomsActions.getAllRooms(userId)),
-    onGetOnesRooms: (userId) => dispatch(roomsActions.getOnesRooms(userId))
+    onGetOnesRooms: (userId) => dispatch(roomsActions.getOnesRooms(userId)),
+    onMakeNewRoom: (userId) => dispatch(roomsActions.makeNewRoom(userId))
   };
 }
 

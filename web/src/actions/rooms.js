@@ -20,3 +20,9 @@ export const addOnesRoomsToState = (roomsData) => ({
   type: types.ADD_ONES_ROOMS_TO_STATE,
   roomsData
 });
+
+export const makeNewRoom = (roomName, userId) => ({
+  type: types.MAKE_NEW_ROOM,
+  roomName,
+  userId
+});

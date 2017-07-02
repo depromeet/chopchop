@@ -9,7 +9,7 @@ const initialState = {
 	]
 };
 
-export default function counter(state = initialState, action) {
+export default function rooms(state = initialState, action) {
 
 	switch(action.type) {
 		case types.ADD_ALL_ROOMS_TO_STATE:
