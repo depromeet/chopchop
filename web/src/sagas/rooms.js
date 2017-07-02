@@ -61,7 +61,7 @@ function* watchMakeNewRoom(){
   yield takeEvery(types.MAKE_NEW_ROOM, makeNewRoom);
 }
 
-export default function* postSaga(){
+export default function* roomSaga(){
   yield fork(watchGetAllRooms);
   yield fork(watchGetFollwingRooms);
   yield fork(watchMakeNewRoom);

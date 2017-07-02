@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import ChopWrapper from '../../components/ChopWrapper';
 import Home from '../../components/Home/Home';
 import { connect } from 'react-redux';
+import * as homeActions from '../../actions/home';
 
 
 type propTypes = {}
@@ -10,6 +11,10 @@ type propTypes = {}
 class HomeContainer extends Component {
   props: propTypes;
 
+  constructor(props) {
+    super(props)
+    // this.props.onGetPopularRooms(); // No use Get popular rooms
+  }
   render() {
     return (
       <ChopWrapper tab="Home">
@@ -27,7 +32,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-  
+  onGetPopularRooms: (userId) => dispatch(homeActions.getPopularRooms()),
 };
 }
 
