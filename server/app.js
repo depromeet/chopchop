@@ -7,11 +7,13 @@ var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
 // import routes/*.js
-var index        = require('./routes/index');
-var user         = require('./routes/user');
-var restaurant   = require('./routes/restaurant');
-var review       = require('./routes/review');
-var board        = require('./routes/board');
+var index           = require('./routes/index');
+var user            = require('./routes/user');
+var restaurant      = require('./routes/restaurant');
+var review          = require('./routes/review');
+var board           = require('./routes/board');
+var review_response = require('./routes/review_response');
+var review_comment  = require('./routes/review_comment');
 
 var app = express();
 
@@ -28,17 +30,27 @@ app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // route modules
+app.use(function timeLog (req, res, next) {
+    console.log('Time: ', Date.now())
+    next()
+});
 app.use('/', index);
 app.use('/users', user);
 app.use('/restaurants', restaurant);
 app.use('/reviews', review);
 app.use('/boards', board);
+app.use('/comments', review_comment);
+app.use('/responses', review_response);
 
 // use session
 app.use(session({
-  secret: 'showmethemoney',
+  key: 'sid', // 세션키
+  secret: 'secret', // 비밀키
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 1000 * 60 * 60 // 쿠키 유효기간 1시간
+  }
 }));
 
 // catch 404 and forward to error handler
@@ -73,9 +85,6 @@ app.set('jwt-secret', "SeCrEtKeYfOrHaShInGiNChOpChOp")
 // router.use('/', authMiddleware)
 // ex) board.js에 아래와 같이 입력하면, 먼저 토큰 검증을 합니다.
 // router.use('/:board_id', authMiddleware)
-
-
-
 
 /*
 // comment for using 'npm start'
