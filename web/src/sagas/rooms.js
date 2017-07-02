@@ -23,6 +23,27 @@ function* watchGetAllRooms(){
   yield takeEvery(types.GET_ALL_ROOMS, getAllRooms);
 }
 
+function* getOnesRooms(action){
+  const url = config.server.url;
+  const userId = action.userId;
+  const req = "http://" + url + "/boards/ones/";
+  try{
+    let roomsData = {};
+    yield axios.put(req,{
+            idx: userId
+          })
+          .then( res => { roomsData = res.data } )
+    yield put(actions.addOnesRoomsToState(roomsData));
+  } catch(e){
+    console.log(e);
+  }
+}
+
+function* watchGetOnesRooms(){
+  yield takeEvery(types.GET_ONES_ROOMS, getOnesRooms);
+}
+
 export default function* postSaga(){
   yield fork(watchGetAllRooms);
+  yield fork(watchGetOnesRooms);
 }

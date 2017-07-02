@@ -35,7 +35,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onGetAllRooms: (userId) => dispatch(roomsActions.getAllRooms(userId))
+    onGetAllRooms: (userId) => dispatch(roomsActions.getAllRooms(userId)),
+    onGetOnesRooms: (userId) => dispatch(roomsActions.getOnesRooms(userId))
   };
 }
 

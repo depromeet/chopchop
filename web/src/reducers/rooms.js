@@ -1,9 +1,12 @@
 import * as types from '../actions/ActionTypes';
 
 const initialState = {
-    board: [
+    allBoards: [
 
-    ]
+    ],
+	onesBoards: [
+
+	]
 };
 
 export default function counter(state = initialState, action) {
@@ -12,7 +15,12 @@ export default function counter(state = initialState, action) {
 		case types.ADD_ALL_ROOMS_TO_STATE:
 			return {
 				...state,
-                board: action.roomsData.board
+                allBoards: action.roomsData.board
+			 };
+		case types.ADD_ONES_ROOMS_TO_STATE:
+			return {
+				...state,
+                onesBoards: action.roomsData.board
 			 };
 		default:
 			return state;
