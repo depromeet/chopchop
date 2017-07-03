@@ -1,22 +1,8 @@
-import React, { Component, PropTypes } from 'react';
-import { Header, Grid, Image } from 'semantic-ui-react'
-import {
-    Route,
-    Link
-} from 'react-router-dom'
+import React, { Component } from 'react';
+import { Header } from 'semantic-ui-react'
 import RoomList from './RoomList'
 
-const propTypes = {
-
-};
-const defaultProps = {
-
-};
 class Rooms extends Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const allBoards = this.props.roomsReducer.allBoards;
@@ -51,8 +37,5 @@ class Rooms extends Component {
         );
     }
 }
-
-Rooms.propTypes = propTypes;
-Rooms.defaultProps = defaultProps;
 
 export default Rooms;

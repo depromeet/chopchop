@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import Room from '../../components/Room/Room';
 import ChopWrapper from '../../components/ChopWrapper';
 

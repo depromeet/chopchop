@@ -1,6 +1,9 @@
-import React, { Component, PropTypes } from 'react';
-import { Route } from 'react-router-dom'
+import React, { Component } from 'react';
+import { Route, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux';
 import { Container } from 'semantic-ui-react'
+// import Message from '../components/Message/Message'
+import Login from '../components/Login/Login'
 import HomeContainer from './HomeContainer/HomeContainer';
 import MyPageContainer from './MyPageContainer/MyPageContainer';
 import PinListContainer from './PinListContainer/PinListContainer';
@@ -9,37 +12,56 @@ import RoomContainer from './RoomContainer/RoomContainer';
 import ProfileContainer from './ProfileContainer/ProfileContainer';
 import ReviewContainer from './ReviewContainer/ReviewContainer';
 
-import Room from '../components/Room/Room';
-const propTypes = {
-
-};
-const defaultProps = {
-
-};
-class Body extends Component {
-
-    constructor(props) {
-        super(props);
+function PrivateRoute ({component: Component, authed, authedLoading, path, ...rest}) {
+    
+    if(authed === true){
+        return <Route path={path} component={Component}/>
+    }else{
+        return <Redirect from={path} to='/chopchop/login'/>
     }
+}
+
+function PublicRoute ({component: Component, authed, path, ...rest}) {
+    console.log(authed);
+    if(authed === false){
+        return <Route path={path} component={Component}/>
+    }else{
+        return <Redirect from={path} to='/chopchop/'/>
+    }
+}
+
+class RootRoute extends Component {
 
     render() {
+        const authed = false;
         return(
           <div>
             <Container text>
-                <Route exact path="/chopchop/" component={HomeContainer}/>
-                <Route path="/chopchop/rooms/:roomId" component={RoomContainer}/>
-                <Route exact path="/chopchop/rooms" component={RoomsContainer}/>
-                <Route path="/chopchop/pinList" component={PinListContainer}/>
-                <Route path="/chopchop/myPage" component={MyPageContainer}/>
-                <Route path="/chopchop/reviews/:reviewId" component={ReviewContainer}/>
-                <Route path="/chopchop/profile/:profileId" component={ProfileContainer}/>
+                <PublicRoute
+                  path='/chopchop/login'
+                  authed={authed}
+                  component={Login}
+                  />
+                <PrivateRoute exact path="/chopchop/" component={HomeContainer} authed={authed}/>
+                <PrivateRoute path="/chopchop/rooms/:roomId" component={RoomContainer} authed={authed}/>
+                <PrivateRoute exact path="/chopchop/rooms" component={RoomsContainer} authed={authed}/>
+                <PrivateRoute path="/chopchop/pinList" component={PinListContainer} authed={authed}/>
+                <PrivateRoute path="/chopchop/myPage" component={MyPageContainer} authed={authed}/>
+                <PrivateRoute path="/chopchop/reviews/:reviewId" component={ReviewContainer} authed={authed}/>
+                <PrivateRoute path="/chopchop/profile/:profileId" component={ProfileContainer} authed={authed}/>
+                {/*<Message visible={this.props.authReducer.messageVisibility} message={this.props.authReducer.message}/>*/}
             </Container>
           </div>
         );
     }
 }
-
-Body.propTypes = propTypes;
-Body.defaultProps = defaultProps;
-
-export default Body;
+function mapStateToProps(state) {
+  return {
+    authReducer: state.authReducer
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+  };
+}
+export default connect(mapStateToProps,mapDispatchToProps)(RootRoute);

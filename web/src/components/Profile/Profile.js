@@ -1,17 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Header, Icon, Image, Feed } from 'semantic-ui-react'
 
-const propTypes = {
-
-};
-const defaultProps = {
-
-};
 class Profile extends Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         console.log(this.props);
@@ -31,7 +21,7 @@ class Profile extends Component {
                 <Feed>
                   <Feed.Event>
                     <Feed.Label>
-                      <img src='http://semantic-ui.com/images/avatar/small/elliot.jpg' />
+                      <img src='http://semantic-ui.com/images/avatar/small/elliot.jpg' role="presentation" />
                     </Feed.Label>
                     <Feed.Content>
                       <Feed.Summary>
@@ -55,8 +45,8 @@ class Profile extends Component {
                         <Feed.Date>4 days ago</Feed.Date>
                       </Feed.Summary>
                       <Feed.Extra images>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation" /></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation" /></a>
                       </Feed.Extra>
                       <Feed.Meta>
                         <Feed.Like>
@@ -109,8 +99,8 @@ class Profile extends Component {
                         <Feed.Date>4 days ago</Feed.Date>
                       </Feed.Summary>
                       <Feed.Extra images>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation" /></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation" /></a>
                       </Feed.Extra>
                       <Feed.Meta>
                         <Feed.Like>
@@ -125,8 +115,5 @@ class Profile extends Component {
             );
     }
 }
-
-Profile.propTypes = propTypes;
-Profile.defaultProps = defaultProps;
 
 export default Profile;

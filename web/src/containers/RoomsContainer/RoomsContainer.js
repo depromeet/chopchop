@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import Rooms from '../../components/Rooms/Rooms';
 import ChopWrapper from '../../components/ChopWrapper';
 import * as roomsActions from '../../actions/rooms';

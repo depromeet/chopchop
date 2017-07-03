@@ -1,20 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Image, Grid, Feed, Icon } from 'semantic-ui-react'
 import {
   Link
 } from 'react-router-dom'
 
-const propTypes = {
-
-};
-const defaultProps = {
-
-};
 class Room extends Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return(
@@ -30,7 +20,7 @@ class Room extends Component {
                 <Feed>
                   <Feed.Event>
                     <Feed.Label>
-                      <img src='http://semantic-ui.com/images/avatar/small/elliot.jpg' />
+                      <img src='http://semantic-ui.com/images/avatar/small/elliot.jpg' role="presentation"/>
                     </Feed.Label>
                     <Feed.Content>
                       <Feed.Summary>
@@ -44,8 +34,8 @@ class Room extends Component {
                       </Feed.Extra>
                       <Feed.Extra images>
                         <Link to={`/chopchop/reviews/1`}>
-                            <img src='http://semantic-ui.com/images/wireframe/image.png' />
-                            <img src='http://semantic-ui.com/images/wireframe/image.png' />
+                            <img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/>
+                            <img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/>
                         </Link>
                       </Feed.Extra>
                       <Feed.Meta>
@@ -71,8 +61,8 @@ class Room extends Component {
                       </Feed.Extra>
                       <Feed.Extra images>
                           <Link to={`/chopchop/reviews/1`}>
-                              <img src='http://semantic-ui.com/images/wireframe/image.png' />
-                              <img src='http://semantic-ui.com/images/wireframe/image.png' />
+                              <img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/>
+                              <img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/>
                           </Link>
                       </Feed.Extra>
                       <Feed.Meta>
@@ -94,8 +84,8 @@ class Room extends Component {
                         day soon.
                       </Feed.Extra>
                       <Feed.Extra images>
-                        <img src='http://semantic-ui.com/images/wireframe/image.png' />
-                        <img src='http://semantic-ui.com/images/wireframe/image.png' />
+                        <img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/>
+                        <img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/>
                       </Feed.Extra>
                       <Feed.Meta>
                         <Feed.Like>
@@ -119,8 +109,8 @@ class Room extends Component {
                         day soon.
                       </Feed.Extra>
                       <Feed.Extra images>
-                        <img src='http://semantic-ui.com/images/wireframe/image.png' />
-                        <img src='http://semantic-ui.com/images/wireframe/image.png' />
+                        <img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/>
+                        <img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/>
                       </Feed.Extra>
                       <Feed.Extra text>
                         Ours is a life of constant reruns. We're always circling back to where we'd we started, then starting all
@@ -149,8 +139,8 @@ class Room extends Component {
                         day soon.
                       </Feed.Extra>
                       <Feed.Extra images>
-                        <img src='http://semantic-ui.com/images/wireframe/image.png' />
-                        <img src='http://semantic-ui.com/images/wireframe/image.png' />
+                        <img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/>
+                        <img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/>
                       </Feed.Extra>
                       <Feed.Meta>
                         <Feed.Like>
@@ -165,8 +155,5 @@ class Room extends Component {
         );
     }
 }
-
-Room.propTypes = propTypes;
-Room.defaultProps = defaultProps;
 
 export default Room;

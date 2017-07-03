@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Header, Grid, Image } from 'semantic-ui-react'
+import { Grid, Image } from 'semantic-ui-react'
 import {
-    Route,
     Link
 } from 'react-router-dom'
 

@@ -1,5 +1,6 @@
-import { delay } from 'redux-saga';
-import { call, put, takeEvery, fork } from 'redux-saga/effects';
+// import { delay } from 'redux-saga';
+// import { call, put, takeEvery, fork } from 'redux-saga/effects';
+import { put, takeEvery, fork } from 'redux-saga/effects';
 import * as actions from  '../actions/rooms';
 import * as types from '../actions/ActionTypes';
 import axios from 'axios';
@@ -43,10 +44,8 @@ function* watchGetFollwingRooms(){
 
 function* makeNewRoom(action){
   const url = config.server.url;
-  const userId = action.userId;
   const req = "http://" + url + "/boards/";
   try{
-    let roomsData = {};
     yield axios.post(req,{
             "board_name": action.roomName,
             "board_uid": action.userId

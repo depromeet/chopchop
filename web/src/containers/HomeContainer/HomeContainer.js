@@ -11,10 +11,6 @@ type propTypes = {}
 class HomeContainer extends Component {
   props: propTypes;
 
-  constructor(props) {
-    super(props)
-    // this.props.onGetPopularRooms(); // No use Get popular rooms
-  }
   render() {
     return (
       <ChopWrapper tab="Home">

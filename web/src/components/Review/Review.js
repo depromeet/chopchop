@@ -1,17 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Image, Grid, Feed, Icon, Header, Form, Button, Comment } from 'semantic-ui-react'
 
-const propTypes = {
-
-};
-const defaultProps = {
-
-};
 class Review extends Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return(
@@ -22,7 +12,7 @@ class Review extends Component {
                         <Feed>
                           <Feed.Event>
                             <Feed.Label>
-                              <img src='http://semantic-ui.com/images/avatar/small/elliot.jpg' />
+                              <img src='http://semantic-ui.com/images/avatar/small/elliot.jpg' role="presentation" />
                             </Feed.Label>
                             <Feed.Content>
                               <Feed.Summary>
@@ -120,8 +110,5 @@ class Review extends Component {
         );
     }
 }
-
-Review.propTypes = propTypes;
-Review.defaultProps = defaultProps;
 
 export default Review;

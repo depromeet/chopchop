@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import Review from '../../components/Review/Review';
 import ChopWrapper from '../../components/ChopWrapper';
 

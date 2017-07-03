@@ -1,17 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Header, Grid, Image } from 'semantic-ui-react';
 import GoogleMap from '../GoogleMap/GoogleMap';
-const propTypes = {
 
-};
-const defaultProps = {
-
-};
 class PinList extends Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     render() {
 
@@ -46,8 +37,5 @@ class PinList extends Component {
         );
     }
 }
-
-PinList.propTypes = propTypes;
-PinList.defaultProps = defaultProps;
 
 export default PinList;
