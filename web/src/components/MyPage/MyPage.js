@@ -1,17 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Header, Icon, Image, Feed } from 'semantic-ui-react'
 
-const propTypes = {
-
-};
-const defaultProps = {
-
-};
 class MyPage extends Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return(
@@ -30,7 +20,7 @@ class MyPage extends Component {
                 <Feed>
                   <Feed.Event>
                     <Feed.Label>
-                      <img src='http://semantic-ui.com/images/avatar/small/elliot.jpg' />
+                      <img src='http://semantic-ui.com/images/avatar/small/elliot.jpg' role="presentation"/>
                     </Feed.Label>
                     <Feed.Content>
                       <Feed.Summary>
@@ -43,8 +33,8 @@ class MyPage extends Component {
                         day soon.
                       </Feed.Extra>
                       <Feed.Extra images>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/></a>
                       </Feed.Extra>
                       <Feed.Meta>
                         <Feed.Like>
@@ -68,8 +58,8 @@ class MyPage extends Component {
                         day soon.
                       </Feed.Extra>
                       <Feed.Extra images>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/></a>
                       </Feed.Extra>
                       <Feed.Meta>
                         <Feed.Like>
@@ -90,8 +80,8 @@ class MyPage extends Component {
                         day soon.
                       </Feed.Extra>
                       <Feed.Extra images>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/></a>
                       </Feed.Extra>
                       <Feed.Meta>
                         <Feed.Like>
@@ -115,8 +105,8 @@ class MyPage extends Component {
                         day soon.
                       </Feed.Extra>
                       <Feed.Extra images>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/></a>
                       </Feed.Extra>
                       <Feed.Extra text>
                         Ours is a life of constant reruns. We're always circling back to where we'd we started, then starting all
@@ -145,8 +135,8 @@ class MyPage extends Component {
                         day soon.
                       </Feed.Extra>
                       <Feed.Extra images>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
-                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' /></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/></a>
+                        <a><img src='http://semantic-ui.com/images/wireframe/image.png' role="presentation"/></a>
                       </Feed.Extra>
                       <Feed.Meta>
                         <Feed.Like>
@@ -161,8 +151,5 @@ class MyPage extends Component {
             );
     }
 }
-
-MyPage.propTypes = propTypes;
-MyPage.defaultProps = defaultProps;
 
 export default MyPage;
