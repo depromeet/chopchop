@@ -13,18 +13,16 @@ import ProfileContainer from './ProfileContainer/ProfileContainer';
 import ReviewContainer from './ReviewContainer/ReviewContainer';
 
 function PrivateRoute ({component: Component, authed, authedLoading, path, ...rest}) {
-    
     if(authed === true){
-        return <Route path={path} component={Component}/>
+        return <Route exact path={path} component={Component}/>
     }else{
         return <Redirect from={path} to='/chopchop/login'/>
     }
 }
 
 function PublicRoute ({component: Component, authed, path, ...rest}) {
-    console.log(authed);
     if(authed === false){
-        return <Route path={path} component={Component}/>
+        return <Route exact path={path} component={Component}/>
     }else{
         return <Redirect from={path} to='/chopchop/'/>
     }
@@ -33,7 +31,7 @@ function PublicRoute ({component: Component, authed, path, ...rest}) {
 class RootRoute extends Component {
 
     render() {
-        const authed = false;
+        const authed = true;
         return(
           <div>
             <Container text>
@@ -64,4 +62,4 @@ function mapDispatchToProps(dispatch) {
   return {
   };
 }
-export default connect(mapStateToProps,mapDispatchToProps)(RootRoute);
+export default (RootRoute);
