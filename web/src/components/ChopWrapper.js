@@ -3,9 +3,7 @@ import Navigation from './Navigation/Navigation'
 
 const ChopWrapper = ({tab, children}) => (
   <div className="ChopWrapper">
-    <Navigation
-      tab={tab}
-    /> 
+    <Navigation tab={tab}/> 
       {children}
   </div>
 );

@@ -1,7 +1,7 @@
 import * as types from '../actions/ActionTypes';
 
 const initialState = {
-  authed: true,
+  authed: false,
   authedLoading: true,
   requested: false,
   messageVisibility: false,
