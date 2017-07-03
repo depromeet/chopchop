@@ -7,7 +7,11 @@ const initialState = {
   messageVisibility: false,
   message: '',
   userInfo: {
-    
+    user_id : -1,
+    user_name : "",
+    user_nickname : "",
+    user_image : "",
+    user_token : ""
   }
 };
 
