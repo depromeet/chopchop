@@ -2,10 +2,19 @@ import React, { Component }  from 'react'
 import { Button, Modal, Form, Checkbox } from 'semantic-ui-react'
 
 class SignUp extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+        closing: false
+        };
+    }
     handleChange(e,value,item){
         value[item] = e.target.value
     }
     render() {
+        const { visible } = this.props;
+        if(!visible) return null;
+
         let userSignUpInfo = {
                 "user_email" : "",
                 "user_password" : "",
@@ -13,9 +22,6 @@ class SignUp extends Component {
                 "user_source" : "direct"
             }
         return (  
-          <Modal trigger={<Button secondary fluid>Sign Up Now</Button>}>
-            <Modal.Header>Sign Up Now</Modal.Header>
-            <Modal.Content>
             <Form>
                 <Form.Field>
                 <label>Email</label>
@@ -54,8 +60,6 @@ class SignUp extends Component {
                     SignUp
                 </h3>
             </Form>                
-            </Modal.Content>
-          </Modal>
         )
     }
 }

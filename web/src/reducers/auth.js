@@ -5,6 +5,8 @@ const initialState = {
   authedLoading: true,
   requested: false,
   messageVisibility: false,
+  signInVisibility: true,
+  signUpVisibility: false,
   message: '',
   userInfo: {
     user_id : -1,
@@ -18,29 +20,6 @@ const initialState = {
 export default function auth(state = initialState, action) {
 
 	switch(action.type) {
-    case types.AUTH_LOGIN_REQUESTED:
-      return {
-        ...state,
-        authedLoading: true,
-      }
-    case types.AUTH_LOGIN_GET_USER_INFO:
-      return {
-        ...state,
-        authed: true,
-        authedLoading: false,
-        userInfo: action.userInfo,
-      }
-    case types.AUTH_LOGOUT_DETECTED:
-      return {
-        ...state,
-        authed: false,
-        authedLoading: false
-      }
-    case types.AUTH_LOGOUT_FULFILLED:
-      return {
-        ...state,
-        requested: false,
-      }
     case types.AUTH_HIDE_MESSAGE:
       return {
         ...state,
@@ -52,6 +31,29 @@ export default function auth(state = initialState, action) {
         messageVisibility: true,
         message: action.message
       }
+    case types.MAKE_SIGN_IN_VISIBLE:
+      return {
+        ...state,
+        signInVisibility: true,
+        signUpVisibility: false
+      }
+    case types.MAKE_SIGN_IN_UNVISIBLE:
+      return {
+        ...state,
+        signInVisibility: false
+      }
+    case types.MAKE_SIGN_UP_VISIBLE:
+      return {
+        ...state,
+        signUpVisibility: true,
+        signInVisibility: false
+      }
+    case types.MAKE_SIGN_UP_UNVISIBLE:
+      return {
+        ...state,
+        signUpVisibility: false
+      }
+    
 
 		default:
 			return state;

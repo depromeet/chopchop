@@ -4,6 +4,7 @@ import {Provider} from 'react-redux';
 import App from './App';
 import configureStore from './store';
 import './index.css';
+import './Animation.css';
 
 const store = configureStore();
 ReactDOM.render(

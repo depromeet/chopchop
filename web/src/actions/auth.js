@@ -24,3 +24,20 @@ export const authShowMessage = (message) => ({
   type: types.AUTH_SHOW_MESSAGE,
   message
 });
+
+export const makeSignInVisible = () => ({
+  type: types.MAKE_SIGN_IN_VISIBLE
+});
+
+export const makeSignInUnvisible = () => ({
+  type: types.MAKE_SIGN_IN_UNVISIBLE
+});
+
+export const makeSignUpVisible = () => ({
+  type: types.MAKE_SIGN_UP_VISIBLE
+});
+
+export const makeSignUpUnvisible = () => ({
+  type: types.MAKE_SIGN_UP_UNVISIBLE
+});
+
