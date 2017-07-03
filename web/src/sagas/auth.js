@@ -12,12 +12,10 @@ function* signInWithEmail(action){
   try{
     yield axios.post(req,
             {"user" : {
-                "user_tokenid"  : "null",
-                "user_name"     : action.userSignInInfo.user_name,
-                "user_nickname" : action.userSignInInfo.user_nickname,
-                "user_email"    : action.userSignInInfo.user_email,
+                "user_email" : action.userSignInInfo.user_email,
                 "user_password" : action.userSignInInfo.user_password,
-                "user_source"   : action.userSignInInfo.user_source
+                "user_tokenid" : "null",
+                "user_source" : action.userSignInInfo.user_source
                 }   
             })
   } catch(e){
