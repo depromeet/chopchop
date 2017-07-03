@@ -1,6 +1,6 @@
-// import { delay } from 'redux-saga';
+import { delay } from 'redux-saga';
 // import { call, put, takeEvery, fork } from 'redux-saga/effects';
-import { takeEvery, fork } from 'redux-saga/effects';
+import { put, takeEvery, fork } from 'redux-saga/effects';
 import * as actions from  '../actions/auth';
 import * as types from '../actions/ActionTypes';
 import axios from 'axios';
@@ -13,7 +13,9 @@ function* signInWithEmail(action){
     yield axios.post(req,{"user" : action.userSignInInfo})
             .then( res => console.log(res));
   } catch(e){
-    console.log(e);
+    console.log(e.message);
+    yield put(actions.authShowMessage(e.message));
+
   }
 }
 
@@ -28,7 +30,7 @@ function* signUpWithEmail(action){
     yield axios.post(req,{"user" : action.userSignUpInfo})
             .then( res => console.log(res));
   } catch(e){
-    console.log(e);
+    yield put(actions.authShowMessage(e.message));
   }
 }
 
@@ -36,7 +38,17 @@ function* watchSignUpWithEmail(){
   yield takeEvery(types.SIGN_UP_WITH_EMAIL, signUpWithEmail);
 }
 
+function* showMessageAndHide(){
+  yield delay(1500);
+  yield put(actions.authHideMessage());
+}
+
+function* watchShowMessage(){
+  yield takeEvery(types.AUTH_SHOW_MESSAGE, showMessageAndHide);
+}
+
 export default function* authSaga(){
   yield fork(watchSignInWithEmail);
   yield fork(watchSignUpWithEmail);
+  yield fork(watchShowMessage);
 }
