@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { Container } from 'semantic-ui-react'
 // import Message from '../components/Message/Message'
@@ -62,4 +62,4 @@ function mapDispatchToProps(dispatch) {
   return {
   };
 }
-export default (RootRoute);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(RootRoute));
