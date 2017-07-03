@@ -13,7 +13,6 @@ function* signInWithEmail(action){
     yield axios.post(req,{"user" : action.userSignInInfo})
             .then( res => console.log(res));
   } catch(e){
-    console.log(e.message);
     yield put(actions.authShowMessage(e.message));
 
   }
@@ -29,6 +28,7 @@ function* signUpWithEmail(action){
   try{
     yield axios.post(req,{"user" : action.userSignUpInfo})
             .then( res => console.log(res));
+    yield put(actions.authShowMessage(`Success`));
   } catch(e){
     yield put(actions.authShowMessage(e.message));
   }
