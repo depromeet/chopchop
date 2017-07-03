@@ -10,14 +10,8 @@ function* signInWithEmail(action){
   const url = config.server.url;
   const req = "http://" + url + "/users/login";
   try{
-    yield axios.post(req,
-            {"user" : {
-                "user_email" : action.userSignInInfo.user_email,
-                "user_password" : action.userSignInInfo.user_password,
-                "user_tokenid" : "null",
-                "user_source" : action.userSignInInfo.user_source
-                }   
-            })
+    yield axios.post(req,{"user" : action.userSignInInfo})
+            .then( res => console.log(res));
   } catch(e){
     console.log(e);
   }
@@ -31,16 +25,8 @@ function* signUpWithEmail(action){
   const url = config.server.url;
   const req = "http://" + url + "/users";
   try{
-    yield axios.post(req,
-            {"user" : {
-                "user_tokenid"  : "null",
-                "user_name"     : action.userSignUpInfo.user_name,
-                "user_nickname" : action.userSignUpInfo.user_nickname,
-                "user_email"    : action.userSignUpInfo.user_email,
-                "user_password" : action.userSignUpInfo.user_password,
-                "user_source"   : action.userSignUpInfo.user_source
-                }   
-            })
+    yield axios.post(req,{"user" : action.userSignUpInfo})
+            .then( res => console.log(res));
   } catch(e){
     console.log(e);
   }

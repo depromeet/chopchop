@@ -25,8 +25,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onSignInWithEmail: (userSignInInfo) => dispatch(authActions.signInWithEmail()),
-    onSignUpWithEmail: (userSignUpInfo) => dispatch(authActions.signUpWithEmail()),
+    onSignInWithEmail: (userSignInInfo) => dispatch(authActions.signInWithEmail(userSignInInfo)),
+    onSignUpWithEmail: (userSignUpInfo) => dispatch(authActions.signUpWithEmail(userSignUpInfo)),
   };
 }
 
