@@ -1,5 +1,5 @@
 import React, { Component }  from 'react'
-import { Button, Header, Image, Modal, Form, Checkbox } from 'semantic-ui-react'
+import { Button, Modal, Form, Checkbox } from 'semantic-ui-react'
 
 class SignUp extends Component {
     handleChange(e,value,item){

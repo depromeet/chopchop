@@ -6,7 +6,9 @@ const initialState = {
   requested: false,
   messageVisibility: false,
   message: '',
-  userInfo: {}
+  userInfo: {
+    
+  }
 };
 
 export default function auth(state = initialState, action) {

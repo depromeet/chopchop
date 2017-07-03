@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Button, Divider, Checkbox, Form } from 'semantic-ui-react';
+import { Button, Divider } from 'semantic-ui-react';
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import "./Auth.css";

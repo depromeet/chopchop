@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import ChopWrapper from '../../components/ChopWrapper';
 import Auth from '../../components/Auth/Auth';
 import { connect } from 'react-redux';
 import * as authActions from '../../actions/auth';
