@@ -48,9 +48,9 @@ function* getUserInfo(action){
   try{
     let userInfo = {};
     yield axios.get(req)
-            .then( res => userInfo = res.data.users);
+            .then( res => userInfo = res.data.users[0]);
     yield put(actions.addUserInfo(userInfo));
-    yield put(actions.authShowMessage(`Success`));
+    yield put(actions.authShowMessage(userInfo.user_name + `님 환영합니다`));
   } catch(e){
     yield put(actions.authShowMessage(e.message));
   }
