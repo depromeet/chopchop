@@ -9,7 +9,6 @@ class SignUp extends Component {
         this.props.onVerifyEmail(emailAddress);
     }
     submitUserSignUpInfo(userSignUpInfo){
-        console.log(userSignUpInfo);
         if(this.props.verifiedEmail){
             this.props.onSignUpWithEmail(userSignUpInfo);
         }else{
