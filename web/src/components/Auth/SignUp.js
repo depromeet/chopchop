@@ -1,14 +1,15 @@
 import React, { Component }  from 'react'
-import { Form, Checkbox } from 'semantic-ui-react'
+import { Form, Button, Checkbox } from 'semantic-ui-react'
 
 class SignUp extends Component {
     handleChange(e,value,item){
         value[item] = e.target.value
     }
-    verifyEmailAddress(e){
-        this.props.onVerifyEmail(e.target.value);
+    verifyEmailAddress(emailAddress){
+        this.props.onVerifyEmail(emailAddress);
     }
     submitUserSignUpInfo(userSignUpInfo){
+        console.log(userSignUpInfo);
         if(this.props.verifiedEmail){
             this.props.onSignUpWithEmail(userSignUpInfo);
         }else{
@@ -36,11 +37,18 @@ class SignUp extends Component {
                     type='email'
                     onChange={(e) => {
                         this.handleChange(e,userSignUpInfo,"user_email")
-                        this.verifyEmailAddress(e)
-                        }
-                    }
+                        }}
                 />
-                {verifiedEmail?"VERIFIED":"NOT VERIFIED"}
+                <div>{verifiedEmail?"VERIFIED":"NOT VERIFIED"}</div>
+                <Button
+                    onClick={(e) => {
+                        e.preventDefault();
+                        this.verifyEmailAddress(userSignUpInfo["user_email"])
+                        }}
+                >
+                    VERIFY EMAIL
+                </Button>
+                
                 
                 </Form.Field>
                 <Form.Field>

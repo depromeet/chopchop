@@ -38,6 +38,7 @@ function* signUpWithEmail(action){
 function* verifyEmail(action){
   if(action.emailAddress.length===0){
       yield put(actions.setVerifiedEmail(false));
+      yield put(actions.authShowMessage(`Not Verified`));
       return;
   }
       
@@ -50,8 +51,10 @@ function* verifyEmail(action){
             if (res.data.status === "Success") verifiedEmail = true;
           });
     yield put(actions.setVerifiedEmail(verifiedEmail));
+    yield put(actions.authShowMessage(`Verified`));
   } catch(e){
     yield put(actions.setVerifiedEmail(false));
+    yield put(actions.authShowMessage(`Not Verified`));
   }
 }
 
