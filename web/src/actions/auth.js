@@ -16,6 +16,11 @@ export const getUserInfo = (userId) => ({
   userId
 });
 
+export const addUserInfo = (userInfo) => ({
+  type: types.ADD_USER_INFO,
+  userInfo
+});
+
 export const authHideMessage = () => ({
   type: types.AUTH_HIDE_MESSAGE
 });

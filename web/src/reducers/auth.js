@@ -2,8 +2,6 @@ import * as types from '../actions/ActionTypes';
 
 const initialState = {
   authed: false,
-  authedLoading: true,
-  requested: false,
   messageVisibility: false,
   signInVisibility: true,
   signUpVisibility: false,
@@ -52,6 +50,12 @@ export default function auth(state = initialState, action) {
       return {
         ...state,
         signUpVisibility: false
+      }
+    case types.ADD_USER_INFO:
+      return {
+        ...state,
+        authed: true,
+        userInfo: action.userInfo
       }
     
 
