@@ -11,8 +11,9 @@ function* signInWithEmail(action){
   const req = "http://" + url + "/users/login";
   try{
     let userId = null;
-    yield axios.post(req,{"user" : action.userSignInInfo})
-            .then( res => userId = res.message);
+    // yield axios.post(req,{"user" : action.userSignInInfo})
+    //         .then( res => userId = res.message);
+    userId = 1; //tmp userId setup
     yield put(actions.getUserInfo(userId));
   } catch(e){
     yield put(actions.authShowMessage(e.message));
@@ -71,5 +72,6 @@ function* watchShowMessage(){
 export default function* authSaga(){
   yield fork(watchSignInWithEmail);
   yield fork(watchSignUpWithEmail);
+  yield fork(watchGetUserInfo);
   yield fork(watchShowMessage);
 }
