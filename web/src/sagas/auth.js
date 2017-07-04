@@ -36,6 +36,11 @@ function* signUpWithEmail(action){
   }
 }
 function* verifyEmail(action){
+  if(action.emailAddress.length===0){
+      yield put(actions.setVerifiedEmail(false));
+      return;
+  }
+      
   const url = config.server.url;
   const req = "http://" + url + "/users/email?email=" + action.emailAddress;
   try{
