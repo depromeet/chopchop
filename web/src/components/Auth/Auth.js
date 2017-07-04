@@ -12,7 +12,6 @@ class Auth extends Component {
         const onMakeSignInUnvisible = this.props.onMakeSignInUnvisible;
         const onMakeSignUpVisible = this.props.onMakeSignUpVisible;
         const onMakeSignUpUnvisible = this.props.onMakeSignUpUnvisible;
-        const visible = this.props.authReducer
         return(
             <div className="Auth-wrapper">
                 <Button fluid color='blue'>Facebook Login</Button>
