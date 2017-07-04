@@ -13,8 +13,16 @@ const initialState = {
     user_image : "",
     user_token : ""
   },
-  signUpInfo: {
-    verifiedEmail : false
+  signUpInfoWithEmail: {
+    verifiedEmail : false,
+    users: {
+      "user_tokenid" : "NULL",
+      "user_name" : "",
+      "user_nickname" : "",
+      "user_email" : "",
+      "user_password" : "",
+      "user_source" : "direct"
+    }
   }
 };
 
@@ -63,7 +71,7 @@ export default function auth(state = initialState, action) {
     case types.SET_VERIFIED_EMAIL:
       return {
         ...state,
-        signUpInfo: {
+        signUpInfoWithEmail: {
           ...state.signUpInfo,
           verifiedEmail: action.success
         }
