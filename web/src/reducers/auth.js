@@ -12,6 +12,9 @@ const initialState = {
     user_nickname : "",
     user_image : "",
     user_token : ""
+  },
+  signUpInfo: {
+    verifiedEmail : false
   }
 };
 
@@ -56,6 +59,14 @@ export default function auth(state = initialState, action) {
         ...state,
         authed: true,
         userInfo: action.userInfo
+      }
+    case types.SET_VERIFIED_EMAIL:
+      return {
+        ...state,
+        signUpInfo: {
+          ...state.signUpInfo,
+          verifiedEmail: action.success
+        }
       }
     
 

@@ -17,7 +17,6 @@ function* signInWithEmail(action){
     yield put(actions.getUserInfo(userId));
   } catch(e){
     yield put(actions.authShowMessage(e.message));
-
   }
 }
 
@@ -36,9 +35,26 @@ function* signUpWithEmail(action){
     yield put(actions.authShowMessage(e.message));
   }
 }
+function* verifyEmail(action){
+  const url = config.server.url;
+  const req = "http://" + url + "/users/email?email=" + action.emailAddress;
+  try{
+    let verifiedEmail = false;
+    yield axios.get(req)
+          .then( function(res){
+            if (res.status === "Success") verifiedEmail = true;
+          });
+    yield put(actions.setVerifiedEmail(verifiedEmail));
+    yield put(actions.authShowMessage(`Success`));
+  } catch(e){
+    yield put(actions.setVerifiedEmail(false));
+    yield put(actions.authShowMessage(e.message));
+  }
+}
 
 function* watchSignUpWithEmail(){
   yield takeEvery(types.SIGN_UP_WITH_EMAIL, signUpWithEmail);
+  yield takeEvery(types.VERIFY_EMAIL, verifyEmail);
 }
 
 function* getUserInfo(action){
@@ -48,7 +64,7 @@ function* getUserInfo(action){
   try{
     let userInfo = {};
     yield axios.get(req)
-            .then( res => userInfo = res.data.users[0]);
+            .then( res => userInfo = res.data.values[0]);
     yield put(actions.addUserInfo(userInfo));
     yield put(actions.authShowMessage(userInfo.user_name + `님 환영합니다`));
   } catch(e){

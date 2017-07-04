@@ -11,6 +11,7 @@ class AuthContainer extends Component {
       <Auth 
         onSignInWithEmail={this.props.onSignInWithEmail}
         onSignUpWithEmail={this.props.onSignUpWithEmail}
+        onVerifyEmail={this.props.onVerifyEmail}
         authReducer={this.props.authReducer}
         onMakeSignInVisible={this.props.onMakeSignInVisible}
         onMakeSignInUnvisible={this.props.onMakeSignInUnvisible}
@@ -31,6 +32,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onSignInWithEmail: (userSignInInfo) => dispatch(authActions.signInWithEmail(userSignInInfo)),
     onSignUpWithEmail: (userSignUpInfo) => dispatch(authActions.signUpWithEmail(userSignUpInfo)),
+    onVerifyEmail: (emailAddress) => dispatch(authActions.verifyEmail(emailAddress)),
     onMakeSignInVisible: () => dispatch(authActions.makeSignInVisible()),
     onMakeSignInUnvisible: () => dispatch(authActions.makeSignInUnvisible()),
     onMakeSignUpVisible: () => dispatch(authActions.makeSignUpVisible()),

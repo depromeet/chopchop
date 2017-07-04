@@ -11,6 +11,9 @@ class SignUp extends Component {
     handleChange(e,value,item){
         value[item] = e.target.value
     }
+    verifyEmailAddress(e){
+        this.props.onVerifyEmail(e.target.value);
+    }
     render() {
         const { visible } = this.props;
         if(!visible) return null;
@@ -28,7 +31,7 @@ class SignUp extends Component {
                 <input 
                     placeholder='YourEmail@Email.com' 
                     type='email'
-                    onChange={e => this.handleChange(e,userSignUpInfo,"user_email")}
+                    onChange={e => this.verifyEmailAddress(e)}
                 />
                 </Form.Field>
                 <Form.Field>
