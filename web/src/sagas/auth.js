@@ -57,8 +57,7 @@ function* watchSignUpWithEmail(){
 
 function* getUserInfo(action){
   const url = config.server.url;
-  const offset = action.userId-1;
-  const req = "http://" + url + "/users?limit=1&offset="+offset;
+  const req = "http://" + url + "/users/"+action.userId;
   try{
     let userInfo = {};
     yield axios.get(req)
