@@ -42,13 +42,11 @@ function* verifyEmail(action){
     let verifiedEmail = false;
     yield axios.get(req)
           .then( function(res){
-            if (res.status === "Success") verifiedEmail = true;
+            if (res.data.status === "Success") verifiedEmail = true;
           });
     yield put(actions.setVerifiedEmail(verifiedEmail));
-    yield put(actions.authShowMessage(`Success`));
   } catch(e){
     yield put(actions.setVerifiedEmail(false));
-    yield put(actions.authShowMessage(e.message));
   }
 }
 

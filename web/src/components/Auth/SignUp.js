@@ -2,27 +2,30 @@ import React, { Component }  from 'react'
 import { Form, Checkbox } from 'semantic-ui-react'
 
 class SignUp extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-        closing: false
-        };
-    }
     handleChange(e,value,item){
         value[item] = e.target.value
     }
     verifyEmailAddress(e){
         this.props.onVerifyEmail(e.target.value);
     }
+    submitUserSignUpInfo(userSignUpInfo){
+        if(this.props.verifiedEmail){
+            this.props.onSignUpWithEmail(userSignUpInfo);
+        }else{
+            this.props.onAuthShowMessage(`Email address isn't verified`)
+        }
+    }
     render() {
         const { visible } = this.props;
         if(!visible) return null;
-
+        const verifiedEmail = this.props.verifiedEmail;
         let userSignUpInfo = {
+                "user_tokenid" : "NULL",
+                "user_name" : "",
+                "user_nickname" : "",
                 "user_email" : "",
                 "user_password" : "",
-                "user_tokenid" : "null",
-                "user_source" : "direct"
+                "user_source" : "direct",
             }
         return (  
             <Form>
@@ -31,8 +34,14 @@ class SignUp extends Component {
                 <input 
                     placeholder='YourEmail@Email.com' 
                     type='email'
-                    onChange={e => this.verifyEmailAddress(e)}
+                    onChange={(e) => {
+                        this.handleChange(e,userSignUpInfo,"user_email")
+                        this.verifyEmailAddress(e)
+                        }
+                    }
                 />
+                {verifiedEmail?"VERIFIED":"NOT VERIFIED"}
+                
                 </Form.Field>
                 <Form.Field>
                 <label>Password</label>
@@ -59,7 +68,7 @@ class SignUp extends Component {
                 <Form.Field>
                 <Checkbox label='I agree to the Terms and Conditions' />
                 </Form.Field>
-                <h3 type='submit' onClick={e => this.props.onSignUpWithEmail(userSignUpInfo)}>
+                <h3 type='submit' onClick={e => this.submitUserSignUpInfo(userSignUpInfo)}>
                     SignUp
                 </h3>
             </Form>                

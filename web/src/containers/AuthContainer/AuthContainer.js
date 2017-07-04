@@ -17,6 +17,7 @@ class AuthContainer extends Component {
         onMakeSignInUnvisible={this.props.onMakeSignInUnvisible}
         onMakeSignUpVisible={this.props.onMakeSignUpVisible}
         onMakeSignUpUnvisible={this.props.onMakeSignUpUnvisible}
+        onAuthShowMessage={this.props.onAuthShowMessage}
       />
     );
   }
@@ -37,6 +38,7 @@ function mapDispatchToProps(dispatch) {
     onMakeSignInUnvisible: () => dispatch(authActions.makeSignInUnvisible()),
     onMakeSignUpVisible: () => dispatch(authActions.makeSignUpVisible()),
     onMakeSignUpUnvisible: () => dispatch(authActions.makeSignUpUnvisible()),
+    onAuthShowMessage: (message) => dispatch(authActions.authShowMessage(message)),
   };
 }
 
