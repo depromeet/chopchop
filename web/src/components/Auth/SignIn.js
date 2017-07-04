@@ -11,7 +11,7 @@ class SignIn extends Component {
         let userSignUpInfo = {
                 "user_email" : "",
                 "user_password" : "",
-                "user_tokenid" : "null",
+                "user_tokenid" : "NULL",
                 "user_source" : "direct"
             }
         return (  
