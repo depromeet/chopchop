@@ -12,7 +12,6 @@ class Auth extends Component {
         const onMakeSignInUnvisible = this.props.onMakeSignInUnvisible;
         const onMakeSignUpVisible = this.props.onMakeSignUpVisible;
         const onMakeSignUpUnvisible = this.props.onMakeSignUpUnvisible;
-        console.log(this.props);
         const visible = this.props.authReducer
         return(
             <div className="Auth-wrapper">
