@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Image, Grid, Icon, Card } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { Header, Image, Grid } from 'semantic-ui-react'
 
 class Home extends Component {
 

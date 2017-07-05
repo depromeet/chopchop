@@ -26,3 +26,11 @@ export const makeNewRoom = (roomName, userId) => ({
   roomName,
   userId
 });
+
+export const makeRoomMakerVisible = () => ({
+  type: types.MAKE_ROOM_MAKER_VISIBLE
+});
+
+export const makeRoomMakerUnvisible = () => ({
+  type: types.MAKE_ROOM_MAKER_UNVISIBLE
+});

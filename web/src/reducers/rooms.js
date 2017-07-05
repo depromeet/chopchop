@@ -1,12 +1,14 @@
 import * as types from '../actions/ActionTypes';
 
 const initialState = {
-    allBoards: [
+  allBoards: [
 
     ],
 	followingBoards: [
 
-	]
+	],
+	roomMakerVisibility: false,
+
 };
 
 export default function rooms(state = initialState, action) {
@@ -22,6 +24,17 @@ export default function rooms(state = initialState, action) {
 				...state,
                 followingBoards: action.roomsData.board
 			 };
+		case types.MAKE_ROOM_MAKER_VISIBLE:
+			return {
+				...state,
+				roomMakerVisibility: true
+			}
+		case types.MAKE_ROOM_MAKER_UNVISIBLE:
+			return {
+				...state,
+				roomMakerVisibility: false
+			}
+
 		default:
 			return state;
 	}

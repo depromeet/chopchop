@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 import { Header } from 'semantic-ui-react'
 import RoomList from './RoomList'
+import RoomMaker from './RoomMaker'
 
 class Rooms extends Component {
 
     render() {
         const allBoards = this.props.roomsReducer.allBoards;
         const followingBoards = this.props.roomsReducer.followingBoards;
-        const roomName = "방제";
-        const userId = 14;
         return(
             <div>
                     <div>
-                        <h3 onClick={()=> this.props.onMakeNewRoom(roomName, userId)}>
+                        <h3 
+                            onClick={()=> this.props.onMakeRoomMakerVisible()}
+                            >
                             방생성
                         </h3>
+                        <RoomMaker
+                            onMakeNewRoom={this.props.onMakeNewRoom}
+                            visible={this.props.roomsReducer.roomMakerVisibility}
+                            userId={this.props.userId}
+                        />
 
                         <Header as='h3' dividing>
                             즐겨찾기

@@ -45,12 +45,15 @@ function* watchGetFollwingRooms(){
 function* makeNewRoom(action){
   const url = config.server.url;
   const req = "http://" + url + "/boards/";
+  const roomName = action.roomName;
+  const userId = action.userId;
   try{
     yield axios.post(req,{
-            "board_name": action.roomName,
-            "board_uid": action.userId
+            "board_name": roomName,
+            "board_uid": userId
           })
           .then( res => console.log(res));
+    yield put(actions.getAllRooms(userId));
   } catch(e){
     console.log(e);
   }
