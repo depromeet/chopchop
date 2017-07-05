@@ -2,6 +2,7 @@
 // import { call, put, takeEvery, fork } from 'redux-saga/effects';
 import { put, takeEvery, fork } from 'redux-saga/effects';
 import * as actions from  '../actions/rooms';
+import * as messageActions from  '../actions/message';
 import * as types from '../actions/ActionTypes';
 import axios from 'axios';
 import config from '../config/config.json'
@@ -16,7 +17,7 @@ function* getAllRooms(action){
           .then( res => { roomsData = res.data } )
     yield put(actions.addAllRoomsToState(roomsData));
   } catch(e){
-    console.log(e);
+    yield put(messageActions.showMessage(e.message));
   }
 }
 
@@ -34,7 +35,7 @@ function* getFollwingRooms(action){
           .then( res => { roomsData = res.data } )
     yield put(actions.addFollowingRoomsToState(roomsData));
   } catch(e){
-    console.log(e);
+    yield put(messageActions.showMessage(e.message));
   }
 }
 
@@ -48,14 +49,20 @@ function* makeNewRoom(action){
   const roomName = action.roomName;
   const userId = action.userId;
   try{
+    let response = null;
     yield axios.post(req,{
             "board_name": roomName,
             "board_uid": userId
           })
-          .then( res => console.log(res));
-    yield put(actions.getAllRooms(userId));
+          .then( res => response = res.data);
+    if(response.status==="S"){
+      yield put(actions.getAllRooms(userId));
+      yield put(messageActions.showMessage(`방이 생성되었습니다.`));
+    }else if(response.status==="F"){
+      yield put(messageActions.showMessage(response.reason));
+    }
   } catch(e){
-    console.log(e);
+    yield put(messageActions.showMessage(e.message));
   }
 }
 
