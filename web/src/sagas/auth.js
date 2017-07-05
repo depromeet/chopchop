@@ -47,17 +47,20 @@ function* verifyEmail(action){
   }
       
   const url = config.server.url;
-  const req = "http://" + url + "/users/email?email=" + emailAddress;
+  const req = "http://" + url + "/users?email=" + emailAddress;
+  let verifiedEmail = false;
   try{
-    let verifiedEmail = false;
     yield axios.get(req)
           .then( function(res){
             if (res.data.status === "Success") verifiedEmail = true;
           });
     yield put(actions.setVerifiedEmail(verifiedEmail));
-    yield put(messageActions.showMessage(`Verified`));
   } catch(e){
     yield put(actions.setVerifiedEmail(false));
+  }
+  if(verifiedEmail===true){
+    yield put(messageActions.showMessage(`Verified`));
+  }else{
     yield put(messageActions.showMessage(`Not Verified`));
   }
 }
