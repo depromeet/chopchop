@@ -13,7 +13,7 @@ function* signInWithEmail(action){
     let userId = null;
     // yield axios.post(req,{"user" : action.userSignInInfo})
     //         .then( res => userId = res.message);
-    userId = 1; //tmp userId setup
+    userId = 3; //tmp userId setup
     yield put(actions.getUserInfo(userId));
   } catch(e){
     yield put(actions.authShowMessage(e.message));
