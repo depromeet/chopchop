@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Auth from '../../components/Auth/Auth';
 import { connect } from 'react-redux';
 import * as authActions from '../../actions/auth';
+import * as messageActions from '../../actions/message';
 
 
 class AuthContainer extends Component {
@@ -17,7 +18,7 @@ class AuthContainer extends Component {
         onMakeSignInUnvisible={this.props.onMakeSignInUnvisible}
         onMakeSignUpVisible={this.props.onMakeSignUpVisible}
         onMakeSignUpUnvisible={this.props.onMakeSignUpUnvisible}
-        onAuthShowMessage={this.props.onAuthShowMessage}
+        onShowMessage={this.props.onShowMessage}
       />
     );
   }
@@ -38,7 +39,7 @@ function mapDispatchToProps(dispatch) {
     onMakeSignInUnvisible: () => dispatch(authActions.makeSignInUnvisible()),
     onMakeSignUpVisible: () => dispatch(authActions.makeSignUpVisible()),
     onMakeSignUpUnvisible: () => dispatch(authActions.makeSignUpUnvisible()),
-    onAuthShowMessage: (message) => dispatch(authActions.authShowMessage(message)),
+    onShowMessage: (message) => dispatch(messageActions.showMessage(message)),
   };
 }
 

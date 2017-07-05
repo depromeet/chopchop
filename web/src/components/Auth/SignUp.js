@@ -12,7 +12,7 @@ class SignUp extends Component {
         if(this.props.verifiedEmail){
             this.props.onSignUpWithEmail(userSignUpInfo);
         }else{
-            this.props.onAuthShowMessage(`Email address isn't verified`)
+            this.props.onShowMessage(`Email address isn't verified`)
         }
     }
     render() {

@@ -47,7 +47,7 @@ class RootRoute extends Component {
                 <PrivateRoute path="/chopchop/myPage" component={MyPageContainer} authed={authed}/>
                 <PrivateRoute path="/chopchop/reviews/:reviewId" component={ReviewContainer} authed={authed}/>
                 <PrivateRoute path="/chopchop/profile/:profileId" component={ProfileContainer} authed={authed}/>
-                <Message visible={this.props.authReducer.messageVisibility} message={this.props.authReducer.message}/>
+                <Message visible={this.props.messageReducer.messageVisibility} message={this.props.messageReducer.message}/>
             </Container>
           </div>
         );
@@ -55,7 +55,8 @@ class RootRoute extends Component {
 }
 function mapStateToProps(state) {
   return {
-    authReducer: state.authReducer
+    authReducer: state.authReducer,
+    messageReducer: state.messageReducer
   };
 }
 function mapDispatchToProps(dispatch) {

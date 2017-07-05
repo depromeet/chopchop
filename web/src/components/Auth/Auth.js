@@ -35,7 +35,7 @@ class Auth extends Component {
                     Sign Up Now</Button>
                 <SignUp
                     onSignUpWithEmail={this.props.onSignUpWithEmail}
-                    onAuthShowMessage={this.props.onAuthShowMessage}
+                    onShowMessage={this.props.onShowMessage}
                     onVerifyEmail={this.props.onVerifyEmail}
                     verifiedEmail={this.props.authReducer.signUpInfoWithEmail.verifiedEmail}
                     userSignUpInfo={this.props.authReducer.signUpInfoWithEmail.userSignUpInfo}

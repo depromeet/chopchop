@@ -36,15 +36,6 @@ export const saveSignUpUserInfo = (userSignUpInfo) => ({
   userSignUpInfo
 });
 
-export const authHideMessage = () => ({
-  type: types.AUTH_HIDE_MESSAGE
-});
-
-export const authShowMessage = (message) => ({
-  type: types.AUTH_SHOW_MESSAGE,
-  message
-});
-
 export const makeSignInVisible = () => ({
   type: types.MAKE_SIGN_IN_VISIBLE
 });
