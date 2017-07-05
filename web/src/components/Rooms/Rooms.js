@@ -8,17 +8,23 @@ class Rooms extends Component {
     render() {
         const allBoards = this.props.roomsReducer.allBoards;
         const followingBoards = this.props.roomsReducer.followingBoards;
+        const roomMakerVisible= this.props.roomsReducer.roomMakerVisibility;
+        const onMakeRoomMakerVisible = this.props.onMakeRoomMakerVisible;
+        const onMakeRoomMakerUnvisible = this.props.onMakeRoomMakerUnvisible;
+
         return(
             <div>
                     <div>
                         <h3 
-                            onClick={()=> this.props.onMakeRoomMakerVisible()}
-                            >
+                            onClick={function(e){
+                                if (roomMakerVisible === false) return onMakeRoomMakerVisible()
+                                else return onMakeRoomMakerUnvisible()
+                            }}>
                             방생성
                         </h3>
                         <RoomMaker
                             onMakeNewRoom={this.props.onMakeNewRoom}
-                            visible={this.props.roomsReducer.roomMakerVisibility}
+                            visible={roomMakerVisible}
                             userId={this.props.userId}
                         />
 

@@ -25,6 +25,7 @@ class RoomsContainer extends Component {
           userId={this.props.userId}
           onMakeNewRoom={this.props.onMakeNewRoom}
           onMakeRoomMakerVisible={this.props.onMakeRoomMakerVisible}
+          onMakeRoomMakerUnvisible={this.props.onMakeRoomMakerUnvisible}
         />
       </ChopWrapper>
     );
@@ -43,7 +44,8 @@ function mapDispatchToProps(dispatch) {
     onGetAllRooms: (userId) => dispatch(roomsActions.getAllRooms(userId)),
     onGetFollowingRooms: (userId) => dispatch(roomsActions.getFollowingRooms(userId)),
     onMakeNewRoom: (roomName, userId) => dispatch(roomsActions.makeNewRoom(roomName, userId)),
-    onMakeRoomMakerVisible: () => dispatch(roomsActions.makeRoomMakerVisible())
+    onMakeRoomMakerVisible: () => dispatch(roomsActions.makeRoomMakerVisible()),
+    onMakeRoomMakerUnvisible: () => dispatch(roomsActions.makeRoomMakerUnvisible())
   };
 }
 
