@@ -25,6 +25,7 @@ function* watchSignInWithEmail(){
 }
 
 function* signUpWithEmail(action){
+  yield put(actions.saveSignUpUserInfo(action.userSignUpInfo))
   const url = config.server.url;
   const req = "http://" + url + "/users";
   try{
@@ -36,14 +37,16 @@ function* signUpWithEmail(action){
   }
 }
 function* verifyEmail(action){
-  if(action.emailAddress.length===0){
+  yield put(actions.saveSignUpUserInfo(action.userSignUpInfo));
+  const emailAddress = action.userSignUpInfo["user_email"];
+  if(emailAddress.length===0){
       yield put(actions.setVerifiedEmail(false));
-      yield put(actions.authShowMessage(`Not Verified`));
+      yield put(actions.authShowMessage(`Write your email address`));
       return;
   }
       
   const url = config.server.url;
-  const req = "http://" + url + "/users/email?email=" + action.emailAddress;
+  const req = "http://" + url + "/users/email?email=" + emailAddress;
   try{
     let verifiedEmail = false;
     yield axios.get(req)

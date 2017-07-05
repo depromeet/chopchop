@@ -19,14 +19,7 @@ class SignUp extends Component {
         const { visible } = this.props;
         if(!visible) return null;
         const verifiedEmail = this.props.verifiedEmail;
-        let userSignUpInfo = {
-                "user_tokenid" : "NULL",
-                "user_name" : "",
-                "user_nickname" : "",
-                "user_email" : "",
-                "user_password" : "",
-                "user_source" : "direct",
-            }
+        let userSignUpInfo = this.props.userSignUpInfo;
         return (  
             <Form>
                 <Form.Field>
@@ -34,6 +27,7 @@ class SignUp extends Component {
                 <input 
                     placeholder='YourEmail@Email.com' 
                     type='email'
+                    defaultValue={userSignUpInfo["user_email"]}
                     onChange={(e) => {
                         this.handleChange(e,userSignUpInfo,"user_email")
                         }}
@@ -42,7 +36,7 @@ class SignUp extends Component {
                 <Button
                     onClick={(e) => {
                         e.preventDefault();
-                        this.verifyEmailAddress(userSignUpInfo["user_email"])
+                        this.verifyEmailAddress(userSignUpInfo)
                         }}
                 >
                     VERIFY EMAIL
@@ -62,6 +56,7 @@ class SignUp extends Component {
                 <label>Name</label>
                 <input 
                     placeholder='Your Name'
+                    defaultValue={userSignUpInfo["user_name"]}
                     onChange={e => this.handleChange(e,userSignUpInfo,"user_name")}
                 />
                 </Form.Field>
@@ -69,6 +64,7 @@ class SignUp extends Component {
                 <label>Nickname</label>
                 <input 
                     placeholder='Your Nickname' 
+                    defaultValue={userSignUpInfo["user_nickname"]}
                     onChange={e => this.handleChange(e,userSignUpInfo,"user_nickname")}
                 />
                 </Form.Field>

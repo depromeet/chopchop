@@ -11,9 +11,9 @@ export const signUpWithEmail = (userSignUpInfo) => ({
   userSignUpInfo
 });
 
-export const verifyEmail = (emailAddress) => ({
+export const verifyEmail = (userSignUpInfo) => ({
   type: types.VERIFY_EMAIL,
-  emailAddress
+  userSignUpInfo
 });
 
 export const setVerifiedEmail = (success) => ({
@@ -29,6 +29,11 @@ export const getUserInfo = (userId) => ({
 export const addUserInfo = (userInfo) => ({
   type: types.ADD_USER_INFO,
   userInfo
+});
+
+export const saveSignUpUserInfo = (userSignUpInfo) => ({
+  type: types.SAVE_SIGN_UP_USER_INFO,
+  userSignUpInfo
 });
 
 export const authHideMessage = () => ({

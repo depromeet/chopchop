@@ -15,7 +15,7 @@ const initialState = {
   },
   signUpInfoWithEmail: {
     verifiedEmail : false,
-    users: {
+    userSignUpInfo: {
       "user_tokenid" : "NULL",
       "user_name" : "",
       "user_nickname" : "",
@@ -68,11 +68,19 @@ export default function auth(state = initialState, action) {
         authed: true,
         userInfo: action.userInfo
       }
+    case types.SAVE_SIGN_UP_USER_INFO:
+      return {
+        ...state,
+        signUpInfoWithEmail: {
+          ...state.signUpInfoWithEmail,
+          userSignUpInfo: action.userSignUpInfo
+        }
+      }
     case types.SET_VERIFIED_EMAIL:
       return {
         ...state,
         signUpInfoWithEmail: {
-          ...state.signUpInfo,
+          ...state.signUpInfoWithEmail,
           verifiedEmail: action.success
         }
       }
