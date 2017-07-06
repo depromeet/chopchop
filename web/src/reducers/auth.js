@@ -29,17 +29,6 @@ const initialState = {
 export default function auth(state = initialState, action) {
 
 	switch(action.type) {
-    case types.AUTH_HIDE_MESSAGE:
-      return {
-        ...state,
-        messageVisibility: false
-      }
-    case types.AUTH_SHOW_MESSAGE:
-      return {
-        ...state,
-        messageVisibility: true,
-        message: action.message
-      }
     case types.MAKE_SIGN_IN_VISIBLE:
       return {
         ...state,
