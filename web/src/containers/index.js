@@ -11,27 +11,43 @@ import RoomsContainer from './RoomsContainer/RoomsContainer';
 import RoomContainer from './RoomContainer/RoomContainer';
 import ProfileContainer from './ProfileContainer/ProfileContainer';
 import ReviewContainer from './ReviewContainer/ReviewContainer';
+import * as authActions from '../actions/auth';
 
 function PrivateRoute ({component: Component, authed, authedLoading, path, ...rest}) {
     if(authed === true){
+        console.log("PrivateRoute True");
         return <Route exact path={path} component={Component}/>
     }else{
+        console.log("PrivateRoute False , Redirect");
         return <Redirect from={path} to='/chopchop/login'/>
     }
 }
 
 function PublicRoute ({component: Component, authed, path, ...rest}) {
     if(authed === false){
+        console.log("PublicRoute True");
         return <Route exact path={path} component={Component}/>
     }else{
+        console.log("PublicRoute False, Redirect");
         return <Redirect from={path} to='/chopchop/'/>
     }
 }
 
 class RootRoute extends Component {
-
+    
+    componentWillMount() {
+        const authed = window.sessionStorage.getItem("authed");
+        const userId = window.sessionStorage.getItem("userId");
+        if(authed==="true"){
+            this.props.onGetUserInfo(userId);
+        }
+        console.log("cwm authed "+authed);
+    }
+    
+    
     render() {
         const authed = this.props.authReducer.authed;
+        console.log("render authed "+authed);
         return(
           <div>
             <Container text>
@@ -61,6 +77,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
+       onGetUserInfo: (userId) => dispatch(authActions.getUserInfo(userId)),
   };
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(RootRoute));
