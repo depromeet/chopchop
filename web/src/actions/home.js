@@ -1,11 +1,11 @@
 import * as types from './ActionTypes';
 
 
-export const getPopularRooms = () => ({
-  type: types.GET_POPULAR_ROOMS
+export const getPopularReviews = () => ({
+  type: types.GET_POPULAR_REVIEWS
 });
 
-export const addPopularRoomsToState = (roomsData) => ({
-  type: types.ADD_POPULAR_ROOMS_TO_STATE,
-  roomsData
+export const addPopularReviewsToState = (reviewsData) => ({
+  type: types.ADD_POPULAR_REVIEWS_TO_STATE,
+  reviewsData
 });

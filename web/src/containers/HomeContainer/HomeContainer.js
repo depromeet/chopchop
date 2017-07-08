@@ -10,11 +10,20 @@ type propTypes = {}
 
 class HomeContainer extends Component {
   props: propTypes;
+  constructor(props) {
+    super(props);
+    this.props.onGetPopularReviews();
+
+  }
+  
 
   render() {
     return (
       <ChopWrapper tab="Home">
-        <Home/>
+        <Home
+          homeReducer={this.props.homeReducer}
+
+        />
       </ChopWrapper>
     );
   }
@@ -22,13 +31,13 @@ class HomeContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-      state
+    homeReducer: state.homeReducer,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-  onGetPopularRooms: (userId) => dispatch(homeActions.getPopularRooms()),
+  onGetPopularReviews: () => dispatch(homeActions.getPopularReviews()),
 };
 }
 

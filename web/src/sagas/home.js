@@ -6,24 +6,24 @@ import * as types from '../actions/ActionTypes';
 import axios from 'axios';
 import config from '../config/config.json'
 
-function* getPopularRooms(action){
+function* getPopularReviews(action){
   const url = config.server.url;
-  const req = "http://" + url + "/boards/populars";
+  const req = "http://" + url + "/reviews?popular=true";
   try{
-    let roomsData = {};
+    let reviewsData = {};
     yield axios.get(req)
-          .then( res => { roomsData = res.data } )
-    yield console.log(roomsData);
-    yield put(actions.addPopularRoomsToState(roomsData));
+          .then( res => { reviewsData = res.data } )
+    yield console.log(reviewsData);
+    yield put(actions.addPopularReviewsToState(reviewsData));
   } catch(e){
     console.log(e);
   }
 }
 
-function* watchGetPopularRooms(){
-  yield takeEvery(types.GET_POPULAR_ROOMS, getPopularRooms);
+function* watchGetPopularReviews(){
+  yield takeEvery(types.GET_POPULAR_REVIEWS, getPopularReviews);
 }
 
 export default function* homeSaga(){
-  yield fork(watchGetPopularRooms);
+  yield fork(watchGetPopularReviews);
 }
