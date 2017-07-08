@@ -40,20 +40,16 @@ class RootRoute extends Component {
         const userId = window.sessionStorage.getItem("userId");
         const targetPath = props.location.pathname!=='/chopchop/login'?props.location.pathname:'/chopchop/';
         if(authed==="true"){
-            console.log(props.location.pathname);
             this.props.onGetUserInfoWithSession(userId, targetPath);
         }else{
-            console.log(props.location.pathname);
             this.props.onDetectNoSession(targetPath)
             this.props.onSetUpTargetPath(targetPath)
         }
-        console.log("CONSTRUCTOR");
     }
     render() {
         const authed = this.props.authReducer.authed;
         const authedLoading = this.props.authReducer.authedLoading;
         const targetPath = this.props.routerReducer.targetPath;
-        console.log("RENDERING "+authed+" "+authedLoading);
         return(
           <div>
             <Switch>
