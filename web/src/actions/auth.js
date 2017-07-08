@@ -32,6 +32,10 @@ export const getUserInfoWithSession = (userId, targetPath) => ({
   targetPath
 });
 
+export const detectNoSession = () => ({
+  type: types.DETECT_NO_SESSION,
+});
+
 export const addUserInfo = (userInfo) => ({
   type: types.ADD_USER_INFO,
   userInfo

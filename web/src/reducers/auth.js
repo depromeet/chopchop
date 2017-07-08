@@ -2,6 +2,7 @@ import * as types from '../actions/ActionTypes';
 
 const initialState = {
   authed: false,
+  authedLoading: true,
   messageVisibility: false,
   signInVisibility: true,
   signUpVisibility: false,
@@ -55,7 +56,13 @@ export default function auth(state = initialState, action) {
       return {
         ...state,
         authed: true,
+        authedLoading: false,
         userInfo: action.userInfo
+      }
+    case types.DETECT_NO_SESSION:
+      return {
+        ...state,
+        authedLoading: false
       }
     case types.SAVE_SIGN_UP_USER_INFO:
       return {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Redirect, withRouter, Switch } from 'react-router-dom'
 import { connect } from 'react-redux';
 import Message from '../components/Message/Message'
+import Loading from '../components/Loading/Loading'
 import AuthContainer from './AuthContainer/AuthContainer'
 import HomeContainer from './HomeContainer/HomeContainer';
 import MyPageContainer from './MyPageContainer/MyPageContainer';
@@ -13,7 +14,7 @@ import ReviewContainer from './ReviewContainer/ReviewContainer';
 import * as authActions from '../actions/auth';
 import * as routerActions from '../actions/router';
 
-function PrivateRoute ({component: Component, authed, authedLoading, path, ...rest}) {
+function PrivateRoute ({component: Component, authed, path, ...rest}) {
     if(authed === true){
         return <Route exact path={path} component={Component}/>
     }else{
@@ -21,8 +22,10 @@ function PrivateRoute ({component: Component, authed, authedLoading, path, ...re
     }
 }
 
-function PublicRoute ({component: Component, authed, targetPath, path, ...rest}) {
-    if(authed === false){
+function PublicRoute ({component: Component, authed, authedLoading, targetPath, path, ...rest}) {
+    if(authedLoading === true) {
+        return null
+    }else if(authed === false){
         return <Route exact path={path} component={Component}/>
     }else{
         return <Redirect from={path} to={targetPath}/>
@@ -35,21 +38,51 @@ class RootRoute extends Component {
         super(props);
         const authed = window.sessionStorage.getItem("authed");
         const userId = window.sessionStorage.getItem("userId");
+        const targetPath = props.location.pathname!=='/chopchop/login'?props.location.pathname:'/chopchop/';
         if(authed==="true"){
-            this.props.onGetUserInfoWithSession(userId, props.location.pathname);
+            console.log(props.location.pathname);
+            this.props.onGetUserInfoWithSession(userId, targetPath);
         }else{
-            this.props.onSetUpTargetPath(props.location.pathname)
+            console.log(props.location.pathname);
+            this.props.onDetectNoSession(targetPath)
+            this.props.onSetUpTargetPath(targetPath)
         }
+        console.log("CONSTRUCTOR");
     }
+    componentWillMount(){
+        console.log("componentWillMount");
+    }
+    componentDidMount(){
+        console.log("componentDidMount");
+    }    
+    componentWillReceiveProps(nextProps){
+        console.log("componentWillReceiveProps: " + JSON.stringify(nextProps));
+    }
+    shouldComponentUpdate(nextProps, nextState){
+        console.log("shouldComponentUpdate: " + JSON.stringify(nextProps) + " " + JSON.stringify(nextState));
+        return true;
+    }
+    componentWillUpdate(nextProps, nextState){
+        console.log("componentWillUpdate: " + JSON.stringify(nextProps) + " " + JSON.stringify(nextState));
+    }
+    componentDidUpdate(prevProps, prevState){
+        console.log("componentDidUpdate: " + JSON.stringify(prevProps) + " " + JSON.stringify(prevState));
+    }
+    componentWillUnmount(){
+        console.log("componentWillUnmount");
+    }    
     render() {
         const authed = this.props.authReducer.authed;
+        const authedLoading = this.props.authReducer.authedLoading;
         const targetPath = this.props.routerReducer.targetPath;
+        console.log("RENDERING "+authed+" "+authedLoading);
         return(
           <div>
             <Switch>
                   <PublicRoute
                     path='/chopchop/login'
                     authed={authed}
+                    authedLoading={authedLoading}
                     component={AuthContainer}
                     targetPath={targetPath}
                     />
@@ -62,6 +95,8 @@ class RootRoute extends Component {
                   <PrivateRoute path="/chopchop/profile/:profileId" component={ProfileContainer} authed={authed}/>
             </Switch>
             <Message visible={this.props.messageReducer.messageVisibility} message={this.props.messageReducer.message}/>
+            <Loading visible={authedLoading}/>
+
           </div>
         );
     }
@@ -76,6 +111,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
        onGetUserInfoWithSession: (userId, targetPath) => dispatch(authActions.getUserInfoWithSession(userId, targetPath)),
+       onDetectNoSession: () => dispatch(authActions.detectNoSession()),
        onSetUpTargetPath: (targetPath) => dispatch(routerActions.setUpTargetPath(targetPath)),
   };
 }
