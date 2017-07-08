@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Navigation from '../../components/Navigation/Navigation';
 import SignOut from '../../components/Auth/SignOut';
 import * as authActions from '../../actions/auth';
+import * as routerActions from '../../actions/router';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux'
 
 class NavigationContainer extends Component {
   render() {
@@ -10,9 +12,12 @@ class NavigationContainer extends Component {
       <div>
         <Navigation
           tab={this.props.tab}
+          onSetUpCurrentPath={this.props.onSetUpCurrentPath}
         />
         <SignOut
+          targetPath={this.props.routerReducer.currentPath}
           onSignOut={this.props.onSignOut}
+          onSetUpTargetPath={this.props.onSetUpTargetPath}
         />
       </div>
     );
@@ -20,13 +25,16 @@ class NavigationContainer extends Component {
 }
 function mapStateToProps(state) {
   return {
-      state
+      routerReducer: state.routerReducer
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     onSignOut: () => dispatch(authActions.signOut()),
+    onSetUpTargetPath: (targetPath) => dispatch(routerActions.setUpTargetPath(targetPath)),
+    onSetUpCurrentPath: (currentPath) => dispatch(routerActions.setUpCurrentPath(currentPath)),
+
   };
 }
 

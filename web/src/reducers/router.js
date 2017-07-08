@@ -2,6 +2,7 @@ import * as types from '../actions/ActionTypes';
 
 const initialState = {
   targetPath: "/chopchop/",
+  currentPath: "/chopchop/",
 };
 
 export default function auth(state = initialState, action) {
@@ -16,6 +17,11 @@ export default function auth(state = initialState, action) {
       return {
         ...state,
         targetPath: action.targetPath,
+      }
+    case types.SET_UP_CURRENT_PATH:
+      return {
+        ...state,
+        currentPath: action.currentPath,
       }
 		default:
 			return state;
