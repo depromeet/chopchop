@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Redirect, withRouter } from 'react-router-dom'
+import { Route, Redirect, withRouter, Switch } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { Container } from 'semantic-ui-react'
 import Message from '../components/Message/Message'
@@ -15,56 +15,51 @@ import * as authActions from '../actions/auth';
 
 function PrivateRoute ({component: Component, authed, authedLoading, path, ...rest}) {
     if(authed === true){
-        console.log("PrivateRoute True");
         return <Route exact path={path} component={Component}/>
     }else{
-        console.log("PrivateRoute False , Redirect");
         return <Redirect from={path} to='/chopchop/login'/>
     }
 }
 
-function PublicRoute ({component: Component, authed, path, ...rest}) {
+function PublicRoute ({component: Component, authed, targetPath, path, ...rest}) {
     if(authed === false){
-        console.log("PublicRoute True");
         return <Route exact path={path} component={Component}/>
     }else{
-        console.log("PublicRoute False, Redirect");
-        return <Redirect from={path} to='/chopchop/'/>
+        return <Redirect from={path} to={targetPath}/>
     }
 }
 
 class RootRoute extends Component {
     
-    componentWillMount() {
+    constructor(props){
+        super(props);
         const authed = window.sessionStorage.getItem("authed");
         const userId = window.sessionStorage.getItem("userId");
         if(authed==="true"){
-            this.props.onGetUserInfo(userId);
+            this.props.onGetUserInfo(userId, props.location.pathname);
         }
-        console.log("cwm authed "+authed);
     }
-    
-    
     render() {
         const authed = this.props.authReducer.authed;
-        console.log("render authed "+authed);
+        const targetPath = this.props.authReducer.targetPath;
         return(
           <div>
-            <Container text>
-                <PublicRoute
-                  path='/chopchop/login'
-                  authed={authed}
-                  component={AuthContainer}
-                  />
-                <PrivateRoute exact path="/chopchop/" component={HomeContainer} authed={authed}/>
-                <PrivateRoute path="/chopchop/rooms/:roomId" component={RoomContainer} authed={authed}/>
-                <PrivateRoute exact path="/chopchop/rooms" component={RoomsContainer} authed={authed}/>
-                <PrivateRoute path="/chopchop/pinList" component={PinListContainer} authed={authed}/>
-                <PrivateRoute path="/chopchop/myPage" component={MyPageContainer} authed={authed}/>
-                <PrivateRoute path="/chopchop/reviews/:reviewId" component={ReviewContainer} authed={authed}/>
-                <PrivateRoute path="/chopchop/profile/:profileId" component={ProfileContainer} authed={authed}/>
-                <Message visible={this.props.messageReducer.messageVisibility} message={this.props.messageReducer.message}/>
-            </Container>
+            <Switch>
+                  <PublicRoute
+                    path='/chopchop/login'
+                    authed={authed}
+                    component={AuthContainer}
+                    targetPath={targetPath}
+                    />
+                  <PrivateRoute exact path="/chopchop/" component={HomeContainer} authed={authed}/>
+                  <PrivateRoute path="/chopchop/rooms/:roomId" component={RoomContainer} authed={authed}/>
+                  <PrivateRoute exact path="/chopchop/rooms" component={RoomsContainer} authed={authed}/>
+                  <PrivateRoute path="/chopchop/pinList" component={PinListContainer} authed={authed}/>
+                  <PrivateRoute path="/chopchop/myPage" component={MyPageContainer} authed={authed}/>
+                  <PrivateRoute path="/chopchop/reviews/:reviewId" component={ReviewContainer} authed={authed}/>
+                  <PrivateRoute path="/chopchop/profile/:profileId" component={ProfileContainer} authed={authed}/>
+            </Switch>
+            <Message visible={this.props.messageReducer.messageVisibility} message={this.props.messageReducer.message}/>
           </div>
         );
     }
@@ -77,7 +72,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-       onGetUserInfo: (userId) => dispatch(authActions.getUserInfo(userId)),
+       onGetUserInfo: (userId, pathname) => dispatch(authActions.getUserInfo(userId, pathname)),
   };
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(RootRoute));

@@ -77,7 +77,7 @@ function* getUserInfo(action){
     let userInfo = {};
     yield axios.get(req)
             .then( res => userInfo = res.data.values[0]);
-    yield put(actions.addUserInfo(userInfo));
+    yield put(actions.addUserInfo(userInfo, action.pathname));
     window.sessionStorage.setItem("authed", "true");
     window.sessionStorage.setItem("userId", userInfo.user_id);
     yield put(messageActions.showMessage(userInfo.user_name + `님 환영합니다`));

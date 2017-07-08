@@ -22,7 +22,8 @@ const initialState = {
       "user_email" : "",
       "user_password" : "",
       "user_source" : "direct"
-    }
+    },
+    targetPath : '/chopchop/'
   }
 };
 
@@ -55,7 +56,8 @@ export default function auth(state = initialState, action) {
       return {
         ...state,
         authed: true,
-        userInfo: action.userInfo
+        userInfo: action.userInfo,
+        targetPath: action.pathname
       }
     case types.SAVE_SIGN_UP_USER_INFO:
       return {
