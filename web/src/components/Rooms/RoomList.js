@@ -7,6 +7,9 @@ import {
 class RoomList extends Component {
     render() {
         const boards = this.props.children;
+        if(boards===undefined){
+            return null;
+        }
         const parsedBoards = boards.map((board, index) => 
             <Grid.Row key={index}>
                 <Grid.Column width={3}>
