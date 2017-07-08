@@ -15,5 +15,4 @@ const App = () => {
   );
 };
 
-// export default App;
-export default connect()(App);
+export default App;
