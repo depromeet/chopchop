@@ -41,6 +41,14 @@ export const addUserInfo = (userInfo) => ({
   userInfo
 });
 
+export const signOut = () => ({
+  type: types.SIGN_OUT
+});
+
+export const removeUserInfo = () => ({
+  type: types.REMOVE_USER_INFO
+});
+
 export const saveSignUpUserInfo = (userSignUpInfo) => ({
   type: types.SAVE_SIGN_UP_USER_INFO,
   userSignUpInfo

@@ -105,8 +105,21 @@ function* watchGetUserInfo(){
   yield takeEvery(types.GET_USER_INFO_WITH_SESSION, getUserInfoWithSession);
 }
 
+function* signOut(action){
+  window.sessionStorage.removeItem("authed");
+  window.sessionStorage.removeItem("userId");
+  yield put(actions.removeUserInfo());
+  yield put(messageActions.showMessage(`로그아웃 되었습니다.`));
+
+}
+
+function* watchSignOut(){
+  yield takeEvery(types.SIGN_OUT, signOut);
+}
+
 export default function* authSaga(){
   yield fork(watchSignInWithEmail);
   yield fork(watchSignUpWithEmail);
   yield fork(watchGetUserInfo);
+  yield fork(watchSignOut);
 }

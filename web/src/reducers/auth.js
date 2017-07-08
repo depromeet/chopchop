@@ -59,6 +59,19 @@ export default function auth(state = initialState, action) {
         authedLoading: false,
         userInfo: action.userInfo
       }
+    case types.REMOVE_USER_INFO:
+      return {
+        ...state,
+        authed: false,
+        authedLoading: false,
+        userInfo: {
+          user_id : -1,
+          user_name : "",
+          user_nickname : "",
+          user_image : "",
+          user_token : ""
+        }
+      }
     case types.DETECT_NO_SESSION:
       return {
         ...state,
