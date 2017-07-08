@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Redirect, withRouter, Switch } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { Container } from 'semantic-ui-react'
 import Message from '../components/Message/Message'
 import AuthContainer from './AuthContainer/AuthContainer'
 import HomeContainer from './HomeContainer/HomeContainer';
