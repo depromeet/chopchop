@@ -4,7 +4,7 @@ export const SignOut = (props) => {
   return(
     <div
       onClick={ ()=>{
-          props.onSignOut(),
+          props.onSignOut()
           props.onSetUpTargetPath(props.targetPath)
         }
       }

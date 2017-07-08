@@ -4,7 +4,6 @@ import SignOut from '../../components/Auth/SignOut';
 import * as authActions from '../../actions/auth';
 import * as routerActions from '../../actions/router';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux'
 
 class NavigationContainer extends Component {
   render() {
