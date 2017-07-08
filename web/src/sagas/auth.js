@@ -76,7 +76,7 @@ function* getUserInfo(action){
     let userInfo = {};
     yield axios.get(req)
             .then( res => userInfo = res.data.values[0]);
-    yield put(actions.addUserInfo(userInfo, action.pathname));
+    yield put(actions.addUserInfo(userInfo));
     window.sessionStorage.setItem("authed", "true");
     window.sessionStorage.setItem("userId", userInfo.user_id);
     yield put(messageActions.showMessage(userInfo.user_name + `님 환영합니다`));
@@ -85,8 +85,24 @@ function* getUserInfo(action){
   }
 }
 
+function* getUserInfoWithSession(action){
+  const url = config.server.url;
+  const req = "http://" + url + "/users/"+action.userId;
+  try{
+    let userInfo = {};
+    yield axios.get(req)
+            .then( res => userInfo = res.data.values[0]);
+    yield put(actions.addUserInfo(userInfo));
+    window.sessionStorage.setItem("authed", "true");
+    window.sessionStorage.setItem("userId", userInfo.user_id);
+  } catch(e){
+    yield put(messageActions.showMessage(e.message));
+  }
+}
+
 function* watchGetUserInfo(){
   yield takeEvery(types.GET_USER_INFO, getUserInfo);
+  yield takeEvery(types.GET_USER_INFO_WITH_SESSION, getUserInfoWithSession);
 }
 
 export default function* authSaga(){

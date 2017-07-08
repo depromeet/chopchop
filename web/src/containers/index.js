@@ -11,6 +11,7 @@ import RoomContainer from './RoomContainer/RoomContainer';
 import ProfileContainer from './ProfileContainer/ProfileContainer';
 import ReviewContainer from './ReviewContainer/ReviewContainer';
 import * as authActions from '../actions/auth';
+import * as routerActions from '../actions/router';
 
 function PrivateRoute ({component: Component, authed, authedLoading, path, ...rest}) {
     if(authed === true){
@@ -35,12 +36,15 @@ class RootRoute extends Component {
         const authed = window.sessionStorage.getItem("authed");
         const userId = window.sessionStorage.getItem("userId");
         if(authed==="true"){
-            this.props.onGetUserInfo(userId, props.location.pathname);
+            this.props.onGetUserInfoWithSession(userId, props.location.pathname);
+        }else{
+            this.props.onSetUpTargetPath(props.location.pathname)
         }
     }
     render() {
         const authed = this.props.authReducer.authed;
-        const targetPath = this.props.authReducer.targetPath;
+        const targetPath = this.props.routerReducer.targetPath;
+        console.log(this.props.routerReducer);
         return(
           <div>
             <Switch>
@@ -66,12 +70,14 @@ class RootRoute extends Component {
 function mapStateToProps(state) {
   return {
     authReducer: state.authReducer,
+    routerReducer: state.routerReducer,
     messageReducer: state.messageReducer
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
-       onGetUserInfo: (userId, pathname) => dispatch(authActions.getUserInfo(userId, pathname)),
+       onGetUserInfoWithSession: (userId, targetPath) => dispatch(authActions.getUserInfoWithSession(userId, targetPath)),
+       onSetUpTargetPath: (targetPath) => dispatch(routerActions.setUpTargetPath(targetPath)),
   };
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(RootRoute));

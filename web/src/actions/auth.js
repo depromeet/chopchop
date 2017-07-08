@@ -21,16 +21,20 @@ export const setVerifiedEmail = (success) => ({
   success
 });
 
-export const getUserInfo = (userId, pathname = '/chopchop/') => ({
+export const getUserInfo = (userId) => ({
   type: types.GET_USER_INFO,
-  userId,
-  pathname
+  userId
 });
 
-export const addUserInfo = (userInfo, pathname = '/chopchop/') => ({
+export const getUserInfoWithSession = (userId, targetPath) => ({
+  type: types.GET_USER_INFO_WITH_SESSION,
+  userId,
+  targetPath
+});
+
+export const addUserInfo = (userInfo) => ({
   type: types.ADD_USER_INFO,
-  userInfo,
-  pathname
+  userInfo
 });
 
 export const saveSignUpUserInfo = (userSignUpInfo) => ({
