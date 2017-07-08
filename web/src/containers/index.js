@@ -44,7 +44,6 @@ class RootRoute extends Component {
     render() {
         const authed = this.props.authReducer.authed;
         const targetPath = this.props.routerReducer.targetPath;
-        console.log(this.props.routerReducer);
         return(
           <div>
             <Switch>
