@@ -10,6 +10,11 @@ const initialState = {
 export default function room(state = initialState, action) {
 
 	switch(action.type) {
+		case types.ADD_ALL_REVIEWS_IN_THE_ROOM_TO_STATE:
+			return {
+				...state,
+				reviews: action.reviewsData.values
+			 };
 		default:
 			return state;
 	}
