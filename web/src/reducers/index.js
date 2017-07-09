@@ -7,6 +7,7 @@ import router from './router';
 import room from './room';
 import review from './review';
 import myPage from './myPage';
+import profile from './profile';
 
 const reducers = combineReducers({
 	roomsReducer: rooms,
@@ -17,6 +18,7 @@ const reducers = combineReducers({
 	roomReducer: room,
 	reviewReducer: review,
 	myPageReducer: myPage,
+	profileReducer: profile,
 })
 
 export default reducers;

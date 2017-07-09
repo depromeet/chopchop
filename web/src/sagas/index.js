@@ -5,6 +5,7 @@ import messageSaga from './message';
 import roomSaga from './room';
 import reviewSaga from './review';
 import myPageSaga from './myPage';
+import profileSaga from './profile';
 
 export default function* rootSaga() {
   yield [
@@ -14,6 +15,7 @@ export default function* rootSaga() {
     messageSaga(),
     roomSaga(),
     reviewSaga(),
-    myPageSaga()
+    myPageSaga(),
+    profileSaga()
   ];
 };
