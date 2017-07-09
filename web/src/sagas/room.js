@@ -12,9 +12,12 @@ function* getRoomDataInTheRoom(action){
   const roomId = action.roomId;
   try{
     let req = "http://" + url + "/reviews?board_id=" + roomId;
-    let reviewsData = {};
+    let reviewsData = [];
     yield axios.get(req)
-          .then( res => { reviewsData = res.data.values } )
+          .then( res => {
+            if(res.data.status==="Success")
+              reviewsData = res.data.values 
+            } )
     req = "http://" + url + "/boards/" + roomId;
     let roomData = {};
     yield axios.get(req)
