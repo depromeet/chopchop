@@ -13,7 +13,9 @@ class Room extends Component {
             <div>
                 <Grid centered doubling>
                     <Grid.Column width='12'>
+                        <div style={{width:'50%', top:'50%', left:'50%', transform: 'translate(50%, 0%)'}}>
                         {board.board_img!==null?<Image src={board.board_img}/>:<Image src='http://semantic-ui.com/images/wireframe/image.png' />}
+                        </div>
                         <h3>{board.board_name!==null?board.board_name:''} </h3>
                         <h5>
                            {boardOwner.user_id!==null?'관리자:'+boardOwner.user_nickname+', ':''}  
