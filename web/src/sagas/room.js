@@ -15,7 +15,7 @@ function* getAllReviewsInTheRoom(action){
     let reviewsData = {};
     yield axios.get(req)
           .then( res => { reviewsData = res.data } )
-    yield put(actions.addAllReviewsInTheRoomToState(reviewsData));
+    yield put(actions.addAllReviewsInTheRoomToState(roomId, reviewsData));
   } catch(e){
     yield put(messageActions.showMessage(e.message));
   }
