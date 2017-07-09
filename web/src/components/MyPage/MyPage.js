@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Icon, Image, Feed } from 'semantic-ui-react'
+import { Header, Image } from 'semantic-ui-react'
 import ReviewList from '../ReviewList';
 
 class MyPage extends Component {
