@@ -82,6 +82,9 @@ function* getUserInfo(action){
     yield put(messageActions.showMessage(userInfo.user_name + `님 환영합니다`));
   } catch(e){
     yield put(messageActions.showMessage(e.message));
+    yield window.sessionStorage.removeItem("authed");
+    yield window.sessionStorage.removeItem("userId");
+
   }
 }
 
@@ -97,6 +100,9 @@ function* getUserInfoWithSession(action){
     yield window.sessionStorage.setItem("userId", userInfo.user_id);
   } catch(e){
     yield put(messageActions.showMessage(e.message));
+    yield window.sessionStorage.removeItem("authed");
+    yield window.sessionStorage.removeItem("userId");
+
   }
 }
 
