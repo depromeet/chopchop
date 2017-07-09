@@ -9,10 +9,6 @@ class RoomContainer extends Component {
   props: propTypes;
   constructor (props) {
     super(props)
-    // const userId = this.props.userId;
-    // this.props.onGetAllRooms(userId);
-    // this.props.onGetFollowingRooms(userId);
-
     const roomId = this.props.match.params.roomId;
     this.props.onGetRoomDataInTheRoom(roomId);
   }
