@@ -13,14 +13,14 @@ class PopularReviewList extends Component {
         const parsedPopularReviews = popularReviews.map((review, index) => 
             <Grid.Row key={index}>
                 <Grid.Column width={3}>
-                    <Link to={`/chopchop/rooms/`+review.review_id}>
+                    <Link to={`/chopchop/reviews/`+review.review_id}>
                         {review.review_img!==null?<Image src={review.review_img}/>:<Image src='http://semantic-ui.com/images/wireframe/image.png' />}
                     </Link>
                 </Grid.Column>
                 <Grid.Column width={13}>
                     리뷰: 
-                    <Link to={`/chopchop/rooms/`+review.review_id}>
-                        {review.review_story!==null?review.review_story:''}
+                    <Link to={`/chopchop/reviews/`+review.review_id}>
+                        {review.review_story!==null?review.review_story:''}🍛
                     </Link>
                     <br/>
                     식당: {review.review_resname!==null?review.review_resname:'없음'}
