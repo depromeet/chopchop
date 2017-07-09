@@ -17,12 +17,12 @@ export default function rooms(state = initialState, action) {
 		case types.ADD_ALL_ROOMS_TO_STATE:
 			return {
 				...state,
-                allBoards: action.roomsData.board
+				allBoards: action.roomsData.board
 			 };
 		case types.ADD_FOLLOWING_ROOMS_TO_STATE:
 			return {
 				...state,
-                followingBoards: action.roomsData.board
+				followingBoards: action.roomsData.board
 			 };
 		case types.MAKE_ROOM_MAKER_VISIBLE:
 			return {
