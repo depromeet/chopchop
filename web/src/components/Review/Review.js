@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Image, Grid, Feed, Icon, Header, Form, Button, Comment } from 'semantic-ui-react'
 
 class Review extends Component {
-
     render() {
+        const review = this.props.reviewReducer.review
         return(
             <div>
                 <Grid centered doubling>
                     <Grid.Column width='12'>
-                        <Image src='http://semantic-ui.com/images/wireframe/image.png' size='medium' shape='rounded' centered />
+                        {review.review_img!==null?<Image src={review.review_img} size='medium' shape='rounded' centered />:<Image src='http://semantic-ui.com/images/wireframe/image.png' size='medium' shape='rounded' centered />}
                         <Feed>
                           <Feed.Event>
                             <Feed.Label>
@@ -16,18 +16,19 @@ class Review extends Component {
                             </Feed.Label>
                             <Feed.Content>
                               <Feed.Summary>
-                                <Feed.User>Elliot Fu</Feed.User> added you as a friend
+                                <Feed.User>{review.review_nickname!==null?review.review_nickname:''}</Feed.User> 님이 남이신 리뷰입니다.
                                 <Feed.Date>1 Hour Ago</Feed.Date>
                               </Feed.Summary>
                               <Feed.Extra text>
-                                Ours is a life of constant reruns. We're always circling back to where we'd we started, then starting all
-                                over again. Even if we don't run extra laps that day, we surely will come back for more of the same another
-                                day soon.
+                                <b>{review.review_score!==null?review.review_score:''}점!</b><br/>
+                                {review.review_story!==null?review.review_story:''}
                               </Feed.Extra>
                               <Feed.Meta>
                                 <Feed.Like>
-                                  <Icon name='like' />
-                                  4 Likes
+                                  <Icon name='like outline' />
+                                  {review.review_like!==null?review.review_like:''}
+                                  <Icon name='dislike outline' />
+                                  {review.review_bad!==null?review.review_bad:''}
                                 </Feed.Like>
                               </Feed.Meta>
                             </Feed.Content>

@@ -21,7 +21,7 @@ class RoomList extends Component {
                   <Feed.Date>1 Hour Ago</Feed.Date>
                 </Feed.Summary>
                 <Feed.Extra text>
-                  <b>{review.review_score!==null?review.review_score:''}점!</b>
+                  <b>{review.review_score!==null?review.review_score:''}점!</b><br/>
                   {review.review_story!==null?review.review_story:''}
                 </Feed.Extra>
                 <Feed.Extra images>

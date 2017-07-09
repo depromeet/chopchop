@@ -3,6 +3,7 @@ import homeSaga from './home';
 import authSaga from './auth';
 import messageSaga from './message';
 import roomSaga from './room';
+import reviewSaga from './review';
 
 export default function* rootSaga() {
   yield [
@@ -10,6 +11,7 @@ export default function* rootSaga() {
     homeSaga(),
     authSaga(),
     messageSaga(),
-    roomSaga()
+    roomSaga(),
+    reviewSaga()
   ];
 };
