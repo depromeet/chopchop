@@ -19,7 +19,10 @@ class RoomList extends Component {
               </Feed.Label>
               <Feed.Content>
                 <Feed.Summary>
-                  <Feed.User>{review.review_nickname!==null?review.review_nickname:''}</Feed.User> 님이 남기신 리뷰입니다.
+                  <Link to={`/chopchop/profile/`+review.review_uid}>
+                    <Feed.User>{review.review_nickname!==null?review.review_nickname:''}</Feed.User> 
+                  </Link>
+                  님이 남기신 리뷰입니다.
                   <Feed.Date>1 Hour Ago</Feed.Date>
                 </Feed.Summary>
                 <Feed.Extra text>
@@ -27,7 +30,7 @@ class RoomList extends Component {
                   {review.review_story!==null?review.review_story:''}
                 </Feed.Extra>
                 <Feed.Extra images>
-                  <Link to={`/chopchop/reviews/`+review.review_id}>
+                  <Link to={`/chopchop/profile/`+review.review_uid}>
                         {review.review_img!==null?<Image src={review.review_img}/>:<Image src='http://semantic-ui.com/images/wireframe/image.png' />}
                         {review.review_img!==null?<Image src={review.review_img}/>:<Image src='http://semantic-ui.com/images/wireframe/image.png' />}
                   </Link>
