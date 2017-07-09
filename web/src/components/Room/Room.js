@@ -8,6 +8,7 @@ class Room extends Component {
         const allReviewsInTheRoom = this.props.roomReducer.reviews;
         const board = this.props.roomReducer.board.boardData;
         const boardOwner = this.props.roomReducer.board.boardOwnerData;
+        console.log(boardOwner);
         return(
             <div>
                 <Grid centered doubling>
@@ -15,7 +16,7 @@ class Room extends Component {
                         {board.board_img!==null?<Image src={board.board_img}/>:<Image src='http://semantic-ui.com/images/wireframe/image.png' />}
                         <h3>{board.board_name!==null?board.board_name:''} </h3>
                         <h5>
-                           {boardOwner.user_id!==null?'관리자:'+boardOwner.user_id+', ':''}  
+                           {boardOwner.user_id!==null?'관리자:'+boardOwner.user_nickname+', ':''}  
                             팔로워:
                            {board.board_popular!==null?board.board_popular:''}명
                         </h5>

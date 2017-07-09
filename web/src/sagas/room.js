@@ -26,7 +26,7 @@ function* getRoomDataInTheRoom(action){
     if(roomOwnerId!==null){
       req = "http://" + url + "/users/" + roomOwnerId;
       yield axios.get(req)
-            .then( res => { roomOwnerData = res.data.values } )
+            .then( res => { roomOwnerData = res.data.values[0] } )
     }
     yield put(actions.addRoomDataInTheRoomToState(roomData, roomOwnerData, reviewsData));
   } catch(e){
