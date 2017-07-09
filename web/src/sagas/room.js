@@ -14,12 +14,21 @@ function* getRoomDataInTheRoom(action){
     let req = "http://" + url + "/reviews?board_id=" + roomId;
     let reviewsData = {};
     yield axios.get(req)
-          .then( res => { reviewsData = res.data } )
+          .then( res => { reviewsData = res.data.values } )
     req = "http://" + url + "/boards/" + roomId;
     let roomData = {};
     yield axios.get(req)
-          .then( res => { roomData = res.data } )
-    yield put(actions.addRoomDataInTheRoomToState(roomData, reviewsData));
+          .then( res => { roomData = res.data.board } )
+    let roomOwnerId = roomData.board_uid;
+    let roomOwnerData = {
+      user_id: null
+    };
+    if(roomOwnerId!==null){
+      req = "http://" + url + "/users/" + roomOwnerId;
+      yield axios.get(req)
+            .then( res => { roomOwnerData = res.data.values } )
+    }
+    yield put(actions.addRoomDataInTheRoomToState(roomData, roomOwnerData, reviewsData));
   } catch(e){
     yield put(messageActions.showMessage(e.message));
   }
