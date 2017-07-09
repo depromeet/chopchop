@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Header } from 'semantic-ui-react'
-import PopularReviewList from './PopularReviewList'
+import ReviewList from '../ReviewList';
 
 class Home extends Component {
 
@@ -12,9 +12,9 @@ class Home extends Component {
                 <Header as='h3' dividing>
                     인기 리뷰
                 </Header>
-                <PopularReviewList>
+                <ReviewList>
                     {popularReviews}
-                </PopularReviewList>
+                </ReviewList>
             </div>
         );
     }
