@@ -19,7 +19,7 @@ function* getRoomDataInTheRoom(action){
     let roomData = {};
     yield axios.get(req)
           .then( res => { roomData = res.data } )
-    yield put(actions.addRoomDataInTheRoomToState(roomId, roomData, reviewsData));
+    yield put(actions.addRoomDataInTheRoomToState(roomData, reviewsData));
   } catch(e){
     yield put(messageActions.showMessage(e.message));
   }
