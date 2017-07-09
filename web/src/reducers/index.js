@@ -4,6 +4,7 @@ import home from './home';
 import auth from './auth';
 import message from './message';
 import router from './router';
+import room from './room';
 
 const reducers = combineReducers({
 	roomsReducer: rooms,
@@ -11,6 +12,7 @@ const reducers = combineReducers({
 	authReducer: auth,
 	messageReducer: message,
 	routerReducer: router,
+	roomReducer: room,
 })
 
 export default reducers;
