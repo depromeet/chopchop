@@ -77,8 +77,8 @@ function* getUserInfo(action){
     yield axios.get(req)
             .then( res => userInfo = res.data.values[0]);
     yield put(actions.addUserInfo(userInfo));
-    window.sessionStorage.setItem("authed", "true");
-    window.sessionStorage.setItem("userId", userInfo.user_id);
+    yield window.sessionStorage.setItem("authed", "true");
+    yield window.sessionStorage.setItem("userId", userInfo.user_id);
     yield put(messageActions.showMessage(userInfo.user_name + `님 환영합니다`));
   } catch(e){
     yield put(messageActions.showMessage(e.message));
@@ -93,8 +93,8 @@ function* getUserInfoWithSession(action){
     yield axios.get(req)
             .then( res => userInfo = res.data.values[0]);
     yield put(actions.addUserInfo(userInfo));
-    window.sessionStorage.setItem("authed", "true");
-    window.sessionStorage.setItem("userId", userInfo.user_id);
+    yield window.sessionStorage.setItem("authed", "true");
+    yield window.sessionStorage.setItem("userId", userInfo.user_id);
   } catch(e){
     yield put(messageActions.showMessage(e.message));
   }
@@ -106,8 +106,8 @@ function* watchGetUserInfo(){
 }
 
 function* signOut(action){
-  window.sessionStorage.removeItem("authed");
-  window.sessionStorage.removeItem("userId");
+  yield window.sessionStorage.removeItem("authed");
+  yield window.sessionStorage.removeItem("userId");
   yield put(actions.removeUserInfo());
   yield put(messageActions.showMessage(`로그아웃 되었습니다.`));
 
