@@ -30,7 +30,7 @@ class RoomList extends Component {
                   {review.review_story!==null?review.review_story:''}
                 </Feed.Extra>
                 <Feed.Extra images>
-                  <Link to={`/chopchop/review/`+review.review_id}>
+                  <Link to={`/chopchop/reviews/`+review.review_id}>
                         {review.review_img!==null?<Image src={review.review_img}/>:<Image src='http://semantic-ui.com/images/wireframe/image.png' />}
                         {review.review_img!==null?<Image src={review.review_img}/>:<Image src='http://semantic-ui.com/images/wireframe/image.png' />}
                   </Link>
