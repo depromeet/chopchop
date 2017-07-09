@@ -14,7 +14,7 @@ class RoomContainer extends Component {
     // this.props.onGetFollowingRooms(userId);
 
     const roomId = this.props.match.params.roomId;
-    this.props.onGetAllReviewsInTheRoom(roomId);
+    this.props.onGetRoomDataInTheRoom(roomId);
   }
   
   render() {
@@ -38,7 +38,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onGetAllReviewsInTheRoom: (roomId) => dispatch(roomActions.getAllReviewsInTheRoom(roomId)),
+    onGetRoomDataInTheRoom: (roomId) => dispatch(roomActions.getRoomDataInTheRoom(roomId)),
   };
 }
 

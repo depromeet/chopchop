@@ -7,25 +7,29 @@ import * as types from '../actions/ActionTypes';
 import axios from 'axios';
 import config from '../config/config.json'
 
-function* getAllReviewsInTheRoom(action){
+function* getRoomDataInTheRoom(action){
   const url = config.server.url;
   const roomId = action.roomId;
-  const req = "http://" + url + "/reviews?board_id=" + roomId;
   try{
+    let req = "http://" + url + "/reviews?board_id=" + roomId;
     let reviewsData = {};
     yield axios.get(req)
           .then( res => { reviewsData = res.data } )
-    yield put(actions.addAllReviewsInTheRoomToState(roomId, reviewsData));
+    req = "http://" + url + "/boards/" + roomId;
+    let roomData = {};
+    yield axios.get(req)
+          .then( res => { roomData = res.data } )
+    yield put(actions.addRoomDataInTheRoomToState(roomId, roomData, reviewsData));
   } catch(e){
     yield put(messageActions.showMessage(e.message));
   }
 }
 
-function* watchGetAllReviewsInTheRoom(){
-  yield takeEvery(types.GET_ALL_REVIEWS_IN_THE_ROOM, getAllReviewsInTheRoom);
+function* watchGetRoomDataInTheRoom(){
+  yield takeEvery(types.GET_ROOM_DATA_IN_THE_ROOM, getRoomDataInTheRoom);
 }
 
 export default function* roomSaga(){
-  yield fork(watchGetAllReviewsInTheRoom);
+  yield fork(watchGetRoomDataInTheRoom);
 
 }
