@@ -13,7 +13,6 @@ function* getPopularReviews(action){
     let reviewsData = {};
     yield axios.get(req)
           .then( res => { reviewsData = res.data } )
-    yield console.log(reviewsData);
     yield put(actions.addPopularReviewsToState(reviewsData));
   } catch(e){
     console.log(e);

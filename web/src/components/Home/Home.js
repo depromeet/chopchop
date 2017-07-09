@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Image, Grid } from 'semantic-ui-react'
+import { Header } from 'semantic-ui-react'
 import PopularReviewList from './PopularReviewList'
 
 class Home extends Component {

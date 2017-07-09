@@ -8,7 +8,6 @@ class Room extends Component {
         const allReviewsInTheRoom = this.props.roomReducer.reviews;
         const board = this.props.roomReducer.board.boardData;
         const boardOwner = this.props.roomReducer.board.boardOwnerData;
-        console.log(this.props.roomReducer.board.boardOwnerData);
         return(
             <div>
                 <Grid centered doubling>
