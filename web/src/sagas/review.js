@@ -14,8 +14,8 @@ function* getReviewDataInTheReview(action){
     let req = "http://" + url + "/reviews/" + reviewId;
     let reviewData = {};
     yield axios.get(req)
-          .then( res => { reviewData = res.data.values } )
-    yield put(actions.addReviewDataInTheReviewToState(reviewData[0]));
+          .then( res => { reviewData = res.data.values[0] } )
+    yield put(actions.addReviewDataInTheReviewToState(reviewData));
   } catch(e){
     yield put(messageActions.showMessage(e.message));
   }
