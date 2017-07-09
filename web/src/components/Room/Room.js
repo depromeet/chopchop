@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Grid } from 'semantic-ui-react'
-import ReviewList from './ReviewList';
+import ReviewList from '../ReviewList';
 
 class Room extends Component {
 

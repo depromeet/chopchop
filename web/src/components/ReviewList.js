@@ -7,8 +7,10 @@ import {
 class RoomList extends Component {
     render() {
         const reviews = this.props.children;
-        if(reviews===undefined){
-            return null;
+        if(reviews.length===0){
+            return (
+              <h3>존재하지 않습니다.</h3>
+            );
         }
         const parsedReviews = reviews.map((review, index) => 
             <Feed.Event  key={index}>
