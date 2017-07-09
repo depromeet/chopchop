@@ -6,14 +6,18 @@ class Room extends Component {
 
     render() {
         const allReviewsInTheRoom = this.props.roomReducer.reviews;
+        const board = this.props.roomReducer.board;
 
         return(
             <div>
                 <Grid centered doubling>
                     <Grid.Column width='12'>
-                        <Image src='http://semantic-ui.com/images/wireframe/image.png' fluid shape='rounded' centered />
-                        <h3>치즈인더치즈방 </h3>
-                        <h5>관리자:ZNE, 팔로워:231명</h5>
+                        {board.board_img!==null?<Image src={board.board_img}/>:<Image src='http://semantic-ui.com/images/wireframe/image.png' />}
+                        <h3>{board.board_name!==null?board.board_name:''} </h3>
+                        <h5>관리자:ZNE, 팔로워:
+
+                           {board.board_popular!==null?board.board_popular:''}명
+                        </h5>
                     </Grid.Column>
                 </Grid>
                 <ReviewList>
