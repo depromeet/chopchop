@@ -19,7 +19,7 @@ class RoomList extends Component {
               </Feed.Label>
               <Feed.Content>
                 <Feed.Summary>
-                  <Feed.User>{review.review_nickname!==null?review.review_nickname:''}</Feed.User> 님이 남이신 리뷰입니다.
+                  <Feed.User>{review.review_nickname!==null?review.review_nickname:''}</Feed.User> 님이 남기신 리뷰입니다.
                   <Feed.Date>1 Hour Ago</Feed.Date>
                 </Feed.Summary>
                 <Feed.Extra text>
