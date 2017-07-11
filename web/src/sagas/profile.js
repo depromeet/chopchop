@@ -9,7 +9,7 @@ function* getUserData(action){
   const url = config.server.url;
   const userId = action.userId;
   try{
-    let req = "http://" + url + "/reviews?user_id=" + userId;
+    let req = url + "/reviews?user_id=" + userId;
     let reviewsData = [];
     yield axios.get(req)
           .then( res => { 
@@ -17,7 +17,7 @@ function* getUserData(action){
               reviewsData = res.data.values 
           } )
     let userInfo = {};
-    req = "http://" + url + "/users/" + userId;
+    req = url + "/users/" + userId;
     yield axios.get(req)
           .then( res => { userInfo = res.data.values[0] } )
 

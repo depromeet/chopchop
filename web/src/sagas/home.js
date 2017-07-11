@@ -8,7 +8,7 @@ import config from '../config/config.json'
 
 function* getPopularReviews(action){
   const url = config.server.url;
-  const req = "http://" + url + "/reviews?popular=true";
+  const req = url + "/reviews?popular=true";
   try{
     let reviewsData = {};
     yield axios.get(req)

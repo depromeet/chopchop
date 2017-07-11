@@ -11,7 +11,7 @@ function* getReviewDataInTheReview(action){
   const url = config.server.url;
   const reviewId = action.reviewId;
   try{
-    let req = "http://" + url + "/reviews/" + reviewId;
+    let req = url + "/reviews/" + reviewId;
     let reviewData = {};
     yield axios.get(req)
           .then( res => { reviewData = res.data.values[0] } )

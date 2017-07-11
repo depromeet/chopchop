@@ -8,7 +8,7 @@ import config from '../config/config.json'
 
 function* signInWithEmail(action){
   const url = config.server.url;
-  const req = "http://" + url + "/users/login";
+  const req = url + "/users/login";
   try{
     let userId = null;
     // yield axios.post(req,{"user" : action.userSignInInfo})
@@ -27,7 +27,7 @@ function* watchSignInWithEmail(){
 function* signUpWithEmail(action){
   yield put(actions.saveSignUpUserInfo(action.userSignUpInfo))
   const url = config.server.url;
-  const req = "http://" + url + "/users";
+  const req = url + "/users";
   try{
     yield axios.post(req,{"user" : action.userSignUpInfo})
             .then( res => console.log(res));
@@ -46,7 +46,7 @@ function* verifyEmail(action){
   }
       
   const url = config.server.url;
-  const req = "http://" + url + "/users?email=" + emailAddress;
+  const req = url + "/users?email=" + emailAddress;
   let verifiedEmail = false;
   try{
     yield axios.get(req)
@@ -71,7 +71,7 @@ function* watchSignUpWithEmail(){
 
 function* getUserInfo(action){
   const url = config.server.url;
-  const req = "http://" + url + "/users/"+action.userId;
+  const req = url + "/users/"+action.userId;
   try{
     let userInfo = {};
     yield axios.get(req)
@@ -81,6 +81,7 @@ function* getUserInfo(action){
     yield window.sessionStorage.setItem("userId", userInfo.user_id);
     yield put(messageActions.showMessage(userInfo.user_name + `님 환영합니다`));
   } catch(e){
+    console.log(e.message);
     yield put(messageActions.showMessage(e.message));
     yield window.sessionStorage.removeItem("authed");
     yield window.sessionStorage.removeItem("userId");
@@ -90,7 +91,7 @@ function* getUserInfo(action){
 
 function* getUserInfoWithSession(action){
   const url = config.server.url;
-  const req = "http://" + url + "/users/"+action.userId;
+  const req = url + "/users/"+action.userId;
   try{
     let userInfo = {};
     yield axios.get(req)

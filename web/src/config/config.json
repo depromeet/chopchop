@@ -1,5 +1,8 @@
 {
     "server":{
-        "url": "localhost:3000"
+        "protocol": "http",
+        "domail": "jeemyeong.gonetis.com",
+        "port": "3000",
+        "url": "http://jeemyeong.gonetis.com:3000"
     }
 }

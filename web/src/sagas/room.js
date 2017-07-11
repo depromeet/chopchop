@@ -11,14 +11,14 @@ function* getRoomDataInTheRoom(action){
   const url = config.server.url;
   const roomId = action.roomId;
   try{
-    let req = "http://" + url + "/reviews?board_id=" + roomId;
+    let req = url + "/reviews?board_id=" + roomId;
     let reviewsData = [];
     yield axios.get(req)
           .then( res => {
             if(res.data.status==="Success")
               reviewsData = res.data.values 
             } )
-    req = "http://" + url + "/boards/" + roomId;
+    req = url + "/boards/" + roomId;
     let roomData = {};
     yield axios.get(req)
           .then( res => { roomData = res.data.board } )
@@ -27,7 +27,7 @@ function* getRoomDataInTheRoom(action){
       user_id: null
     };
     if(roomOwnerId!==null){
-      req = "http://" + url + "/users/" + roomOwnerId;
+      req = url + "/users/" + roomOwnerId;
       yield axios.get(req)
             .then( res => { roomOwnerData = res.data.values[0] } )
     }

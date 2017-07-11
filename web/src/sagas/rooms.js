@@ -10,7 +10,7 @@ import config from '../config/config.json'
 function* getAllRooms(action){
   const url = config.server.url;
   const userId = action.userId;
-  const req = "http://" + url + "/boards/lists/" + userId;
+  const req = url + "/boards/lists/" + userId;
   try{
     let roomsData = {};
     yield axios.get(req)
@@ -28,7 +28,7 @@ function* watchGetAllRooms(){
 function* getFollwingRooms(action){
   const url = config.server.url;
   const userId = action.userId;
-  const req = "http://" + url + "/boards/follow/" + userId;
+  const req = url + "/boards/follow/" + userId;
   try{
     let roomsData = {};
     yield axios.get(req)
@@ -45,7 +45,7 @@ function* watchGetFollwingRooms(){
 
 function* makeNewRoom(action){
   const url = config.server.url;
-  const req = "http://" + url + "/boards/";
+  const req = url + "/boards/";
   const roomName = action.roomName;
   const userId = action.userId;
   try{
