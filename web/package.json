@@ -1,0 +1,31 @@
+{
+  "name": "chopchop-web",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://depromeet.github.io/chopchop",
+  "devDependencies": {
+    "flow": "^0.2.3",
+    "gh-pages": "^0.12.0",
+    "react-redux": "^5.0.2",
+    "react-scripts": "0.9.0",
+    "redux": "^3.6.0"
+  },
+  "dependencies": {
+    "axios": "^0.15.3",
+    "google-map-react": "^0.22.3",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-google-maps": "^6.0.1",
+    "react-router-dom": "^4.1.1",
+    "redux-saga": "^0.14.3",
+    "semantic-ui-css": "^2.2.4",
+    "semantic-ui-react": "^0.65.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "deploy": "npm run build&&gh-pages -d build"
+  }
+}

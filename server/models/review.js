@@ -4,8 +4,7 @@
  *  Define a model of review table.
  */
 module.exports = function(sequelize, DataTypes) {
-	console.log('models/review.js');
-  return sequelize.define("Review", {
+  return sequelize.define('Review', {
     review_id       : { type : DataTypes.INTEGER, primaryKey : true, autoIncrement: true, allowNull : false },
     review_boardid  : { type : DataTypes.INTEGER, allowNull : false },
     review_uid      : { type : DataTypes.INTEGER, allowNull : false },
@@ -20,13 +19,13 @@ module.exports = function(sequelize, DataTypes) {
     review_like     : { type : DataTypes.INTEGER },
     review_bad      : { type : DataTypes.INTEGER },
     review_report   : { type : DataTypes.INTEGER },
-    review_comment  : { type : DataTypes.STRING(50) }
-  }, 
+    review_comment  : { type : DataTypes.STRING(50) },
+  },
   {
 	  classMethods: {},
 		tableName: 'review',
 		freezeTableName: true,
 		underscored: true,
 		timestamps: false
-  });    
+  });
 };

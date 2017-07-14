@@ -4,17 +4,15 @@ var crypto = require('crypto');
  *  Define a model of user table. 
  */
 module.exports = function(sequelize, DataTypes) {
-  console.log('models/user.js')
 	return sequelize.define("User", {
-	  user_id       : { type : DataTypes.INTEGER(15), primaryKey : true, allowNull : false },
-	  user_email    : { type : DataTypes.STRING(64), allowNull : false },
-	  user_tokenid  : { type : DataTypes.STRING(30), allowNull : false },
+	  user_id       : { type : DataTypes.INTEGER(15), primaryKey : true, allowNull : false, autoIncrement : true },
+	  user_email    : { type : DataTypes.STRING(64), allowNull : true },
+    user_password : { type : DataTypes.STRING(30), allowNull : true },
+    user_image    : { type : DataTypes.STRING(128), allowNull : true }, 
+	  user_tokenid  : { type : DataTypes.STRING(30), allowNull : false }, 
     user_name     : { type : DataTypes.STRING(30), allowNull : false },
     user_nickname : { type : DataTypes.STRING(30), allowNull : false },
-    user_gender   : { type : DataTypes.INTEGER(30), allowNull : false },
-    user_age      : { type : DataTypes.INTEGER(30), allowNull : false },
-    user_address  : { type : DataTypes.STRING(30) },
-    user_rank     : { type : DataTypes.INTEGER(30) }
+    user_source   : { type : DataTypes.STRING(30), allowNull : false }
 	}, {
 		classMethods: {
 		  //salt 생성

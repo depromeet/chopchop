@@ -3,56 +3,123 @@ var bodyParser = require('body-parser');
 var multer     = require('multer');
 var upload     = multer();
 var router     = express.Router();
-
 var models     = require('../models');
 
-/*
- // 전체 방 조회
- router.get('/boards',entireBoard);
- */
-
 // 전체 방 조회
-router.get('/boards', function(req, res) {
-    var result = {};
-    result["boards"] = [];
+router.get('/', function(req, res) {
+  var result = {};
+  var data = {};
+  result.boards = [];
 
-    models.Board.findAll()
-        .then(function(boards) {
-            for(var i=0; i<boards.length; i++) {
-                result["boards"][i] = boards[i].dataValues;
-            }
-            res.status(200);
-            res.json(result);
-        })
-        .catch(function(err) {
-            res.status(500);
-            res.send('Something is broken!');
-        });
+  if('limit' in req.query) data.limit = Number(req.query.limit);
+  else data.limit = 5;
+
+  var qOrder = req.query.order=='true' ? true : false;
+  var qDesc = req.query.desc=='true' ? true : false;
+
+  if(qOrder) {
+    data.order = [['board_popular']];
+    if(qDesc) data.order[0].push('DESC');
+  }
+
+  models.Board.findAll(data)
+    .then(function(boards) {
+      for (var i = 0; i < boards.length; i++) {
+        result.boards[i] = boards[i].dataValues;
+      }
+      res.status(200).json(result);
+    }).catch(function(err) {
+      // res.status(500).send('Something is broken!');
+      res.status(500).send(err.message);
+    });
 });
 
 // 특정 방 조회
-router.get('/boards/:idx',certainBoard);
+router.get('/:idx', certainBoard);
 
 // 방 팔로우
-router.put('/boards/:idx',followBoard);
+router.post('/follow', followBoard);
 
 // 방 팔로우 취소
-router.put('/boardsCancel/:idx', unfollowBoard)
+router.delete('/follow', unfollowBoard);
 
-// 인기 방 조회
-router.get('/boardsPopular',popularBoard);
+// // 인기 방 조회
+// router.get('/popular',popularBoard);
+
+//방 생성 한 유저당 방 하나만 생성
+router.post('/', regisBoard);
+
+// 전체 방 조회 팔로잉 되는 방 빼고
+router.get('/lists/:idx', boardList);
 
 // 팔로우 된 방 조회
-router.get('/boardsFollowed/:idx',specialBoard);
+router.get('/follow/:idx', specialBoard);
 
-router.use(function timeLog (req, res, next) {
-    console.log('Time: ', Date.now())
-    next()
-});
+// 방 생성 한 유저당 방 하나만 생성
+function regisBoard(req, res) {
+    var boardInfo = req.body,
+        user_id   = req.body.board_uid,
+        result = {
+            board_id : null,
+            status   : null,
+            reason   : null
+        };
 
-/*function entireBoard(req, res){
+    //중복 검사
+    models.Board.findAll({where: {board_uid : user_id}}).then(function(duplicate){
+        if(duplicate.length != 0) {
+            result.status = 'F';
+            result.reason = 'Duplicate user';
+            res.status(200).json(result);
+        }
+        else {
+            models.Board.create(boardInfo).then(function (board) {
+                result.board_id = board.board_id;
+                result.status = 'S';
+                res.status(200).json(result);
+            }, function (err) {
+                result.status = 'F';
+                result.reason = 'not find board response' + err;
+                res.status(400).json(result);
+            })
+        }
+    })
+}
 
- }*/
+
+// 팔로잉 된 방 빼고 전체 조회
+function boardList(req, res) {
+    var result = {
+            board : null,
+            status: null,
+            reason: null
+        },
+
+        user_id = req.params.idx,
+        board_id = [];
+
+    models.Board_Follow.findAll({where: {bf_userid: user_id}}).then(function(followed){
+        for(var i =0; i < followed.length; i++){
+            board_id[i]= followed[i].bf_boardid;
+        }
+        models.Board.sequelize.query('select * from board where board_id not in (' + board_id + ') order by board_popular DESC').then(function(board){
+            if(board == null){
+                result.status = 'F';
+                result.reason = 'not find board';
+                res.status(200).json(result);
+            }
+            else{
+                result.board  = board[0];
+                result.status = 'S';
+                res.status(200).json(result);
+            }
+        }, function(err){
+            result.status = 'F';
+            result.reason = 'not find board response' + err;
+            res.status(400).json(result);
+        })
+    })
+}
 
 // 특정 방 조회 get, board_id params로 받음
 function certainBoard(req, res){
@@ -64,80 +131,18 @@ function certainBoard(req, res){
     };
     models.Board.findById(idx).then(function(ret) {
         if(ret == null){
-            res.status(400);
             result.status = 'F';
             result.reason = 'not find board';
-            res.json(result);
+            res.status(200).json(result);
         } else{
-            console.log(ret);
             result.status = 'S';
             result.board = ret;
-            res.json(result);
+            res.status(200).json(result);
         }
     }, function(err) {
-        console.log(err);
-        res.status(400);
         result.status = 'F';
-        result.reason = err.message;
-        res.json(result);
-    })
-}
-
-// 방 팔로우 put, board_id params로 받음, bf_userid, bf_boardid body로 받음
-function followBoard(req, res){
-    var board_id = req.params.idx;
-    var bfinfo = req.body;
-    var result = {
-        board_id : null,
-        status   : null,
-        reason   : null
-    };
-    models.Board.sequelize.query('update board set board_popular = board_popular + 1 where board_id = ?',{replacements : [board_id]}).then(function(ret1){
-        models.Board_Follow.create(bfinfo).then(function(ret2){
-            res.status(200);
-            result.board_id = board_id;
-            result.status = 'S';
-            res.json(result);
-        }, function(err2){
-            res.status(400);
-            result.status = 'F';
-            result.reason = 'board_follow update failed';
-            res.json(result);
-        })
-    }, function(err1){
-        console.log(err1);
-        result.status = 'F';
-        result.reason = 'Follow failed';
-        res.json(result);
-    })
-}
-
-// 방 팔로우 취소 put, board_id params로 받음, bf_userid, bf_boardid body로 받음
-function unfollowBoard(req, res){
-    var board_id = req.params.idx;
-    var bfinfo = req.body;
-    var result = {
-        board_id : null,
-        status   : null,
-        reason   : null
-    };
-    models.Board.sequelize.query('update board set board_popular = board_popular - 1 where board_id = ?',{replacements : [board_id]}).then(function(ret1){
-        models.Board_Follow.destroy({where : {bf_userid : bfinfo.bf_userid, bf_boardid : bfinfo.bf_boardid}}).then(function(ret2){
-            res.status(200);
-            result.board_id = board_id;
-            result.status = 'S';
-            res.json(result);
-        }, function(err2){
-            res.status(400);
-            result.status = 'F';
-            result.reason = 'board_follow update failed';
-            res.json(result);
-        })
-    }, function(err1){
-        console.log(err1);
-        result.status = 'F';
-        result.reason = 'Follow failed';
-        res.json(result);
+        result.reason = 'not find board response' + err.message;
+        res.status(400).json(result);
     })
 }
 
@@ -148,95 +153,164 @@ function popularBoard(req, res){
         board : null
     };
 
-    console.log('check before query');
     models.Board.sequelize.query('select * from board order by board_popular desc limit 3;').then(function(ret){
         if(ret == null) {
-            res.status(400);
             result.status = 'F';
             result.reason = 'not find board';
-            res.json(result);
+            res.status(200).json(result);
         } else {
-            console.log(ret[0]);
             result.status = 'S';
             result.board = ret[0];
-            res.json(result);
+            res.status(200).json(result);
         }
     }, function(err) {
-        console.log(err);
-        res.status(400);
         result.status = 'F';
-        result.reason = err.message;
-        res.json(result);
+        result.reason = 'not find board response' + err.message;
+        res.status(400).json(result);
     })
 }
 
-/*
- // 팔로우 된 방 조회 params로 userid 받음
- function specialBoard(req, res){
- var result = {
- reason : null,
- board  : null
- };
- var user_id = req.params.idx;
- models.Board_Follow.sequelize.query('select * from board_follow where bf_userid = ?', {replacements : [user_id]}).then(function(ret1){
 
- for(var i=0; i<ret1.length; i++){
- ret1[i].bf_boardid
- }
- var board_id = bf.bf_boardid;
- console.log(board_id);
- models.Board.findById(board_id).then(function(ret2){
- if(ret2 == null){
- res.status(200);
- result.status = 'F';
- result.reason = 'not find board';
- res.json(result);
- }
- else{
- result.status = 'S';
- result.board = ret2;
- res.json(result);
- }
- }, function(err1) {
- res.status(400);
- result.status = 'F';
- result.reason = 'Add follow failed'
- })
- })
- }
- */
+// // 방 팔로우 put, bf_userid, bf_boardid body로 받음
+function followBoard(req, res){
+    var bfinfo = req.body,
+
+        result = {
+            board_id : null,
+            status   : null,
+            reason   : null
+        },
+
+        preventDuplication = {
+            bf_userid  : bfinfo.bf_userid,
+            bf_boardid : bfinfo.bf_boardid
+        },
+
+        boardIdMatched = {
+            board_id : bfinfo.bf_boardid
+        },
+
+        value = {
+            board_popular : 0
+        };
+
+    models.Board_Follow.findAll({where:preventDuplication})
+    .then(function (response) {
+        // 리스폰스 중복방지
+        if(response.length > 0) {
+            result.status = 'F';
+            result.reason = 'Duplicate follow';
+            res.status(200).json(result);
+        }
+        else{
+            models.Board_Follow.create(bfinfo)
+            models.Board.findAll({where: boardIdMatched}).then(function(board){
+                value.board_popular = board[0].dataValues.board_popular + 1;
+                models.Board.update(value, {where:boardIdMatched}).then(function() {
+                    result.board_id = bfinfo.bf_boardid;
+                    result.status   = 'S';
+                    res.status(200).json(result);
+                }, function (err) {
+                    result.status = 'F';
+                    result.reason = 'not find board response' + err;
+                    res.status(400).json(result);
+                })
+            })
+        }
+    }, function(err1) {
+        console.log(err1);
+        result.status = 'F';
+        result.reason = 'Follow failed';
+        res.status(400).json(result);
+    })
+}
+
+// 방 팔로우 취소 put, bf_userid, bf_boardid body로 받음
+function unfollowBoard(req, res){
+    var bfinfo = req.body,
+
+        result = {
+            board_id : null,
+            status   : null,
+            reason   : null
+        },
+
+        preventDuplication = {
+            bf_userid  : bfinfo.bf_userid,
+            bf_boardid : bfinfo.bf_boardid
+        },
+
+        boardIdMatched = {
+            board_id : bfinfo.bf_boardid
+        },
+
+        value = {
+            board_popular : 0
+        },
+
+        destroyCondition = {
+            bf_boardid: bfinfo.bf_boardid
+        }
+
+
+    models.Board_Follow.findAll({where:preventDuplication}).then(function (response) {
+        // 리스폰스 중복방지
+        if(response.length == 0) {
+            result.status = 'F';
+            result.reason = 'Duplicate follow';
+            res.status(200).json(result);
+        }
+        else{
+            models.Board_Follow.destroy({where: destroyCondition})
+            models.Board.findAll({where: boardIdMatched}).then(function(board){
+                value.board_popular = board[0].dataValues.board_popular - 1;
+                models.Board.update(value, {where: boardIdMatched}).then(function() {
+                    result.board_id = bfinfo.bf_boardid;
+                    result.status   = 'S';
+                    res.status(200).json(result);
+                }, function (err) {
+                    result.status = 'F';
+                    result.reason = err;
+                    res.status(400).json(result);
+                })
+            })
+        }
+    })
+
+}
 
 // 팔로우 된 방 조회 params로 userid 받음
 function specialBoard(req, res){
-    var result = {
-        reason : null,
-        board  : null
-    };
-    var user_id = req.params.idx;
-    models.Board_Follow.findAll({where : {bf_userid : user_id}}).then(function(ret1){
-        for(var i=0; i<ret1.length; i++) {
-            models.Board.findById(ret1[i].bf_boardid).then(function(ret2){
-                result["board"][i] = ret2[i].dataValues;
-            })
+    var result   = {},
+        board_id = [],
+        user_id  = req.params.idx;
+
+    models.Board_Follow.findAll({where : {bf_userid : user_id}})
+    .then(function(boardF){
+        for(var i = 0; i < boardF.length; i++){
+            board_id[i] = boardF[i].bf_boardid;
         }
-        if(ret == null){
-            res.status(400);
+        models.Board.findAll({where : {board_id: board_id} })
+        .then(function(board){
+            if(board.length == 0) {
+                result.status = 'F';
+                result.reason = 'not find board';
+                res.status(200).json(result);
+            } else {
+                result.status = 'S';
+                result.board  = board;
+                res.status(200).json(result);
+            }
+        }, function(errOfBoardFind) {
             result.status = 'F';
-            result.reason = 'not find review';
-            res.json(result);
-        } else{
-            console.log(ret);
-            result.status = 'S';
-            result.review = ret;
-            res.json(result);
-        }
-    }, function(err) {
-        console.log(err);
-        res.status(400);
+            result.reason = "Failed check board" + errOfBoardFind;
+            res.status(400).json(result);
+        })
+    }, function(errOfBoardFollow){
         result.status = 'F';
-        result.reason = err.message;
-        res.json(result);
-    })
+        result.reason = "Failed check board_follow" +  errOfBoardFollow;
+        res.status(400).json(result);
+    });
 }
 
 module.exports = router;

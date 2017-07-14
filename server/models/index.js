@@ -2,9 +2,9 @@ var fs = require('fs');
 var path = require('path');
 var Sequelize = require('sequelize');
 
-//cofig파일에서 dbConfig속성을 불러온다.
-//var env = process.env.NODE_ENV || "dbConfig";
-//var DBInit= require('../config.json')[env];
+// cofig파일에서 dbConfig속성을 불러온다
+// var env = process.env.NODE_ENV || "dbConfig";
+// var DBInit= require('../config.json')[env];
 var config = require('./../config/config.json').development;
 
 //시퀄라이즈 생성
@@ -16,7 +16,7 @@ var sequelize = new Sequelize(config.database, config.username, config.password,
 	define : {
 		charset : 'utf8',
 		collate : 'utf8_general_ci'
-	} // 설정 물어봐야지 이따가
+	}
 });
 
 //다른 모델들을 저장하는 객체.
@@ -32,7 +32,7 @@ fs.readdirSync(__dirname)
     db[model.name] = model;
   });
 
-// models 폴더가 module 이 됨. 
+// models 폴더가 module 이 됨.
 Object.keys(db).forEach(function(modelName) {
   if ("associate" in db[modelName]) {
     db[modelName].associate(db);
